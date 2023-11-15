@@ -51,7 +51,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 1"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -80,7 +80,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 1"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -109,7 +109,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 1"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -138,7 +138,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 1"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -197,7 +197,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 6"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -227,7 +227,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 6"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>
@@ -257,7 +257,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Text 6"
-                        android:textAlignment="center"
+                        android:textAlignment="viewStart"
                         android:textSize="16sp" />
 
                 </TableRow>

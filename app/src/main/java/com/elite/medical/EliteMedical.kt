@@ -35,6 +35,17 @@ class EliteMedical : Application() {
                 chain.request().newBuilder().addHeader("Authorization", "Bearer $AuthTokenClinic")
                     .build()
             chain.proceed(request)
+        }.addInterceptor { chain ->
+            val response = chain.proceed(chain.request())
+            if (response.code == 401) {
+                updateClinicToken(null)
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("token", "null")
+                startActivity(intent)
+            }
+            response
         }.build()
 
         val clientAdmin = OkHttpClient.Builder().addInterceptor { chain ->
@@ -54,8 +65,6 @@ class EliteMedical : Application() {
                 startActivity(intent)
 
             }
-
-
             response
         }.build()
 
