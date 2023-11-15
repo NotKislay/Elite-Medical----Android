@@ -67,7 +67,7 @@ class NurseListAdapter(val itemList: MutableList<Nurse>, private val viewModel: 
         holder.label1.text = "Name"
         holder.label2.text = "Licence Type"
         holder.label3.text = "License Expiry"
-        holder.label4.text = "Experience"
+        holder.label4.text = "Experience (In Years)"
         holder.label6.text = "Status"
         holder.label7.text = "Availability"
 

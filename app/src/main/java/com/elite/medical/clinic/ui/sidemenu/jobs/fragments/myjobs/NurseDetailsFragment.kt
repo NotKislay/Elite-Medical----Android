@@ -45,7 +45,7 @@ class NurseDetailsFragment : Fragment() {
             "Address: ${nurses.address}",
             "License Type: ${nurses.licenseType}",
             "License Expiry: ${nurses.licenseExpiry}",
-            "Experience: ${nurses.experience}",
+            "Experience(In Years): ${nurses.experience}",
             "Speciality: ${nurses.speciality}",
             "US Immigration Status: ${nurses.usImmgStatus}",
             "NCLEX Status: ${nurses.nclexStatus}",

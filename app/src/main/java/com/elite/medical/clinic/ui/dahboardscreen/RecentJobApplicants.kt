@@ -2,6 +2,7 @@ package com.elite.medical.clinic.ui.dahboardscreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.R
@@ -18,10 +19,24 @@ class RecentJobApplicants : AppCompatActivity() {
         clinicDashboardData =
             intent.getParcelableExtra("clinicDashboardData")!!
 
-        val adapter = RecentJobApplicationAdapter(clinicDashboardData.nurseApplicants)
-        binding.listview.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.listview.adapter = adapter
+
+        if (clinicDashboardData.nurseApplicants.isEmpty()) {
+
+            binding.tvNoDataFound.isVisible = true
+
+
+        } else {
+
+            val adapter = RecentJobApplicationAdapter(clinicDashboardData.nurseApplicants)
+            binding.listview.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.listview.adapter = adapter
+            binding.tvNoDataFound.isVisible = false
+
+
+        }
+
+
 
 
         binding.btnBack.setOnClickListener { finish() }

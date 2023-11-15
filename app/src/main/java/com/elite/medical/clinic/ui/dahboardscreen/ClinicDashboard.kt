@@ -37,6 +37,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard_clinic)
 
+        println(EliteMedical.AuthTokenClinic)
 
         setupDrawer()
         fetchDashboardData()
@@ -44,7 +45,6 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         binding.avatarImageView.setOnClickListener(this)
         binding.tvJobApplicants.setOnClickListener(this)
         binding.tvTopRatedNurse.setOnClickListener(this)
-
 
     }
 
@@ -165,17 +165,18 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
                 showCustomAvatarDialog()
             }
 
+            binding.tvJobApplicants.id -> {
+                val intent = Intent(this, RecentJobApplicants::class.java)
+                intent.putExtra("clinicDashboardData", clinicDashboardData)
+                startActivity(intent)
+            }
+
             binding.tvTopRatedNurse.id -> {
                 val intent = Intent(this, TopRatedNurses::class.java)
                 intent.putExtra("clinicDashboardData", clinicDashboardData)
                 startActivity(intent)
             }
 
-            binding.tvJobApplicants.id -> {
-                val intent = Intent(this, RecentJobApplicants::class.java)
-                intent.putExtra("clinicDashboardData", clinicDashboardData)
-                startActivity(intent)
-            }
         }
     }
 
