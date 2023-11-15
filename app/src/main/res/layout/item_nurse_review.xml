@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/review_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/et_background_grey"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/clinic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sample Clinic Name"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_days_ago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6 Days ago"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rating_label"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Rating"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="#F4B61B"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
+
+            <!--        <TextView
+                        android:layout_weight="20"
+                        android:id="@+id/rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="4.5"
+                        android:textColor="@color/accent_color"
+                        android:textSize="16sp"
+                        android:textStyle="italic" />-->
+
+        </LinearLayout>
+
+
+        <!--    <RatingBar-->
+        <!--        android:id="@+id/ratings_img"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:numStars="5" />-->
+
+
+        <!--    <TextView
+                android:id="@+id/comment_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comment"
+                android:textColor="@color/dark_gray"
+                android:textSize="16sp" />-->
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et libero odio."
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_comment"
+            android:hint="Add Your Comment"
+            android:textSize="14sp"
+            android:visibility="gone"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#4288BF"
+            android:text="Submit Review"
+            android:id="@+id/btn_submit_review"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</layout>
+
+
+    <!--   <TextView-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:id="@+id/id"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="id" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/nurse_register_id"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="nurse_register_id" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/clinic_register_id"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="clinic_register_id" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/created_at"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="comment" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/updated_at"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="updated_at" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/time_ago"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="time_ago" />-->

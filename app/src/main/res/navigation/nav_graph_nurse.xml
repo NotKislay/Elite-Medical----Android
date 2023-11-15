@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="com.elite.medical.nurse.fragments.MainScreenFragment"
+        android:label="Main Screen"
+        tools:layout="@layout/fragment_main_screen">
+        <action
+            android:id="@+id/action_mainScreenFragment_to_enrolledFragment"
+            app:destination="@id/EnrolledClinicsFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_appliedJobsTab"
+            app:destination="@id/appliedJobsTab" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_searchJobsTab"
+            app:destination="@id/searchJobsTab" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_notificationTab"
+            app:destination="@id/notificationTab" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_profileTab"
+            app:destination="@id/profileTab" />
+    </fragment>
+    <fragment
+        android:id="@+id/EnrolledClinicsFragment"
+        android:name="com.elite.medical.nurse.fragments.clinics.EnrolledClinics"
+        android:label="ClinicsFragment"
+        tools:layout="@layout/fragment_enrolled_clinics">
+        <action
+            android:id="@+id/action_EnrolledClinicsFragment_to_enrolledClinicsDetailsFragment"
+            app:destination="@id/enrolledClinicsDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileTab"
+        android:name="com.elite.medical.nurse.fragments.dashboard.Profile"
+        android:label="fragment_profile_tab"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/notificationTab"
+        android:name="com.elite.medical.nurse.fragments.dashboard.NotificationsNurse"
+        android:label="fragment_notification_tab"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/searchJobsTab"
+        android:name="com.elite.medical.nurse.fragments.searchjobs.SearchJobs"
+        android:label="fragment_search_jobs_tab"
+        tools:layout="@layout/fragment_search_jobs">
+        <action
+            android:id="@+id/action_searchJobsTab_to_searchJobDetail2"
+            app:destination="@id/searchJobDetail2" />
+    </fragment>
+    <fragment
+        android:id="@+id/appliedJobsTab"
+        android:name="com.elite.medical.nurse.fragments.appliedjobs.AppliedJobs"
+        android:label="fragment_applied_jobs_tab"
+        tools:layout="@layout/fragment_applied_jobs" >
+        <action
+            android:id="@+id/action_appliedJobsTab_to_appliedJobDetails"
+            app:destination="@id/appliedJobDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/enrolledClinicsDetailsFragment"
+        android:name="com.elite.medical.nurse.fragments.clinics.EnrolledClinicsDetailsFragment"
+        android:label="fragment_enrolled_clinics_details"
+        tools:layout="@layout/fragment_enrolled_clinics_details" >
+        <action
+            android:id="@+id/action_enrolledClinicsDetailsFragment_to_clinicReviewsFragment"
+            app:destination="@id/clinicReviewsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchJobDetail2"
+        android:name="com.elite.medical.nurse.fragments.searchjobs.SearchJobDetail"
+        android:label="fragment_search_job_detail"
+        tools:layout="@layout/fragment_search_job_detail" />
+    <fragment
+        android:id="@+id/clinicReviewsFragment"
+        android:name="com.elite.medical.nurse.fragments.clinics.ClinicReviewsFragment"
+        android:label="fragment_clinic_reviews"
+        tools:layout="@layout/fragment_clinic_reviews" />
+    <fragment
+        android:id="@+id/appliedJobDetails"
+        android:name="com.elite.medical.nurse.fragments.appliedjobs.AppliedJobDetails"
+        android:label="fragment_applied_job_details"
+        tools:layout="@layout/fragment_applied_job_details" />
+</navigation>

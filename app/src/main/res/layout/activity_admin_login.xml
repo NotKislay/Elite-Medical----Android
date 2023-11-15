@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
+    tools:context=".admin.ui.auth.LoginAdmin">
+
+
+    <!--            TOP App Bar         -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Admin"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="30dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_background"
+                android:drawableLeft="@drawable/icon_email"
+                android:drawablePadding="10dp"
+                android:hint="Email"
+                android:text="admin@gmail.com"
+                android:textColor="#3D6E95"
+                android:textColorHint="#3D6E95"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_background"
+                android:drawableLeft="@drawable/icon_password"
+                android:drawablePadding="10dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:text="Admin@123"
+                android:textColor="#3D6E95"
+                android:textColorHint="#3D6E95"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        Create Account Button
+                <TextView
+                    android:id="@+id/tv_signUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="20dp"
+                    android:text="Don't have an account ? Sign Up"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+        -->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signIn"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginVertical="10dp"
+                android:elevation="4dp"
+                android:text="Sign In"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:backgroundTint="#012A4A"
+                app:cornerRadius="10dp" />
+
+            <ProgressBar
+                android:id="@+id/loader"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:layout_marginVertical="10dp"
+                android:indeterminateTint="#012A4A" />
+
+
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:elevation="4dp"
+            android:text="Cancel"
+            android:textColor="#012A4A"
+            android:textSize="18sp"
+            app:backgroundTint="#AFF7FF"
+            app:cornerRadius="10dp"
+            app:rippleColor="@color/white" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

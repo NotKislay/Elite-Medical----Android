@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboard"
+        android:title="Dashboard">
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:title="Home" />
+            <item
+                android:id="@+id/notifnnav"
+                android:title="Notification" />
+            <item
+                android:id="@+id/clinics"
+                android:title="Clinics" />
+            <item
+                android:id="@+id/Nurses"
+                android:title="nurses" />
+            <item
+                android:id="@+id/jobs"
+                android:title="Jobs" />
+            <item
+                android:id="@+id/jobaplcnts"
+                android:title="Job Applicants" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/approvals"
+        android:title="Approvals">
+        <menu>
+            <item
+                android:id="@+id/nurseapprovals"
+                android:title="Nurse Approval" />
+            <item
+                android:id="@+id/clinicapproval"
+                android:title="Clinic Approval" />
+            <item
+                android:id="@+id/jobapproval"
+                android:title="Job Approval" />
+            <item
+                android:id="@+id/empmtapproval"
+                android:title="Employment Approval" />
+            <item
+                android:id="@+id/jobsrchapproval"
+                android:title="Job Search Approval" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/reviews"
+        android:title="Reviews">
+        <menu>
+            <item
+                android:id="@+id/nursereview"
+                android:title="Nurse Review" />
+            <item
+                android:id="@+id/clinicreview"
+                android:title="Clinic Review" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E0F2F1"
+        android:orientation="horizontal">
+
+        <GridLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:columnCount="2"
+            android:padding="5dp">
+
+            <!-- Row 1 -->
+            <TextView
+                android:id="@+id/label_1_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Label 1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv1_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Text 1"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+            <!-- Row 2 -->
+            <TextView
+                android:id="@+id/label_2_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Label 2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv2_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Text 2"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <!-- Row 3 -->
+            <TextView
+                android:id="@+id/label_3_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Label 3"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv3_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Text 3"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <!-- Row 4 -->
+            <TextView
+                android:id="@+id/label_4_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Label 4"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv4_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Text 4"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <!-- Row 5 -->
+            <TextView
+                android:id="@+id/label_5_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Label 5"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv5_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Text 5"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <!-- Row 6 -->
+            <TextView
+                android:id="@+id/label_6_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Label 6"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv6_cstm_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Text 6"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+        </GridLayout>
+
+
+        <ImageView
+            android:id="@+id/next_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

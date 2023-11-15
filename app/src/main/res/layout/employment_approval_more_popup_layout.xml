@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="More Details"
+        android:paddingVertical="8dp"
+        android:gravity="center"
+        android:textColor="@color/md_black_1000"
+        android:textSize="25sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey_400" />
+    <Button
+        android:id="@+id/clinicBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clinic Details"
+        android:gravity="center"
+        android:textColor="@color/md_blue_900"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey_400" />
+    <Button
+        android:id="@+id/nurseBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nurse Details"
+        android:gravity="center"
+        android:textColor="@color/md_blue_900"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey_400" />
+    <Button
+        android:id="@+id/employmentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Employment Details"
+        android:gravity="center"
+        android:textColor="@color/md_blue_900"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey_400" />
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:gravity="center"
+        android:textColor="@color/md_blue_900"
+        android:textSize="15sp"
+        />
+
+</LinearLayout>

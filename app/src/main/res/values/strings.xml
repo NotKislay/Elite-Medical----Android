@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Elite Medical</string>
+    <string name="ratings_reviews"><![CDATA[Ratings & Reviews]]></string>
+    <string name="nav_open">Navigation open</string>
+    <string name="nav_close">Navigation close</string>
+    <string name="forgot_password_text">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</string>
+    <string name="NCLEXStatus">NCLEX Status</string>
+    <string name="USImmigrationStatus">US Immigration Status</string>
+    <string name="CGFNSStatus">CGFNS Status (foreign nurses only)</string>
+    <string name="LicenseType">License Type (foreign nurses only)</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="active_clinics">Active Clinics</string>
+    <string name="active_nurses">Active Nurses</string>
+    <string name="active_jobs">Active Jobs</string>
+    <string name="back_button">back navigation</string>
+    <string name="nurse_reviews">Nurse Reviews</string>
+    <string name="clinic_reviews">Clinic Reviews</string>
+    <string name="clinic_review">Clinic Review</string>
+    <string name="blank"> </string>
+
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_city">Select City</string>
+    <string name="select_license_type">Select License type</string>
+
+</resources>

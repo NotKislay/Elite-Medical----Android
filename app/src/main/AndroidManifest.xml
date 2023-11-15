@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".EliteMedical"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EliteMedical"
+        tools:targetApi="31" >
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.more.ClinicReviewForNurseFromSNurseDetails"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.ActivitySearchNurseDetails"
+            android:exported="false" />
+        <activity
+            android:name=".nurse.NurseDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.ActivitySearchNurses"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.TimesheetNurseFromClinic"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.jobs.JobNApplicants"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.more.ActivityReviewsByClinicToNurses"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.ActivityEnrolledNurseDetails"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.jobs.CreateJob"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.jobs.MyJobs"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityReviewsByClinic"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.dahboardscreen.RecentJobApplicants"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.dahboardscreen.TopRatedNurses"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.ActivityViewProfile"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.NurseDetailsFromApprovedNurses"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityJobApplied"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityClinicEnrolled"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobapplicants.ClinicDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.TimesheetNurse"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobapplicants.NurseDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseReviewFromAssocNurseList"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityClinicReviewsFromMoreClinicDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseDetailsFromAssocNurse"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobapplicants.ApplicantDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobapplicants.AllJobApplicants"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobapplicants.ApprovedJobApplicants"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobs.ApprovedJobDetailsByID"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseAssocToClinic"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.jobs.ApprovedJobs"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.nurses.ApprovedNurses"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.reviews.ClinicReviews"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.reviews.NurseReviews"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.clinic_details.ApprovedClinicDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.ApprovedClinics"
+            android:exported="false" />
+        <activity
+            android:name="._feature_testing.ViewModelTesting"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.dashboard.RecentNurseReview"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.dashboard.RecentClinicReview"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.dashboard.recents.RecentNurses"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.dashboard.recents.RecentClinics"
+            android:exported="false" />
+        <activity
+            android:name=".utils.ForgotPassword"
+            android:exported="true" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.NurseApprovalDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.ClinicApprovalDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.JobApprovalDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.employmentapprovaldetails.EmploymentApprovalJobDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.employmentapprovaldetails.EmploymentApprovalClinicDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.employmentapprovaldetails.EmploymentApprovalNurseDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.employmentapprovaldetails.EmploymentApprovalEmploymentDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.jobsearchdetails.JobSearchJobDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.jobsearchdetails.JobSearchClinicDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.jobsearchdetails.JobSearchEmploymentDetails"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.details.jobsearchdetails.JobSearchNurseDetails"
+            android:exported="false" />
+        <activity
+            android:name="._feature_testing.FeatureTesting"
+            android:exported="true" >
+
+            <!--
+                            <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+            -->
+
+        </activity>
+        <activity
+            android:name=".nurse.NurseDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.dahboardscreen.ClinicDashboard"
+            android:exported="false" /> <!-- Clinic Activities -->
+        <activity
+            android:name=".clinic.ui.sidemenu.dashboard.ActivityNotificationsClinic"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.dashboard.ActivityClinicProfile"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.ui.sidemenu.nurses.EnrolledNurses"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.auth.SignupClinic"
+            android:exported="true" />
+        <activity
+            android:name=".nurse.SignupNurse"
+            android:exported="true" />
+        <activity
+            android:name=".admin.ui.sidemenu.dashboard.NotificationsAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".nurse.LoginNurse"
+            android:exported="false" />
+        <activity
+            android:name=".clinic.auth.LoginClinic"
+            android:exported="true" />
+        <activity
+            android:name=".admin.ui.auth.LoginAdmin"
+            android:exported="true" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.ApprovalsNurse"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.ApprovalsClinic"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.JobApprovals"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.EmploymentApprovals"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.sidemenu.approvals.JobSearchApprovals"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.AdminDashboard"
+            android:exported="true" />
+        <activity
+            android:name=".admin.ui.auth.SignUpAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".Splash"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

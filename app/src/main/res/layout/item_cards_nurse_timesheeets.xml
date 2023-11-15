@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:id="@+id/main_card"
+    android:padding="10dp"
+    android:background="@drawable/et_background_grey"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingHorizontal="5dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date_content_timesheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/location_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+
+            android:id="@+id/clock_in_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clock in at"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+
+            android:id="@+id/clock_out_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clock out at"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/attendance_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attendance"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
