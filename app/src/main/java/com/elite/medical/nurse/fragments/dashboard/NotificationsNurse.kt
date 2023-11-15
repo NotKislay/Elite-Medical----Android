@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -14,10 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.R
 import com.elite.medical.databinding.FragmentNotificationBinding
-import com.elite.medical.nurse.NurseViewModel
 import com.elite.medical.nurse.adapters.dashboard.NurseNotificationAdapter
 import com.elite.medical.nurse.viewmodels.dashboard.DashboardViewModel
-import com.elite.medical.retrofit.responsemodel.nurse.dashboard.notification.NotificationModel
 
 class NotificationsNurse : Fragment() {
 

@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.FragmentSearchJobsBinding
-import com.elite.medical.nurse.NurseViewModel
+import com.elite.medical.nurse.viewmodels.NurseViewModel
 import com.elite.medical.nurse.adapters.jobs.SearchJobsAdapter
 import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job

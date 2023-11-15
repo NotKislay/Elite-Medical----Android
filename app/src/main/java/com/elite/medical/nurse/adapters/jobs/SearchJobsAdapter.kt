@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.R
 import com.elite.medical.databinding.RvItemGenericBinding
-import com.elite.medical.nurse.NurseViewModel
-import com.elite.medical.retrofit.responsemodel.clinic.dashboard.Nurse
+import com.elite.medical.nurse.viewmodels.NurseViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 
 class SearchJobsAdapter(

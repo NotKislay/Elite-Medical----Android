@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.elite.medical.R
 import com.elite.medical.databinding.FragmentEnrolledClinicsDetailsBinding
 import com.elite.medical.nurse.Communicator
-import com.elite.medical.nurse.NurseViewModel
 import com.elite.medical.nurse.viewmodels.clinics.ClinicsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.ReviewEnrolledClinic
 
@@ -38,7 +38,7 @@ class EnrolledClinicsDetailsFragment : Fragment() {
     }
 
     private fun getClinicDetailsByID(id: String) {
-        viewmodel.getClinicDetailsbyID(id)
+        viewmodel.getClinicDetailsByID(id)
         viewmodel.enrolledClinicDetails.observe(viewLifecycleOwner) { it ->
 
             val data = arrayOf(

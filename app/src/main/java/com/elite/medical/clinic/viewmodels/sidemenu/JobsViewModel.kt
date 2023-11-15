@@ -1,4 +1,6 @@
 package com.elite.medical.clinic.viewmodels.sidemenu
 
-class JobsViewModel {
+import androidx.lifecycle.ViewModel
+
+class JobsViewModel: ViewModel() {
 }

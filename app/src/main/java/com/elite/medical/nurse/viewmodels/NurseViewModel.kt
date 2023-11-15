@@ -1,4 +1,4 @@
-package com.elite.medical.nurse
+package com.elite.medical.nurse.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

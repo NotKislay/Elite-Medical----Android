@@ -114,23 +114,23 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
         when (view?.id) {
 
             dialogBinding.btn1.id -> {
-                Toast.makeText(requireContext(), "btn1", Toast.LENGTH_SHORT).show()
                 val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "hire")
                 viewModel.callHireAction(hiringActionDetails)
+
 
             }
 
             dialogBinding.btn2.id -> {
-                Toast.makeText(requireContext(), "btn2", Toast.LENGTH_SHORT).show()
                 val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "trial")
                 viewModel.callHireAction(hiringActionDetails)
+
 
             }
 
             dialogBinding.btn3.id -> {
-                Toast.makeText(requireContext(), "btn3", Toast.LENGTH_SHORT).show()
                 val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "reject")
                 viewModel.callHireAction(hiringActionDetails)
+
 
             }
 

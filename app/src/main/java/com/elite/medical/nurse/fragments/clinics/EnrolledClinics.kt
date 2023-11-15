@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.databinding.FragmentEnrolledClinicsBinding
-import com.elite.medical.nurse.NurseViewModel
 import com.elite.medical.nurse.adapters.clinics.EnrolledClinicsAdapter
 import com.elite.medical.nurse.viewmodels.clinics.ClinicsViewModel
+import com.elite.medical.utils.HelperMethods
 
 class EnrolledClinics : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentEnrolledClinicsBinding
@@ -34,19 +34,23 @@ class EnrolledClinics : Fragment(), View.OnClickListener {
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
         viewmodel.clinicList.observe(viewLifecycleOwner) { clinics ->
-            val adapter = EnrolledClinicsAdapter(clinics!!, viewmodel, requireContext())
-            binding.rvEnrolledClinics.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvEnrolledClinics.adapter = adapter
-            binding.loader.isVisible = false
+            if (clinics.isNullOrEmpty()) {
+                binding.textabovervlistofassocnurse.isVisible = false
 
-//            adapter.onItemClicked = { it ->
-//                Toast.makeText(requireContext(), "the item is clicked..", Toast.LENGTH_SHORT).show()
-//            }
+                HelperMethods.showDialog("No Clinics Enrolled", "Go Back", requireContext(),activity)
+
+            } else {
+                val adapter = EnrolledClinicsAdapter(clinics!!, viewmodel, requireContext())
+                binding.rvEnrolledClinics.layoutManager = LinearLayoutManager(requireContext())
+                binding.rvEnrolledClinics.adapter = adapter
+            }
+            binding.loader.isVisible = false
 
         }
 
         return binding.root
     }
+
 
     private fun initBindings() {
         backBtn = binding.btnBack
