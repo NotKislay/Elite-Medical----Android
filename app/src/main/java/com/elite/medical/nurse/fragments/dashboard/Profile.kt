@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.databinding.FragmentProfileBinding
@@ -62,6 +63,25 @@ class Profile : Fragment() {
             val userEmail = binding.etProfileEmail
             userName.setText(it.name)
             userEmail.setText(it.email)
+
+            userEmail.doOnTextChanged { text, start, before, count ->
+
+                if (text.isNullOrBlank()) {
+
+                    userEmail.error = "This can't be blank"
+                    binding.btnUpdateProfile.isEnabled = false
+                }
+
+            }
+            userName.doOnTextChanged { text, start, before, count ->
+
+                if (text.isNullOrBlank()) {
+
+                    userName.error = "This can't be blank"
+                    binding.btnUpdateProfile.isEnabled = false
+                }
+
+            }
 
 
         }

@@ -80,7 +80,7 @@ class ActivityClinicProfile : AppCompatActivity() {
                             }
 
                         }
-                        
+
 
                     }
                 }

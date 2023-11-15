@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
@@ -57,23 +58,32 @@ class ActivityViewProfile : AppCompatActivity() {
                         userEmail.setText(data?.user?.email)
                         binding.loader.visibility = View.GONE
 
-                    } else {
-                        Toast.makeText(
-                            this@ActivityViewProfile,
-                            "Session has expired, Please login again.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@ActivityViewProfile, LoginAdmin::class.java)
-                        startActivity(intent)
-                        EliteMedical.updateAdminToken(null)
-                        finish()
+
+                        userEmail.doOnTextChanged { text, start, before, count ->
+
+                            if (text.isNullOrBlank()) {
+
+                                userEmail.error = "This can't be blank"
+                                binding.btnUpdateProfile.isEnabled = false
+                            }
+
+                        }
+                        userName.doOnTextChanged { text, start, before, count ->
+
+                            if (text.isNullOrBlank()) {
+
+                                userName.error = "This can't be blank"
+                                binding.btnUpdateProfile.isEnabled = false
+                            }
+
+                        }
+
                     }
                 }
             })
         binding.btnUpdateProfile.setOnClickListener {
             val updatedname = binding.etProfileName.text.toString()
             val updatedemail = binding.etProfileEmail.text.toString()
-            //todo uncomment if want to implement the credentials updating part
             postUpdatedCredentialsToAPI(updatedname, updatedemail)
         }
     }
