@@ -9,6 +9,7 @@ object ConstantsNurse {
 
 
     const val SEARCH_JOBS = "nurse/jobs/search"
+    const val REQUEST_SEARCH_JOBS = "nurse/job-search-request"
     const val APPLIED_JOBS = "nurse/jobs/applied"
     const val ENROLLED_CLINICS = "nurse/enrolled-clinic"
     const val CLINIC_DETAILS_BY_ID= "nurse/enrolled-clinic"

@@ -1,5 +1,6 @@
 package com.elite.medical.retrofit
 
+import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLocationsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
@@ -23,6 +24,9 @@ interface RetrofitInterfaceNurse {
 
     @GET(ConstantsNurse.SEARCH_JOBS)
     fun searchJobs(): Call<JobList>
+
+    @POST(ConstantsNurse.REQUEST_SEARCH_JOBS)
+    fun requestSearchJobs(): Call<GenericSuccessErrorModel>
 
     @GET("${ConstantsNurse.SEARCH_JOBS}/{id}")
     fun jobDetailsByID(@Path("id") id: String): Call<JobDetailModel>

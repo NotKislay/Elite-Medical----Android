@@ -3,8 +3,13 @@ package com.elite.medical.nurse.viewmodels.jobs
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
+import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,16 +17,76 @@ import retrofit2.Response
 class JobsViewModel : ViewModel() {
 
     val appliedJobs: MutableLiveData<List<AppliedJobsModel.AppliedJob>?> = MutableLiveData()
+    val appliedJobDetails: MutableLiveData<AppliedJobDetailsModel.Job?> = MutableLiveData()
 
     val currentJobID: MutableLiveData<String> = MutableLiveData()
+    var searchJobDetail: MutableLiveData<Job?> = MutableLiveData()
 
-    val jobDetails: MutableLiveData<AppliedJobDetailsModel.Job?> = MutableLiveData()
+    var jobListCallback: ((JobList) -> Unit)? = null
+    var jobSearchRequestCallback: ((GenericSuccessErrorModel) -> Unit)? = null
 
 
     init {
         getAppliedJobs()
+
     }
 
+    fun getJobsList() {
+        EliteMedical.retrofitNurse.searchJobs().enqueue(object : Callback<JobList?> {
+            override fun onResponse(call: Call<JobList?>, response: Response<JobList?>) {
+                val res = response
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    jobListCallback?.invoke(body!!)
+                }
+            }
+
+            override fun onFailure(call: Call<JobList?>, t: Throwable) {}
+        })
+    }
+
+    fun getJobDetailsByID(id: String) {
+        EliteMedical.retrofitNurse.jobDetailsByID(id)
+            .enqueue(object : Callback<JobDetailModel?> {
+                override fun onResponse(
+                    call: Call<JobDetailModel?>,
+                    response: Response<JobDetailModel?>
+                ) {
+
+                    if (response.isSuccessful) {
+                        val details = response.body()?.jobs
+                        searchJobDetail.postValue(details)
+                    }
+                }
+
+                override fun onFailure(call: Call<JobDetailModel?>, t: Throwable) {}
+            })
+    }
+
+
+
+    fun jobSearchRequest() {
+        EliteMedical.retrofitNurse.requestSearchJobs()
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) jobSearchRequestCallback?.invoke(response.body()!!)
+                    else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        jobSearchRequestCallback?.invoke(errorModel)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
+            })
+    }
 
     private fun getAppliedJobs() {
         EliteMedical.retrofitNurse.appliedJobs().enqueue(object : Callback<AppliedJobsModel?> {
@@ -51,7 +116,7 @@ class JobsViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         val body = response.body()
                         val job = body?.job
-                        jobDetails.postValue(job)
+                        appliedJobDetails.postValue(job)
                     }
 
                 }
@@ -59,6 +124,8 @@ class JobsViewModel : ViewModel() {
                 override fun onFailure(call: Call<AppliedJobDetailsModel?>, t: Throwable) {}
             })
     }
+
+    fun updateCurrentJobID(id: String) = currentJobID.postValue(id)
 
 
 }

@@ -123,14 +123,31 @@
                 android:indeterminateTint="#012A4A" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_no_data"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="80dp"
                 android:gravity="center"
                 android:text="No Data Found!"
-                android:textSize="32dp" />
+                android:textSize="32dp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_job_search_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="70dp"
+                android:textSize="18sp"
+                android:letterSpacing="0.1"
+                android:backgroundTint="@color/md_green_200"
+                android:scaleY="1.3"
+                android:text="Job Search Request"
+                android:textColor="@color/md_green_800"
+                android:visibility="gone" />
+
 
         </RelativeLayout>
 

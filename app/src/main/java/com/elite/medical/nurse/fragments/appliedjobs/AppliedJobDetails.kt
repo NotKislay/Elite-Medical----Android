@@ -16,6 +16,8 @@ import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJo
 
 class AppliedJobDetails : Fragment() {
     private lateinit var binding: FragmentAppliedJobDetailsBinding
+    private lateinit var viewModelJobs: JobsViewModel
+
     private lateinit var viewModel: JobsViewModel
     private lateinit var currentJobID: String
 
@@ -25,12 +27,14 @@ class AppliedJobDetails : Fragment() {
     ): View {
         binding = FragmentAppliedJobDetailsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[JobsViewModel::class.java]
+        viewModelJobs = ViewModelProvider(requireActivity())[JobsViewModel::class.java]
+
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
-        currentJobID = viewModel.currentJobID.value!!
+        currentJobID = viewModelJobs.currentJobID.value!!
         viewModel.getAppliedJobDetailsByID(currentJobID)
 
-        viewModel.jobDetails.observe(viewLifecycleOwner) {
+        viewModel.appliedJobDetails.observe(viewLifecycleOwner) {
             displayJobDetails(it!!)
             binding.loader.isVisible = false
         }

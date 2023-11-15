@@ -68,7 +68,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/inter_medium"
                 android:hint="Email"
-                android:text="7xy.plane@gmail.com"
+                android:text="widoji5465@bikedid.com"
                 android:textColor="#3D6E95"
                 android:textColorHint="#3D6E95"
                 android:textCursorDrawable="@drawable/color_cursor" />
@@ -93,7 +93,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/inter_medium"
                 android:hint="Password"
-                android:text="7b8ea5ad"
+                android:text="d70bca75"
                 android:textColor="#3D6E95"
                 android:textColorHint="#3D6E95"
                 android:textCursorDrawable="@drawable/color_cursor" />

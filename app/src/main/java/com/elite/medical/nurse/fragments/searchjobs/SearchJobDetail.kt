@@ -8,13 +8,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.databinding.FragmentSearchJobDetailBinding
-import com.elite.medical.nurse.NurseViewModel
+import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 
 
 class SearchJobDetail : Fragment() {
     private lateinit var binding: FragmentSearchJobDetailBinding
-    private lateinit var viewModel: NurseViewModel
+    private lateinit var viewModel: JobsViewModel
     private lateinit var currentJobID: String
     private lateinit var currentJobDetails: Job
 
@@ -23,12 +23,13 @@ class SearchJobDetail : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchJobDetailBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity())[NurseViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[JobsViewModel::class.java]
+
 
         currentJobID = viewModel.currentJobID.value!!
         viewModel.getJobDetailsByID(currentJobID)
 
-        viewModel.jobDetail.observe(viewLifecycleOwner) {
+        viewModel.searchJobDetail.observe(viewLifecycleOwner) {
             binding.loader.isVisible = false
             currentJobDetails = it!!
             displayJobDetails()
@@ -37,13 +38,13 @@ class SearchJobDetail : Fragment() {
 
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
-/*        EliteMedical.nurseAuthToken.observe(viewLifecycleOwner) {
-            if (it == null) {
-                val intent = Intent(requireContext(), LoginNurse::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            }
-        }*/
+        /*        EliteMedical.nurseAuthToken.observe(viewLifecycleOwner) {
+                    if (it == null) {
+                        val intent = Intent(requireContext(), LoginNurse::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    }
+                }*/
 
         return binding.root
     }
