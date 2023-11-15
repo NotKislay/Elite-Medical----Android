@@ -75,7 +75,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         val sideMenuItems: List<String> = listOf("Dashboard", "Jobs", "Nurses")
         val sideMenuSubItems: LinkedHashMap<String, List<String>> = LinkedHashMap()
 
-        val dashboard = listOf("Home", "NotificationsNurse", "Profile")
+        val dashboard = listOf("Home", "Notifications", "Profile")
         val jobs = listOf("My Jobs", "Create", "Applicants")
         val nurses = listOf("Search", "Enrolled")
 
@@ -108,10 +108,9 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
                 "Home" -> {
                 }
 
-                "NotificationsNurse" -> {
+                "Notifications" -> {
                     val intent = Intent(this, ActivityNotificationsClinic::class.java)
                     startActivity(intent)
-                    //Toast.makeText(this,"NotificationsNurse",Toast.LENGTH_SHORT).show()
                 }
 
                 "Profile" -> {

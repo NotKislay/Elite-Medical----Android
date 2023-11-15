@@ -22,7 +22,7 @@ class SideMenuAdapterAdmin(
         "Approvals" to R.drawable.sm_2,
         "Reviews" to R.drawable.sm_3,
         "Home" to R.drawable.sm_1_1,
-        "NotificationsNurse" to R.drawable.sm_1_2,
+        "Notifications" to R.drawable.sm_1_2,
         "Clinics" to R.drawable.sm_1_3,
         "Nurses" to R.drawable.sm_1_4,
         "Jobs" to R.drawable.sm_1_5,

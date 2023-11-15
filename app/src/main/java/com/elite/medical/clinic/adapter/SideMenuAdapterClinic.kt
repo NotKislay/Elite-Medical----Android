@@ -22,7 +22,7 @@ class SideMenuAdapterClinic(
         "Jobs" to R.drawable.sm_1_6,
         "Nurses" to R.drawable.sm_1_4,
         "Home" to R.drawable.sm_1_1,
-        "NotificationsNurse" to R.drawable.sm_1_2,
+        "Notifications" to R.drawable.sm_1_2,
         "Profile" to R.drawable.sm_1_5,
         "My Jobs" to R.drawable.sm_2_1,
         "Create" to R.drawable.create_job,

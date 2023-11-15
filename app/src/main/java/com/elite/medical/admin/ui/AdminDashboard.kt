@@ -121,7 +121,7 @@ class AdminDashboard : AppCompatActivity() {
         val sideMenuItems: List<String> =
             listOf("Dashboard", "Approvals", "Reviews")       //  Menu Items
         val dashboardItems =
-            listOf("Home", "NotificationsNurse", "Clinics", "Nurses", "Jobs", "Job Applicants")
+            listOf("Home", "Notifications", "Clinics", "Nurses", "Jobs", "Job Applicants")
         val approvalItems = listOf(
             "Nurse Approval",
             "Clinic Approval",
@@ -160,7 +160,7 @@ class AdminDashboard : AppCompatActivity() {
                 "Home" -> {
                 }
 
-                "NotificationsNurse" -> {
+                "Notifications" -> {
                     val intent = Intent(this, NotificationsAdmin::class.java)
                     startActivity(intent)
                 }

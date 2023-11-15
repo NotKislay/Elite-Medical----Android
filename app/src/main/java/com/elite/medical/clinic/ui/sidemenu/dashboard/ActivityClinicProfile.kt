@@ -26,21 +26,22 @@ class ActivityClinicProfile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this, R.layout.activity_view_profile)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_view_profile)
         binding.btnBack.setOnClickListener { finish() }
 
 
         //disabling items
-        binding.btnUpdateProfile.visibility= View.GONE
-        binding.labelEmail.visibility= View.GONE
-        binding.labelName.visibility= View.GONE
-        binding.labelProfInfo.visibility= View.GONE
-        binding.etProfileName.visibility= View.GONE
-        binding.etProfileEmail.visibility= View.GONE
+        binding.btnUpdateProfile.visibility = View.GONE
+        binding.labelEmail.visibility = View.GONE
+        binding.labelName.visibility = View.GONE
+        binding.labelProfInfo.visibility = View.GONE
+        binding.etProfileName.visibility = View.GONE
+        binding.etProfileEmail.visibility = View.GONE
 
         fetchAndSetProfileData()
     }
-    private fun fetchAndSetProfileData(){
+
+    private fun fetchAndSetProfileData() {
         DDClinicAPI.getProfileDetails(
             object : DDClinicAPI.Companion.ProfileInfoCallback {
                 override fun onInfoReceived(data: ClinicProfileDetailsModel?, statusCode: Int?) {
@@ -48,12 +49,12 @@ class ActivityClinicProfile : AppCompatActivity() {
                     if (statusCode == 200) {
 
                         //enabling if success
-                        binding.btnUpdateProfile.visibility= View.VISIBLE
-                        binding.labelEmail.visibility= View.VISIBLE
-                        binding.labelName.visibility= View.VISIBLE
-                        binding.labelProfInfo.visibility= View.VISIBLE
-                        binding.etProfileName.visibility= View.VISIBLE
-                        binding.etProfileEmail.visibility= View.VISIBLE
+                        binding.btnUpdateProfile.visibility = View.VISIBLE
+                        binding.labelEmail.visibility = View.VISIBLE
+                        binding.labelName.visibility = View.VISIBLE
+                        binding.labelProfInfo.visibility = View.VISIBLE
+                        binding.etProfileName.visibility = View.VISIBLE
+                        binding.etProfileEmail.visibility = View.VISIBLE
 
 
                         val userName = binding.etProfileName
@@ -65,19 +66,18 @@ class ActivityClinicProfile : AppCompatActivity() {
                         userEmail.doOnTextChanged { text, start, before, count ->
 
                             if (text.isNullOrBlank()) {
-
                                 userEmail.error = "This can't be blank"
-                                binding.btnUpdateProfile.isEnabled = false
                             }
+                            binding.btnUpdateProfile.isEnabled = !text.isNullOrBlank()
+
 
                         }
                         userName.doOnTextChanged { text, start, before, count ->
 
                             if (text.isNullOrBlank()) {
-
                                 userName.error = "This can't be blank"
-                                binding.btnUpdateProfile.isEnabled = false
                             }
+                            binding.btnUpdateProfile.isEnabled = !text.isNullOrBlank()
 
                         }
 
@@ -85,32 +85,32 @@ class ActivityClinicProfile : AppCompatActivity() {
                     }
                 }
             })
-        binding.btnUpdateProfile.setOnClickListener{
-            val updatedname=binding.etProfileName.text.toString()
-            val updatedemail=binding.etProfileEmail.text.toString()
+        binding.btnUpdateProfile.setOnClickListener {
+            val updatedname = binding.etProfileName.text.toString()
+            val updatedemail = binding.etProfileEmail.text.toString()
             //todo uncomment if want to implement the credentials updating part
-            postUpdatedCredentialsToAPI(updatedname,updatedemail)
+            postUpdatedCredentialsToAPI(updatedname, updatedemail)
         }
     }
 
-    private fun postUpdatedCredentialsToAPI(name: String,email: String){
+    private fun postUpdatedCredentialsToAPI(name: String, email: String) {
         DDClinicAPI.postUpdatedUserDetails(
             name,
             email,
-            object: DDClinicAPI.Companion.ProfileUpdateCallback{
+            object : DDClinicAPI.Companion.ProfileUpdateCallback {
                 override fun onSuccess(msg: String?, statusCode: Int?) {
 
-                    if(statusCode==200){
+                    if (statusCode == 200) {
                         Toast.makeText(this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT)
                             .show()
                         finish()
                         val intent =
                             Intent(this@ActivityClinicProfile, ClinicDashboard::class.java)
                         startActivity(intent)
-                    }
-                    else{
+                    } else {
                         Toast.makeText(
-                            this@ActivityClinicProfile,"$msg", Toast.LENGTH_SHORT).show()
+                            this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 }
