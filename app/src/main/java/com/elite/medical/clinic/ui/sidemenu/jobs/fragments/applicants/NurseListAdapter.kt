@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.Nurse
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
 
 class NurseListAdapter(
-    private val items: List<Nurse>,
+    private val items: List<JobsByClinicsModel.NurseApplicant.Nurse>,
     private val viewModel: JobNApplicantsViewModel
 ) :
     RecyclerView.Adapter<NurseListAdapter.ViewHolder>() {

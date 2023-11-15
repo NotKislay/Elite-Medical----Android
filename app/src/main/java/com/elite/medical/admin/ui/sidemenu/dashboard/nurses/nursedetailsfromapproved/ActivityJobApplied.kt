@@ -30,7 +30,6 @@ class ActivityJobApplied : AppCompatActivity() {
             intent.getParcelableArrayListExtra<Job>(
                 "appliedJobs"
             )
-        println(appliedJobs?.joinToString(","))
 
 
         if (appliedJobs.isNullOrEmpty()) {

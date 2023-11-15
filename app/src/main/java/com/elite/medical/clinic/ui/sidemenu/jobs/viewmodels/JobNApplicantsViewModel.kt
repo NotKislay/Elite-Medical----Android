@@ -5,35 +5,49 @@ import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.requestmodels.clinic.JobHiringActionModel
+import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobNApplicantsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.Nurse
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class JobNApplicantsViewModel : ViewModel() {
-    var jobsList: MutableLiveData<JobNApplicantsModel?> = MutableLiveData()
+    var jobsList: MutableLiveData<List<JobsByClinicsModel.NurseApplicant>?> = MutableLiveData()
 
-    var currentJobID: MutableLiveData<Int> = MutableLiveData()
+
     var currentJobDetails: MutableLiveData<Int> = MutableLiveData()
+
     var currentClinicID: MutableLiveData<Int> = MutableLiveData()
-    var currentNurseList: MutableLiveData<List<Nurse>> = MutableLiveData()
-    var currentNurseDetails: MutableLiveData<Nurse> = MutableLiveData()
+    var currentJobID: MutableLiveData<Int> = MutableLiveData()
+
+
+    var currentNurseList: MutableLiveData<List<JobsByClinicsModel.NurseApplicant.Nurse>> =
+        MutableLiveData()
+    var currentNurseDetails: MutableLiveData<JobsByClinicsModel.NurseApplicant.Nurse> =
+        MutableLiveData()
 
     var hiringAction: MutableLiveData<Boolean> = MutableLiveData()
 
+    var HireActionCallback: ((GenericSuccessErrorModel) -> Unit)? = null
+
     fun getJobsList() {
         val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
-        api.getJobNApplicants().enqueue(object : Callback<JobNApplicantsModel?> {
+        api.getJobNApplicants().enqueue(object : Callback<JobsByClinicsModel?> {
             override fun onResponse(
-                call: Call<JobNApplicantsModel?>,
-                response: Response<JobNApplicantsModel?>
+                call: Call<JobsByClinicsModel?>,
+                response: Response<JobsByClinicsModel?>
             ) {
-                if (response.isSuccessful) jobsList.postValue(response.body())
+                if (response.isSuccessful) {
+                    jobsList.postValue(response.body()?.nurseApplicants)
+                    currentClinicID.postValue(response.body()?.clinicId)
+                }
             }
 
-            override fun onFailure(call: Call<JobNApplicantsModel?>, t: Throwable) {}
+            override fun onFailure(call: Call<JobsByClinicsModel?>, t: Throwable) {}
         })
     }
 
@@ -59,13 +73,25 @@ class JobNApplicantsViewModel : ViewModel() {
 
 
     fun callHireAction(hiringDetails: JobHiringActionModel) {
+        println(hiringDetails.toString())
         val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
-        api.jobHireAction(hiringDetails).enqueue(object : Callback<ResponseBody?> {
-            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                if (response.isSuccessful) hiringAction.postValue(true)
+        api.jobHireAction(hiringDetails).enqueue(object : Callback<GenericSuccessErrorModel?> {
+            override fun onResponse(
+                call: Call<GenericSuccessErrorModel?>,
+                response: Response<GenericSuccessErrorModel?>
+            ) {
+                val res = response
+                if (response.isSuccessful) {
+                    HireActionCallback?.invoke(response.body()!!)
+                } else {
+                    val error = response.errorBody()
+                    val errorModel =
+                        Gson().fromJson(error?.charStream(), GenericSuccessErrorModel::class.java)
+                    HireActionCallback?.invoke(errorModel)
+                }
             }
 
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {}
+            override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
         })
     }
 

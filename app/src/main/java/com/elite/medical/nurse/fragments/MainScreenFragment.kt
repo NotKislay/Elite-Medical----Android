@@ -43,7 +43,6 @@ class MainScreenFragment : Fragment(), View.OnClickListener {
         initBindings()
         setupMenu()
 
-        println(EliteMedical.AuthTokenNurse)
 
 
         requireActivity().onBackPressedDispatcher.addCallback(this) { callLogout() }

@@ -29,7 +29,6 @@ class ClinicReviewsFragment : Fragment() {
         val reviews = viewModel.reviews.value!!
 
         /*val inputText = arguments?.getString("key")
-        println("data is :$inputText")
         Toast.makeText(requireContext(),inputText,Toast.LENGTH_SHORT).show()*/
 
         if (reviews.isNullOrEmpty()) {

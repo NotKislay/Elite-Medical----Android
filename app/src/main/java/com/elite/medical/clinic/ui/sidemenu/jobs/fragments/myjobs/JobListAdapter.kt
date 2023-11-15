@@ -82,7 +82,6 @@ class JobListAdapter(val itemList: List<Job>, private val viewModel: MyJobsViewM
         holder.layout.setOnClickListener {
             viewModel.updateJobID(itemList[position].id)
             viewModel.updateJobStatus(itemList[position].status)
-            println(itemList[position].status)
 
             viewModel.currentJobDetails = itemList[position]
             it.findNavController().navigate(R.id.action_jobListFragment_to_jobDetailsFragment)

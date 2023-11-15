@@ -154,7 +154,6 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         }
 
 
-        println("$titleText, $vacancyText, $startDateText, $endDateText $descriptionText, $locationText, $jobTypeText")
 
 
     }

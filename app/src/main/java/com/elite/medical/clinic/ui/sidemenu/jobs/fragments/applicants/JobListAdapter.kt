@@ -4,18 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NurseApplicant
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
 
 class JobListAdapter(
-    private val items: List<NurseApplicant>,
+    private val items: List<JobsByClinicsModel.NurseApplicant>,
     private val viewModel: JobNApplicantsViewModel
 ) :
     RecyclerView.Adapter<JobListAdapter.ViewHolder>() {
+
+    var onItemClickListener: ((JobsByClinicsModel.NurseApplicant) -> Unit)? = null
+
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -60,19 +61,8 @@ class JobListAdapter(
 
         holder.btnGoDeep.visibility = View.VISIBLE
 
-
-        holder.layout.setOnClickListener {
-
-
-            viewModel.currentJobID.postValue(currentItem.jobId)
-            viewModel.currentClinicID.postValue(0)
-            viewModel.currentNurseList.postValue(currentItem.nurses)
-
-            it.findNavController()
-                .navigate(R.id.action_jobNApplicantsFragment_to_listJobApplicantsFragment)
-
-        }
-
+        holder.layout.setOnClickListener { onItemClickListener?.invoke(currentItem) }
 
     }
+
 }

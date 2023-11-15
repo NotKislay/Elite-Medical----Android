@@ -37,7 +37,6 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard_clinic)
 
-        println(EliteMedical.AuthTokenClinic)
 
         setupDrawer()
         fetchDashboardData()

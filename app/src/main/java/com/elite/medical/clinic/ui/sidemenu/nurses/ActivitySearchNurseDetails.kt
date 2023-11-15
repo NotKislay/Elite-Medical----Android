@@ -37,7 +37,6 @@ class ActivitySearchNurseDetails : AppCompatActivity() {
 
 
         getid = intent.getStringExtra("Nurse_id")!!
-        println("this is the id: $getid")
         fetchAvailableNursedetailbyid(getid)
 
         binding.moreBtnEnrNurseDetails.setOnClickListener {

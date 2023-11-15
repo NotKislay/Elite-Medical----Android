@@ -11,9 +11,10 @@ import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Nurse
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
 
 
-class NurseListAdapter(val itemList: MutableList<Nurse>, private val viewModel: MyJobsViewModel) :
+class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>, private val viewModel: MyJobsViewModel) :
     RecyclerView.Adapter<NurseListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

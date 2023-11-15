@@ -170,7 +170,6 @@ class NursesClinicAPIs {
 
                     if (response.isSuccessful) {
                         val responseData = response.body()
-                        println(responseData)
                         val timeSheetList = responseData!!.TimesheetDataModels
                         callback.onListReceived(timeSheetList)
                     } else {
@@ -202,7 +201,6 @@ class NursesClinicAPIs {
                     call: Call<AvailableNurseDetailsModel?>,
                     response: Response<AvailableNurseDetailsModel?>
                 ) {
-                    println(response)
                     if (response.isSuccessful) {
                         val data = response.body()!!
                         callback.onNurseDetailsReceived(data.nurse, response.code())

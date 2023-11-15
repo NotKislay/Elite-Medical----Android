@@ -38,7 +38,6 @@ class ClinicReviewForNurseFromSrcNurDet : AppCompatActivity() {
             LinearLayoutManager.VERTICAL, false
         )
         //todo add the adpater
-        println(reviews)
 //        val adapter =
 //            NurseRevByClinicFromAvlNurseDetlsAdapter(reviews, this@ClinicReviewForNurseFromSrcNurDet)
 //        recyclerView.adapter = adapter
@@ -53,7 +52,6 @@ class ClinicReviewForNurseFromSrcNurDet : AppCompatActivity() {
 //
 //        ReviewsAPIs.fetchClinicsReview(object : ReviewsAPIs.Companion.ClinicReviewsCallback {
 //            override fun onListReceived(reviews: List<ClinicReviewFromClinicReviewModel>) {
-//                println("revwis are"+reviews)
 //                val adapter =
 //                    ClinicReviewAdapter(ArrayList(reviews), this@ClinicReviewForNurseFromSrcNurDet)
 //                recyclerView.adapter = adapter

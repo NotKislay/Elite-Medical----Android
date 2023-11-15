@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
 import com.elite.medical.databinding.FragmentListJobApplicantsBinding
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.Nurse
 
 class NursesListFragment : Fragment() {
     private lateinit var binding: FragmentListJobApplicantsBinding
     private lateinit var viewModel: JobNApplicantsViewModel
 
-    private lateinit var nurses: List<Nurse>
+    private lateinit var nurses: List<JobsByClinicsModel.NurseApplicant.Nurse>
     private var currentJobID: Int = 0
 
     override fun onCreateView(

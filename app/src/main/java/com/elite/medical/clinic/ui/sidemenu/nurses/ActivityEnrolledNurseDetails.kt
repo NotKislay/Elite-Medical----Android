@@ -174,7 +174,6 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 formattedDate = dateFormat.format(selectedDate)
-                println("data is $selectedDate")
                 datepickerBtn.text = formattedDate
                 datepickerBtn.setTextColor(ContextCompat.getColor(this, R.color.black))
                 datepickerBtn.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
@@ -205,7 +204,6 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
 
                 })
 
-                println("dates are :  ${selectedDate.year}")
             }
         }
 

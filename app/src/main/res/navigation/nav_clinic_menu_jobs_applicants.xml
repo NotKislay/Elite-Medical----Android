@@ -26,5 +26,9 @@
         android:id="@+id/nurseDetailsFragment"
         android:name="com.elite.medical.clinic.ui.sidemenu.jobs.fragments.applicants.NurseDetailsFragment"
         android:label="fragment_nurse_details"
-        tools:layout="@layout/fragment_nurse_details" />
+        tools:layout="@layout/fragment_nurse_details" >
+        <action
+            android:id="@+id/action_nurseDetailsFragment_to_jobNApplicantsFragment"
+            app:destination="@id/jobNApplicantsFragment" />
+    </fragment>
 </navigation>

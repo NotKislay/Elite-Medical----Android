@@ -13,6 +13,7 @@ import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Job
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.JobRelatedDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Nurse
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,17 +21,19 @@ import retrofit2.Response
 
 class MyJobsViewModel : ViewModel() {
 
+    val clinicID: MutableLiveData<String> = MutableLiveData()
+
     private val jobList = MutableLiveData<MyJobsModel?>()
     var jobLocation: MutableLiveData<ClinicJobLocationsModel?> = MutableLiveData()
 
-    var jobDetailsByID = MutableLiveData<JobRelatedDetailsModel?>()
+    var jobDetailsByID = MutableLiveData<NursesAppliedOnJobModel?>()
     var jobListLiveData: LiveData<MyJobsModel?> = jobList
 
     var jobID = MutableLiveData<Int>()
     var jobStatus = MutableLiveData<String>()
 
     lateinit var currentJobDetails: Job
-    lateinit var currentNurseDetails: Nurse
+    lateinit var currentNurseDetails: NursesAppliedOnJobModel.Nurse
 
     var isJobCanceled = MutableLiveData<Boolean?>()
 
@@ -53,10 +56,8 @@ class MyJobsViewModel : ViewModel() {
     fun getJobDetailsByID(id: String) {
         ClinicSideMenuJobsAPIs.getJobsDetailsByID(id,
             object : ClinicSideMenuJobsAPIs.Companion.JobsDetailsCallback {
-                override fun onJobDetailsReceived(code: Int, body: JobRelatedDetailsModel?) {
-//                    println(body?.nurses?.map { it.name })
+                override fun onJobDetailsReceived(code: Int, body: NursesAppliedOnJobModel?) {
                     if (code == 200) jobDetailsByID.postValue(body)
-                    println(jobDetailsByID.value?.nurses?.map { it.name })
                 }
             })
     }
@@ -79,7 +80,6 @@ class MyJobsViewModel : ViewModel() {
     }
 
     fun closeJobByID(jobID: String) {
-        println(jobID)
         val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
         api.closeJobByID(jobID)
             .enqueue(object : Callback<GenericSuccessErrorModel?> {

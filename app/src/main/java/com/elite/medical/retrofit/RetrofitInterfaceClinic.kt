@@ -15,6 +15,8 @@ import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLo
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.JobRelatedDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobNApplicantsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.EnrolledNursesModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.SearchNurseModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.AvailableNurseDetailsModel
@@ -92,8 +94,7 @@ interface RetrofitInterfaceClinic {
     fun getJob(): Call<MyJobsModel>
 
 
-    @GET("${Constants.CLINIC_JOBS}/{id}")
-    fun getJobDetailsByID(@Path("id") id: String): Call<JobRelatedDetailsModel>
+
 
     @GET(Constants.CLINIC_JOB_LOCATIONS)
     fun getJobLocations(): Call<ClinicJobLocationsModel>
@@ -106,14 +107,17 @@ interface RetrofitInterfaceClinic {
     ): Call<GenericSuccessErrorModel>
 
     @GET(Constants.CLINIC_JOB_N_APPLICANTS)
-    fun getJobNApplicants(): Call<JobNApplicantsModel>
+    fun getJobNApplicants(): Call<JobsByClinicsModel>
+
+    @GET("${Constants.CLINIC_JOBS}/{id}")
+    fun getJobDetailsByID(@Path("id") id: String): Call<NursesAppliedOnJobModel>
 
 
     @POST(Constants.POST_JOB)
     fun postJob(@Body jobDetails: PostJobRequestModel): Call<ResponseBody>
 
     @POST(Constants.HIRE_ACTION)
-    fun jobHireAction(@Body hiringActionDetails: JobHiringActionModel): Call<ResponseBody>
+    fun jobHireAction(@Body hiringActionDetails: JobHiringActionModel): Call<GenericSuccessErrorModel>
 
 
     @FormUrlEncoded

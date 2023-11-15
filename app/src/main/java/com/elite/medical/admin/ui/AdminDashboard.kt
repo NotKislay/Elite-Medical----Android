@@ -290,7 +290,6 @@ class AdminDashboard : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        println(EliteMedical.AuthTokenAdmin)
     }
 
 

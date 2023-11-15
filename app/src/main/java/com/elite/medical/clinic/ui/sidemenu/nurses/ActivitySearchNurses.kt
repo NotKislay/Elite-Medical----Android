@@ -165,7 +165,6 @@ class ActivitySearchNurses : AppCompatActivity() {
             binding.textabovervlistofavalblnurse.apply {
                 textSize = 18f
             }
-            println("lis is $filteredList")
 
 
         } else {

@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
 import com.elite.medical.databinding.FragmentNurseDetailsBinding
 import com.elite.medical.databinding.ModalLayoutBinding
 import com.elite.medical.retrofit.requestmodels.clinic.JobHiringActionModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.Nurse
 
 
@@ -24,11 +27,11 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
     private lateinit var dialog: Dialog
 
     private lateinit var viewModel: JobNApplicantsViewModel
-    private lateinit var nurseDetails: Nurse
+    private lateinit var nurseDetails: JobsByClinicsModel.NurseApplicant.Nurse
 
-    private lateinit var currJobID:String
-    private lateinit var currClinicID:String
-    private lateinit var currNurseID:String
+    private lateinit var currJobID: String
+    private lateinit var currClinicID: String
+    private lateinit var currNurseID: String
 
 
     override fun onCreateView(
@@ -44,10 +47,6 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
         currJobID = viewModel.currentJobID.value.toString()
         currClinicID = viewModel.currentClinicID.value.toString()
         currNurseID = nurseDetails.id.toString()
-
-
-
-
 
 
         populateList()
@@ -114,29 +113,43 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
         when (view?.id) {
 
             dialogBinding.btn1.id -> {
-                Toast.makeText(requireContext(), "btn1", Toast.LENGTH_SHORT).show()
-                val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "hire")
+                val hiringActionDetails =
+                    JobHiringActionModel(currNurseID, currClinicID, currJobID, "hire")
                 viewModel.callHireAction(hiringActionDetails)
+                viewModel.HireActionCallback = {
+                    dialog.dismiss()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                }
 
             }
 
             dialogBinding.btn2.id -> {
-                Toast.makeText(requireContext(), "btn2", Toast.LENGTH_SHORT).show()
-                val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "trial")
+                val hiringActionDetails =
+                    JobHiringActionModel(currNurseID, currClinicID, currJobID, "trial")
                 viewModel.callHireAction(hiringActionDetails)
+                viewModel.HireActionCallback = {
+                    dialog.dismiss()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                }
 
             }
 
             dialogBinding.btn3.id -> {
-                Toast.makeText(requireContext(), "btn3", Toast.LENGTH_SHORT).show()
-                val hiringActionDetails = JobHiringActionModel(currNurseID, currClinicID, currJobID, "reject")
+                val hiringActionDetails =
+                    JobHiringActionModel(currNurseID, currClinicID, currJobID, "reject")
                 viewModel.callHireAction(hiringActionDetails)
+                viewModel.HireActionCallback = {
+                    dialog.dismiss()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                }
 
             }
 
             dialogBinding.btn4.id -> {
-
-
+                dialog.dismiss()
             }
 
 

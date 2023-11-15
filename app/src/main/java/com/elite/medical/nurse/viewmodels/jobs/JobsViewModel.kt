@@ -97,8 +97,6 @@ class JobsViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val body = response.body()?.appliedJobs
                     appliedJobs.postValue(body)
-                } else {
-                    print("TODO")
                 }
             }
 

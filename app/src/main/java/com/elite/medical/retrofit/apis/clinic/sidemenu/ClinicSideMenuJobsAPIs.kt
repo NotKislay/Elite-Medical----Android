@@ -2,8 +2,8 @@ package com.elite.medical.retrofit.apis.clinic.sidemenu
 
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.RetrofitInterfaceClinic
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.JobRelatedDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +16,7 @@ class ClinicSideMenuJobsAPIs {
         }
 
         interface JobsDetailsCallback {
-            fun onJobDetailsReceived(code: Int, body: JobRelatedDetailsModel?)
+            fun onJobDetailsReceived(code: Int, body: NursesAppliedOnJobModel?)
         }
 
 
@@ -39,10 +39,10 @@ class ClinicSideMenuJobsAPIs {
 
         fun getJobsDetailsByID(id: String, callback: JobsDetailsCallback) {
             val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
-            api.getJobDetailsByID(id).enqueue(object : Callback<JobRelatedDetailsModel?> {
+            api.getJobDetailsByID(id).enqueue(object : Callback<NursesAppliedOnJobModel?> {
                 override fun onResponse(
-                    call: Call<JobRelatedDetailsModel?>,
-                    response: Response<JobRelatedDetailsModel?>
+                    call: Call<NursesAppliedOnJobModel?>,
+                    response: Response<NursesAppliedOnJobModel?>
                 ) {
 
                     val body = response.body()
@@ -54,7 +54,7 @@ class ClinicSideMenuJobsAPIs {
 
                 }
 
-                override fun onFailure(call: Call<JobRelatedDetailsModel?>, t: Throwable) {}
+                override fun onFailure(call: Call<NursesAppliedOnJobModel?>, t: Throwable) {}
             })
         }
 
