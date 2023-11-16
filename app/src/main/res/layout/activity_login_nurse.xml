@@ -117,22 +117,37 @@
             android:layout_marginVertical="20dp"
             android:fontFamily="@font/inter_medium"
             android:text="Don't have an account ? Sign Up"
-
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_signIn"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginVertical="10dp"
-            android:elevation="4dp"
-            android:text="Sign In"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:backgroundTint="#012A4A"
-            app:cornerRadius="10dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signIn"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginVertical="10dp"
+                android:elevation="4dp"
+                android:text="Sign In"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:backgroundTint="#012A4A"
+                app:cornerRadius="10dp" />
+
+            <ProgressBar
+                android:id="@+id/loader"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:layout_marginVertical="10dp"
+                android:indeterminateTint="#012A4A" />
+
+
+        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"

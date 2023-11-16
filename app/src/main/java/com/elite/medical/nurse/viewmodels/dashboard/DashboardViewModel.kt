@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.notification.NotificationModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.profile.NurseProfileDetailsModel
 import com.google.gson.Gson
@@ -20,7 +19,7 @@ class DashboardViewModel : ViewModel() {
     var profileDetails: MutableLiveData<NurseProfileDetailsModel.User> = MutableLiveData()
 
     var onError: ((GenericSuccessErrorModel) -> Unit)? = null
-    var onSuccess: ((PostRequestResponseModel) -> Unit)? = null
+    var onSuccess: ((GenericSuccessErrorModel) -> Unit)? = null
 
 
     fun getNotificationLists() {
@@ -61,10 +60,10 @@ class DashboardViewModel : ViewModel() {
 
     fun updateProfile(name: String, email: String) {
         EliteMedical.retrofitNurse.updateProfile(name, email)
-            .enqueue(object : Callback<PostRequestResponseModel?> {
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(
-                    call: Call<PostRequestResponseModel?>,
-                    response: Response<PostRequestResponseModel?>
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
                 ) {
                     if (response.isSuccessful) {
                         val body = response.body()
@@ -80,7 +79,7 @@ class DashboardViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {}
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
             })
     }
 

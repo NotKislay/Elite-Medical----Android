@@ -5,7 +5,7 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.RetrofitInterfaceAdmin
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.ProfileDetailsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
+import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,10 +79,10 @@ class DDAdminAPI {
         fun postUpdatedUserDetails(name: String, email: String, callback: ProfileUpdateCallback) {
             val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
             val result = api.updateProfile(name, email)
-            result.enqueue(object : Callback<PostRequestResponseModel?> {
+            result.enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(
-                    call: Call<PostRequestResponseModel?>,
-                    response: Response<PostRequestResponseModel?>
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
                 ) {
                     if (response.isSuccessful) {
                         val message = response.body()?.message
@@ -93,7 +93,7 @@ class DDAdminAPI {
                     }
                 }
 
-                override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     
                 }
             })

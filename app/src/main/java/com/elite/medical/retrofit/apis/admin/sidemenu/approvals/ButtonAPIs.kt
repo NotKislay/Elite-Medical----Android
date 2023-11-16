@@ -1,10 +1,8 @@
 package com.elite.medical.retrofit.apis.admin.sidemenu.approvals
 
-import android.util.Log
 import com.elite.medical.retrofit.RetrofitClient
 import com.elite.medical.retrofit.RetrofitInterfaceAdmin
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,10 +20,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .approveUser(token, email).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -43,7 +41,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -57,10 +55,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .scheduleNurse(token, id, scheduleDate, scheduleTime).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         val res = response
                         if (response.isSuccessful) {
@@ -80,7 +78,7 @@ class ButtonAPIs {
                     }
 
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -90,10 +88,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .cancelNurse(token!!, id).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -111,7 +109,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -121,10 +119,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .cancelClinic(token!!, id).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -142,7 +140,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -152,10 +150,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .approveJob(token, id).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -174,7 +172,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -184,10 +182,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .cancelJob(token, id).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -206,7 +204,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -216,10 +214,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .approveEmployment(token, id, action).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -238,7 +236,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }
@@ -248,10 +246,10 @@ class ButtonAPIs {
         ) {
             RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
                 .cancelEmployment(token, id).enqueue(object :
-                    Callback<PostRequestResponseModel?> {
+                    Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
-                        call: Call<PostRequestResponseModel?>,
-                        response: Response<PostRequestResponseModel?>
+                        call: Call<GenericSuccessErrorModel?>,
+                        response: Response<GenericSuccessErrorModel?>
                     ) {
                         if (response.isSuccessful) {
                             val message = response.body()?.message
@@ -270,7 +268,7 @@ class ButtonAPIs {
                         }
                     }
 
-                    override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {
+                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
                     }
                 })
         }

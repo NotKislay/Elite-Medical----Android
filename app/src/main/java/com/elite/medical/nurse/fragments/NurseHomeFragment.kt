@@ -14,21 +14,19 @@ import android.widget.ExpandableListView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
-import com.elite.medical.admin.ui.ActivityViewProfile
 import com.elite.medical.databinding.FragmentMainScreenBinding
 import com.elite.medical.nurse.LoginNurse
 import com.elite.medical.nurse.adapters.MenuAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class MainScreenFragment : Fragment(), View.OnClickListener {
+class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentMainScreenBinding
     private lateinit var hamburger: ImageButton
     private lateinit var profileIcon: ImageView

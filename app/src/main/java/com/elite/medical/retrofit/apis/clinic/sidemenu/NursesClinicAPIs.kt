@@ -1,9 +1,7 @@
 package com.elite.medical.retrofit.apis.clinic.sidemenu
 
 import com.elite.medical.EliteMedical
-import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.TimesheetDataModel
 import com.elite.medical.retrofit.responsemodel.clinic.dashboard.Nurse
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.EnrolledNursesModel
@@ -63,7 +61,7 @@ class NursesClinicAPIs {
         }
 
         fun inviteNurseToJobByID(id: String, jobTitle: String, callback: InviteNurseCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             api.inviteNurseToJobByID(id, jobTitle)
                 .enqueue(object : Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
@@ -89,7 +87,7 @@ class NursesClinicAPIs {
 
 
         fun getNurseEnrolled(callback: NursesEnrolledCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             val result = api.getListOfEnrolledNurses()
             result.enqueue(object : Callback<EnrolledNursesModel?> {
                 override fun onResponse(
@@ -112,7 +110,7 @@ class NursesClinicAPIs {
         }
 
         fun getAvailableSearchNurses(callback: NursesAvailableCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             val result = api.getListOfAvailableSearchNurses()
             result.enqueue(object : Callback<SearchNurseModel?> {
                 override fun onResponse(
@@ -135,7 +133,7 @@ class NursesClinicAPIs {
         }
 
         fun getNurseEnrByid(id: String, callback: EnrolledNursesByIdCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             val result = api.getEnrolledNurseByid(id)
             result.enqueue(object : Callback<EnrolledNurseByidModel?> {
                 override fun onResponse(
@@ -159,7 +157,7 @@ class NursesClinicAPIs {
 
         fun getTimesheetByNurseId(id: String, callback: NurseTimesheetCallback) {
             val nurseTimesheetAPI =
-                EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+                EliteMedical.retrofitClinic
             val result = nurseTimesheetAPI.getTimesheetById(id)
             result.enqueue(object : Callback<NurseTimesheetByIdModelFromClinic> {
                 override fun onResponse(
@@ -194,7 +192,7 @@ class NursesClinicAPIs {
         }
 
         fun getAvlblNurseDetailsByid(id: String, callback: avlblNurseDetailsByIdCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             val result = api.getAvailableNursedetailsbyId(id)
             result.enqueue(object : Callback<AvailableNurseDetailsModel?> {
                 override fun onResponse(
@@ -220,12 +218,12 @@ class NursesClinicAPIs {
         fun terminatenursebyid(date: String, id: Int, callback: TerminateNurseCallback) {
             var msg: String
             val terminateAPI =
-                EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+                EliteMedical.retrofitClinic
             val result = terminateAPI.terminateNurseByClinic(date, id)
-            result.enqueue(object : Callback<PostRequestResponseModel> {
+            result.enqueue(object : Callback<GenericSuccessErrorModel> {
                 override fun onResponse(
-                    call: Call<PostRequestResponseModel>,
-                    response: Response<PostRequestResponseModel>
+                    call: Call<GenericSuccessErrorModel>,
+                    response: Response<GenericSuccessErrorModel>
                 ) {
                     if (response.isSuccessful) {
                         val resdata = response.body()!!
@@ -243,7 +241,7 @@ class NursesClinicAPIs {
                     }
                 }
 
-                override fun onFailure(call: Call<PostRequestResponseModel>, t: Throwable) {
+                override fun onFailure(call: Call<GenericSuccessErrorModel>, t: Throwable) {
 
                 }
 
@@ -251,7 +249,7 @@ class NursesClinicAPIs {
         }
 
         fun postnursereview(nurseid: String, comment: String, rating: Int) {
-            val reviewAPI = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val reviewAPI = EliteMedical.retrofitClinic
             val result = reviewAPI.postNurseReview(nurseid, comment, rating)
             //todo START HERE
 //            result.enqueue()

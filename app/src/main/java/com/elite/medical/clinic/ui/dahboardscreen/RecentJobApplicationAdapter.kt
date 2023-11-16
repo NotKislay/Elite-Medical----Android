@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.dashboard.NurseApplicant
-import com.elite.medical.retrofit.responsemodel.clinic.dashboard.TopNurse
+import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
 
-class RecentJobApplicationAdapter(val itemList: List<NurseApplicant>) :
+class RecentJobApplicationAdapter(val itemList: List<ClinicDashboardModel.NurseApplicant>) :
     RecyclerView.Adapter<RecentJobApplicationAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

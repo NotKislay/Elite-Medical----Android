@@ -35,7 +35,7 @@ class JobNApplicantsViewModel : ViewModel() {
     var HireActionCallback: ((GenericSuccessErrorModel) -> Unit)? = null
 
     fun getJobsList() {
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.getJobNApplicants().enqueue(object : Callback<JobsByClinicsModel?> {
             override fun onResponse(
                 call: Call<JobsByClinicsModel?>,
@@ -52,7 +52,7 @@ class JobNApplicantsViewModel : ViewModel() {
     }
 
     /*fun getApplicantsDetailsByID(jobID: String, clinicID: String) {
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.getApplicantsDetailsByClinicNJobID(jobID, clinicID).enqueue(object : Callback<ApplicantsDetailsModel?> {
             override fun onResponse(
                 call: Call<ApplicantsDetailsModel?>,
@@ -74,7 +74,7 @@ class JobNApplicantsViewModel : ViewModel() {
 
     fun callHireAction(hiringDetails: JobHiringActionModel) {
         println(hiringDetails.toString())
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.jobHireAction(hiringDetails).enqueue(object : Callback<GenericSuccessErrorModel?> {
             override fun onResponse(
                 call: Call<GenericSuccessErrorModel?>,

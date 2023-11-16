@@ -1,16 +1,17 @@
 package com.elite.medical.nurse
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.elite.medical.EliteMedical
-import com.elite.medical.utils.ForgotPassword
 import com.elite.medical.databinding.ActivityLoginNurseBinding
 import com.elite.medical.retrofit.apis.AuthAPI
-import com.elite.medical.utils.InputValidation
 import com.elite.medical.retrofit.responsemodel.auth.LoginResponse
+import com.elite.medical.utils.ForgotPassword
 import com.elite.medical.utils.HelperMethods
+import com.elite.medical.utils.InputValidation
 
 class LoginNurse : AppCompatActivity() {
 
@@ -38,6 +39,8 @@ class LoginNurse : AppCompatActivity() {
         }
 
         binding.btnSignIn.setOnClickListener {
+            binding.loader.visibility = View.VISIBLE
+            binding.btnSignIn.visibility = View.INVISIBLE
             login()
         }
 
@@ -46,7 +49,11 @@ class LoginNurse : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        binding.btnSignIn.visibility = View.VISIBLE
 
     }
 

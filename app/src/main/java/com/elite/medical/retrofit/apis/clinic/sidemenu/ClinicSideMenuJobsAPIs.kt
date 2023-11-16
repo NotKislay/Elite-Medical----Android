@@ -21,7 +21,7 @@ class ClinicSideMenuJobsAPIs {
 
 
         fun getJobs(callback: JobsCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             api.getJob().enqueue(object : Callback<MyJobsModel?> {
                 override fun onResponse(
                     call: Call<MyJobsModel?>,
@@ -38,7 +38,7 @@ class ClinicSideMenuJobsAPIs {
         }
 
         fun getJobsDetailsByID(id: String, callback: JobsDetailsCallback) {
-            val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api = EliteMedical.retrofitClinic
             api.getJobDetailsByID(id).enqueue(object : Callback<NursesAppliedOnJobModel?> {
                 override fun onResponse(
                     call: Call<NursesAppliedOnJobModel?>,

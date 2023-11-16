@@ -33,19 +33,13 @@ class AppliedJobs : Fragment() {
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
         viewModel.appliedJobs.observe(viewLifecycleOwner) { it ->
-            if (!it.isNullOrEmpty()) {
-                adapter = AppliedJobsAdapter(it)
-                binding.listview.layoutManager = LinearLayoutManager(requireContext())
-                binding.listview.adapter = adapter
-                binding.loader.isVisible = false
-                adapter.onItemClicked = {
-                    onItemClicked(it)
-                }
-            }
-            else {
-                Toast.makeText(requireContext(), "No Data Found", Toast.LENGTH_SHORT).show()
-                binding.loader.isVisible = false
-                activity?.onBackPressed()
+
+            if (!it.isNullOrEmpty()) adapter = AppliedJobsAdapter(it)
+            binding.listview.layoutManager = LinearLayoutManager(requireContext())
+            binding.listview.adapter = adapter
+            binding.loader.isVisible = false
+            adapter.onItemClicked = {
+                onItemClicked(it)
             }
 
         }

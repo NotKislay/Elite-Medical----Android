@@ -1,15 +1,14 @@
 package com.elite.medical.clinic.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.elite.medical.EliteMedical
-import com.elite.medical.clinic.ui.dahboardscreen.ClinicDashboard
-import com.elite.medical.utils.ForgotPassword
+import com.elite.medical.clinic.ui.ClinicNavHost
 import com.elite.medical.databinding.ActivityLoginClinicBinding
 import com.elite.medical.retrofit.apis.AuthAPI
+import com.elite.medical.utils.ForgotPassword
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.snackbar.Snackbar
 
@@ -23,7 +22,7 @@ class LoginClinic : AppCompatActivity() {
         setContentView(binding.root)
 
         if (EliteMedical.AuthTokenClinic != null) {
-            val intent = Intent(this@LoginClinic, ClinicDashboard::class.java)
+            val intent = Intent(this@LoginClinic, ClinicNavHost::class.java)
             startActivity(intent)
         }
 
@@ -42,6 +41,10 @@ class LoginClinic : AppCompatActivity() {
         }
 
         binding.btnSignIn.setOnClickListener {
+
+            binding.btnSignIn.visibility = View.INVISIBLE
+            binding.loader.visibility = View.VISIBLE
+
             login(
                 binding.etEmail.text.toString(), binding.etPassword.text.toString()
             )
@@ -53,6 +56,8 @@ class LoginClinic : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.btnSignIn.visibility = View.VISIBLE
+        binding.loader.visibility = View.GONE
+
     }
 
     private fun login(email: String, password: String) {
@@ -63,7 +68,7 @@ class LoginClinic : AppCompatActivity() {
             AuthAPI.loginClinic(email, password, object : AuthAPI.Companion.LoginClinicCallback {
                 override fun onClinicLogin(message: String?) {
                     if (message == null) {
-                        val intent = Intent(this@LoginClinic, ClinicDashboard::class.java)
+                        val intent = Intent(this@LoginClinic, ClinicNavHost::class.java)
                         startActivity(intent)
                         binding.loader.visibility = View.GONE
                     } else {

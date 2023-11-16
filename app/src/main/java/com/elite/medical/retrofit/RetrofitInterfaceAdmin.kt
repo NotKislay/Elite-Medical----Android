@@ -5,7 +5,7 @@ import com.elite.medical.retrofit.requestmodels.RegisterClinicModel
 import com.elite.medical.retrofit.requestmodels.RegisterNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.ProfileDetailsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
+import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.employmentapproval.EmploymentApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.jobapproval.JobApprovalModel
@@ -79,7 +79,7 @@ interface RetrofitInterfaceAdmin {
     fun updateProfile(
         @Field("name") name: String,
         @Field("email") email: String,
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
 
     @GET(Constants.APPROVALS_LIST_NURSES)
@@ -113,14 +113,14 @@ interface RetrofitInterfaceAdmin {
     fun approveUser(
         @Header("Authorization") authorization: String,
         @Field("email") email: String
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     @POST(Constants.APPROVE_JOB)
     @FormUrlEncoded
     fun approveJob(
         @Header("Authorization") authorization: String,
         @Field("job_id") id: Int
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
 
     @POST(Constants.APPROVE_EMPLOYMENT)
@@ -129,7 +129,7 @@ interface RetrofitInterfaceAdmin {
         @Header("Authorization") authorization: String,
         @Field("emp_id") id: Int,
         @Field("emp_action") empAction: String
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
 
     @POST(Constants.SCHEDULE_NURSE)
@@ -139,7 +139,7 @@ interface RetrofitInterfaceAdmin {
         @Field("id") id: Int,
         @Field("schedule") scheduleDate: String,
         @Field("schedule_time") scheduleTime: String
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
 
     @POST(Constants.CANCEL_JOB)
@@ -147,28 +147,28 @@ interface RetrofitInterfaceAdmin {
     fun cancelJob(
         @Header("Authorization") authorization: String,
         @Field("job_id") id: Int
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     @POST(Constants.CANCEL_CLINIC)
     @FormUrlEncoded
     fun cancelClinic(
         @Header("Authorization") authorization: String,
         @Field("id") id: Int
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     @POST(Constants.CANCEL_NURSE)
     @FormUrlEncoded
     fun cancelNurse(
         @Header("Authorization") authorization: String,
         @Field("id") id: Int
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     @POST(Constants.CANCEL_EMPLOYMENT)
     @FormUrlEncoded
     fun cancelEmployment(
         @Header("Authorization") authorization: String,
         @Field("emp_id") id: Int,
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
 
 //    Side Menu Review Section

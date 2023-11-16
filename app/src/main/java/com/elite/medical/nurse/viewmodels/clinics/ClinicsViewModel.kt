@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.ClinicDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.Clinics
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.EnrolledClinicsModel
@@ -26,7 +25,7 @@ class ClinicsViewModel: ViewModel()  {
     var reviews : MutableLiveData<List<ReviewEnrolledClinic>?> = MutableLiveData()
 
     var onErrorPostReviewCallback: ((GenericSuccessErrorModel)-> Unit)? = null
-    var onSuccessPostReviewCallback : ((PostRequestResponseModel)-> Unit)? = null
+    var onSuccessPostReviewCallback : ((GenericSuccessErrorModel)-> Unit)? = null
 
 
 
@@ -72,10 +71,10 @@ class ClinicsViewModel: ViewModel()  {
     fun postReview(nurseId: Int, rating: Int, comment: String) {
 
         EliteMedical.retrofitNurse.storeNurseReview(nurseId, rating, comment)
-            .enqueue(object : Callback<PostRequestResponseModel?> {
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(
-                    call: Call<PostRequestResponseModel?>,
-                    response: Response<PostRequestResponseModel?>
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
                 ) {
                     if (response.isSuccessful) {
                         val body = response.body()
@@ -91,7 +90,7 @@ class ClinicsViewModel: ViewModel()  {
                     }
                 }
 
-                override fun onFailure(call: Call<PostRequestResponseModel?>, t: Throwable) {}
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
             })
     }
 

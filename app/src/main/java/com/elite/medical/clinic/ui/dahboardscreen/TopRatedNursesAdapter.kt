@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.dashboard.TopNurse
+import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
 
-class TopRatedNursesAdapter(val itemList: List<TopNurse>) :
+class TopRatedNursesAdapter(private val items: List<ClinicDashboardModel.TopNurse>) :
     RecyclerView.Adapter<TopRatedNursesAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -33,7 +33,7 @@ class TopRatedNursesAdapter(val itemList: List<TopNurse>) :
 
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -44,9 +44,9 @@ class TopRatedNursesAdapter(val itemList: List<TopNurse>) :
         holder.label2.text = "Location"
         holder.label3.text = "Ratings"
 
-        holder.clinicName.text = itemList[position].name
-        holder.location.text = itemList[position].city
-        holder.ratings.text = itemList[position].nurseReview[0].rating
+        holder.clinicName.text = items[position].name
+        holder.location.text = items[position].city
+        holder.ratings.text = items[position].nurseReview[0].rating
 
 
 

@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class GenericSuccessErrorModel(
     @SerializedName("status")
-    val success: String,
+    val status: String,
 
     @SerializedName("message")
     val message: String,
 
-)
+    )
 

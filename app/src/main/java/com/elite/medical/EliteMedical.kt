@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.RetrofitInterfaceNurse
 import com.elite.medical.utils.Constants
+import com.elite.medical.utils.ConstantsClinic
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -91,8 +93,9 @@ class EliteMedical : Application() {
         }.build()
 
 
-        retrofitClinic = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+        retrofitClinic = Retrofit.Builder().baseUrl(ConstantsClinic.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientClinic).build()
+            .create(RetrofitInterfaceClinic::class.java)
 
         retrofitAdmin = Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientAdmin).build()
@@ -105,7 +108,7 @@ class EliteMedical : Application() {
     }
 
     companion object {
-        lateinit var retrofitClinic: Retrofit
+        lateinit var retrofitClinic: RetrofitInterfaceClinic
         lateinit var retrofitAdmin: Retrofit
         lateinit var retrofitNurse: RetrofitInterfaceNurse
         private lateinit var shardPrefsAdmin: SharedPreferences

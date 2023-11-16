@@ -63,7 +63,7 @@ class MyJobsViewModel : ViewModel() {
     }
 
     fun getJobLocations() {
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.getJobLocations().enqueue(object : Callback<ClinicJobLocationsModel?> {
             override fun onResponse(
                 call: Call<ClinicJobLocationsModel?>,
@@ -80,7 +80,7 @@ class MyJobsViewModel : ViewModel() {
     }
 
     fun closeJobByID(jobID: String) {
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.closeJobByID(jobID)
             .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(
@@ -106,7 +106,7 @@ class MyJobsViewModel : ViewModel() {
     }
 
     fun postJob(jobDetails: PostJobRequestModel) {
-        val api = EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+        val api = EliteMedical.retrofitClinic
         api.postJob(jobDetails).enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 if (response.isSuccessful) {

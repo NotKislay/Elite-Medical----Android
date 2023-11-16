@@ -15,7 +15,7 @@ class DashboardClinicAPIs {
             fun onListReceived(notification: List<NotificationDetailsFromAdminNotificationsModel>)
         }
         fun getClinicNotifications(callback: DashboardClinicAPIs.Companion.NotificationsCallback){
-            val api= EliteMedical.retrofitClinic.create(RetrofitInterfaceClinic::class.java)
+            val api= EliteMedical.retrofitClinic
             val result= api.getNotifications()
             result.enqueue(object: Callback<ClinicNotificationsModel> {
                 override fun onResponse(

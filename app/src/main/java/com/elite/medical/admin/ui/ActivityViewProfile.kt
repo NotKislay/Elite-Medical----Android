@@ -1,15 +1,12 @@
 package com.elite.medical.admin.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
-import com.elite.medical.EliteMedical
 import com.elite.medical.R
-import com.elite.medical.admin.ui.auth.LoginAdmin
 import com.elite.medical.databinding.ActivityViewProfileBinding
 import com.elite.medical.retrofit.apis.admin.DDAdminAPI
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.ProfileDetailsModel

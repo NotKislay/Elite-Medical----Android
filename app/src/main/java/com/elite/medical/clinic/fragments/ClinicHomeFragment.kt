@@ -1,72 +1,74 @@
-package com.elite.medical.clinic.ui.dahboardscreen
+package com.elite.medical.clinic.fragments
 
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ExpandableListAdapter
 import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.SideMenuAdapterClinic
 import com.elite.medical.clinic.auth.LoginClinic
-import com.elite.medical.clinic.ui.sidemenu.dashboard.ActivityClinicProfile
 import com.elite.medical.clinic.ui.sidemenu.dashboard.ActivityNotificationsClinic
 import com.elite.medical.clinic.ui.sidemenu.jobs.CreateJob
 import com.elite.medical.clinic.ui.sidemenu.jobs.JobNApplicants
 import com.elite.medical.clinic.ui.sidemenu.jobs.MyJobs
 import com.elite.medical.clinic.ui.sidemenu.nurses.ActivitySearchNurses
 import com.elite.medical.clinic.ui.sidemenu.nurses.EnrolledNurses
-import com.elite.medical.databinding.ActivityDashboardClinicBinding
-import com.elite.medical.retrofit.apis.clinic.DDClinicAPI
+import com.elite.medical.clinic.viewmodels.ClinicViewModel
+import com.elite.medical.databinding.FragmentClinicDashboardBinding
 import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
 
-class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityDashboardClinicBinding
+class ClinicHomeFragment : Fragment(), View.OnClickListener {
+    private lateinit var binding: FragmentClinicDashboardBinding
+    private lateinit var viewModel: ClinicViewModel
 
     private lateinit var clinicDashboardData: ClinicDashboardModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard_clinic)
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentClinicDashboardBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireActivity())[ClinicViewModel::class.java]
 
         setupDrawer()
-        fetchDashboardData()
+
         binding.btnNavMenu.setOnClickListener(this)
         binding.avatarImageView.setOnClickListener(this)
         binding.tvJobApplicants.setOnClickListener(this)
         binding.tvTopRatedNurse.setOnClickListener(this)
 
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { showLogoutConfirmationDialog() }
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getDashboardData()
+        fetchDashboardData()
     }
 
     private fun fetchDashboardData() {
-        DDClinicAPI.getDashboardData(object : DDClinicAPI.Companion.ResponseCallback {
-            override fun onDataReceived(data: ClinicDashboardModel?, statusCode: Int?) {
-                if (statusCode == 200) {
-                    clinicDashboardData = data!!
-                    binding.tvActiveNurses.text = "Active Nurses: ${data.activeNurses}"
-                    binding.tvActiveJobs.text = "Active Jobs: ${data.activeJobCount}"
-                    binding.loader.visibility = View.GONE
-
-                } else {
-                    Toast.makeText(
-                        this@ClinicDashboard,
-                        "Session has expired, Please login again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    EliteMedical.updateClinicToken(null)
-                    finish()
-                }
-            }
-        })
+        viewModel.dashboardDataCallback = {
+            clinicDashboardData = it
+            binding.tvActiveNurses.text = "Active Nurses: ${it.activeNurses}"
+            binding.tvActiveJobs.text = "Active Jobs: ${it.activeJobCount}"
+            binding.loader.visibility = View.GONE
+        }
     }
 
     private fun setupDrawer() {
@@ -92,7 +94,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
 
 
         val menuAdapter: ExpandableListAdapter
-        menuAdapter = SideMenuAdapterClinic(this, sideMenuItems, sideMenuSubItems)
+        menuAdapter = SideMenuAdapterClinic(requireContext(), sideMenuItems, sideMenuSubItems)
         menu.setAdapter(menuAdapter)    //  Setting Adapter for side menu
 
 
@@ -108,38 +110,34 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
                 }
 
                 "Notifications" -> {
-                    val intent = Intent(this, ActivityNotificationsClinic::class.java)
+                    val intent = Intent(requireContext(), ActivityNotificationsClinic::class.java)
                     startActivity(intent)
                 }
 
-                "Profile" -> {
-                    val intent = Intent(this, ActivityClinicProfile::class.java)
-                    startActivity(intent)
-                    //Toast.makeText(this,"Profile",Toast.LENGTH_SHORT).show()
-                }
+                "Profile" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_profileClinicFragment)
 
                 "My Jobs" -> {
-                    val intent = Intent(this, MyJobs::class.java)
+                    val intent = Intent(requireContext(), MyJobs::class.java)
                     startActivity(intent)
                 }
 
                 "Create" -> {
-                    val intent = Intent(this, CreateJob::class.java)
+                    val intent = Intent(requireContext(), CreateJob::class.java)
                     startActivity(intent)
                 }
 
                 "Applicants" -> {
-                    val intent = Intent(this, JobNApplicants::class.java)
+                    val intent = Intent(requireContext(), JobNApplicants::class.java)
                     startActivity(intent)
                 }
 
                 "Search" -> {
-                    val intent = Intent(this, ActivitySearchNurses::class.java)
+                    val intent = Intent(requireContext(), ActivitySearchNurses::class.java)
                     startActivity(intent)
                 }
 
                 "Enrolled" -> {
-                    val intent = Intent(this, EnrolledNurses::class.java)
+                    val intent = Intent(requireContext(), EnrolledNurses::class.java)
                     startActivity(intent)
                 }
 
@@ -160,28 +158,19 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
                 else binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            binding.avatarImageView.id -> {
-                showCustomAvatarDialog()
-            }
+            binding.avatarImageView.id -> showCustomAvatarDialog()
 
-            binding.tvJobApplicants.id -> {
-                val intent = Intent(this, RecentJobApplicants::class.java)
-                intent.putExtra("clinicDashboardData", clinicDashboardData)
-                startActivity(intent)
-            }
 
-            binding.tvTopRatedNurse.id -> {
-                val intent = Intent(this, TopRatedNurses::class.java)
-                intent.putExtra("clinicDashboardData", clinicDashboardData)
-                startActivity(intent)
-            }
+            binding.tvJobApplicants.id -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_recentJobApplicantsFragment)
+
+
+            binding.tvTopRatedNurse.id -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_topRatedNursesFragment)
 
         }
     }
 
-
     private fun showCustomAvatarDialog() {
-        val customDialog = Dialog(this)
+        val customDialog = Dialog(requireContext())
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         customDialog.setContentView(R.layout.modal_layout_clinic_details_more)
 
@@ -205,8 +194,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
 
         viewProfileBtn.setOnClickListener {
             customDialog.dismiss()
-            val intent = Intent(this, ActivityClinicProfile::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_clinicDashboardFragment_to_profileClinicFragment)
         }
 
         logoutBtn.setOnClickListener {
@@ -217,7 +205,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showLogoutConfirmationDialog() {
-        val builder = AlertDialog.Builder(this, R.style.MyDialogTheme)
+        val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle("Logout")
         builder.setMessage("Want to logout?")
 
@@ -225,7 +213,7 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         builder.setPositiveButton("Yes") { dialog, _ ->
             EliteMedical.updateClinicToken(null)
             dialog.dismiss()
-            val intent = Intent(this, LoginClinic::class.java)
+            val intent = Intent(requireContext(), LoginClinic::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
@@ -238,7 +226,30 @@ class ClinicDashboard : AppCompatActivity(), View.OnClickListener {
         dialog.show()
     }
 
-    override fun onBackPressed() {
-        showLogoutConfirmationDialog()
-    }
+/*    private fun postUpdatedCredentialsToAPI(name: String, email: String) {
+        DDClinicAPI.postUpdatedUserDetails(
+            name,
+            email,
+            object : DDClinicAPI.Companion.ProfileUpdateCallback {
+                override fun onSuccess(msg: String?, statusCode: Int?) {
+
+                    if (statusCode == 200) {
+                        Toast.makeText(this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+                        val intent =
+                            Intent(this@ActivityClinicProfile, ClinicHomeFragment::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
+
+            })
+    }*/
+
+
 }

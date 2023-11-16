@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainScreenFragment"
-        android:name="com.elite.medical.nurse.fragments.MainScreenFragment"
+        android:name="com.elite.medical.nurse.fragments.NurseHomeFragment"
         android:label="Main Screen"
         tools:layout="@layout/fragment_main_screen">
         <action

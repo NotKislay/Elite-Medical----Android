@@ -1,16 +1,14 @@
 package com.elite.medical.retrofit
 
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.PostRequestResponseModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLocationsModel
-import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
-import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.ClinicDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.EnrolledClinicsModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.notification.NotificationModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.profile.NurseProfileDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
 import com.elite.medical.utils.Constants
 import com.elite.medical.utils.ConstantsNurse
 import retrofit2.Call
@@ -55,7 +53,7 @@ interface RetrofitInterfaceNurse {
     fun updateProfile(
         @Field("name") name: String,
         @Field("email") email: String,
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     @POST(ConstantsNurse.NURSE_REVIEW)
     @FormUrlEncoded
@@ -63,7 +61,7 @@ interface RetrofitInterfaceNurse {
         @Field("clinicId") clinicId: Int,
         @Field("rating") rating: Int,
         @Field("comment") comment: String,
-    ): Call<PostRequestResponseModel>
+    ): Call<GenericSuccessErrorModel>
 
     /*    @GET(Constants.CLINIC_JOB_LOCATIONS)
         fun getJobLocations(): Call<ClinicJobLocationsModel>*/

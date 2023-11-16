@@ -12,7 +12,6 @@ import com.elite.medical.nurse.viewmodels.NurseViewModel
 
 class NurseDashboard : AppCompatActivity(), Communicator {
     private lateinit var binding: ActivityNurseDashboardBinding
-
     private lateinit var viewModel: NurseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,15 +22,15 @@ class NurseDashboard : AppCompatActivity(), Communicator {
 
     }
 
-    //way to pass data from fragments to another fragments
+
     override fun passData(data: String) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString("key","data is : $data")
-        val fragmentreviews = ClinicReviewsFragment()
-        fragmentreviews.arguments = bundle
+        val reviewsFragment = ClinicReviewsFragment()
+        reviewsFragment.arguments = bundle
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.enrolledclinicdetailsfrmnt,fragmentreviews)
+            .replace(R.id.enrolledclinicdetailsfrmnt,reviewsFragment)
             .addToBackStack(null)
             .commit()
     }
