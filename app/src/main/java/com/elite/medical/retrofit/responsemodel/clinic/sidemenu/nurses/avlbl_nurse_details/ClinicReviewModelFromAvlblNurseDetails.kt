@@ -16,4 +16,5 @@ data class ClinicReviewModelFromAvlblNurseDetails(
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("updated_at") val updatedAt: String,
     @SerializedName("formatted_date") val formatteddate: String,
+    @SerializedName("clinic_name") val clinic_name: String,
 ): Parcelable

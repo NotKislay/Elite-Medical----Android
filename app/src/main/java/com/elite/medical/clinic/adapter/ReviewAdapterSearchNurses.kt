@@ -1,4 +1,4 @@
-package com.elite.medical.admin.adapters.sidemenu.review
+package com.elite.medical.clinic.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ClinicReviewFromClinicReviewModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.ClinicReviewModelFromAvlblNurseDetails
 
 class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewModelFromAvlblNurseDetails>, private val context: Context) :
@@ -32,7 +31,7 @@ class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewMod
     override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
         val currentItem = cardItems[position]
 
-        holder.name.text = "need to get from api"
+        holder.name.text = currentItem.clinic_name
         holder.daysago.text= currentItem.formatteddate
         holder.rating.rating= currentItem.rating.toFloat()
         holder.commentcontent.text= currentItem.comment

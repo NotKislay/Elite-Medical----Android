@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.admin.adapters.sidemenu.review.ReviewAdapterSearchNurses
+import com.elite.medical.clinic.adapter.ReviewAdapterSearchNurses
 import com.elite.medical.databinding.ActivityNavigationClinicReviewBinding
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.ClinicReviewModelFromAvlblNurseDetails
 
