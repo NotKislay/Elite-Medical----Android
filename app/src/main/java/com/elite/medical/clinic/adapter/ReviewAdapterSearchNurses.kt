@@ -30,7 +30,7 @@ class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewMod
     override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
         val currentItem = cardItems[position]
 
-        holder.name.text = "need to get from api"
+        holder.name.text = currentItem.clinic_name
         holder.daysago.text= currentItem.formatteddate
         holder.rating.rating= currentItem.rating.toFloat()
         holder.commentcontent.text= currentItem.comment
