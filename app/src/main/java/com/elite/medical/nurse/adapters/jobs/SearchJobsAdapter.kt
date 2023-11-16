@@ -3,10 +3,9 @@ package com.elite.medical.nurse.adapters.jobs
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.databinding.RvItemGenericBinding
+import com.elite.medical.databinding.RvItemJobSearchBinding
 import com.elite.medical.nurse.viewmodels.NurseViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 
@@ -18,9 +17,10 @@ class SearchJobsAdapter(
     RecyclerView.Adapter<SearchJobsAdapter.ViewHolder>() {
 
 
-    var onItemClikced: ((Job) -> Unit)? = null
+    var onItemClicked: ((Job) -> Unit)? = null
+    var applyForJob: ((Job) -> Unit)? = null
 
-    inner class ViewHolder(binding: RvItemGenericBinding) :
+    inner class ViewHolder(binding: RvItemJobSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         val layout = binding.layout
@@ -35,28 +35,33 @@ class SearchJobsAdapter(
         val row8 = binding.row8
         val row9 = binding.row9
         val row10 = binding.row10
+        val row11 = binding.row11
 
-        var tv1: TextView = binding.tv1
-        var tv2: TextView = binding.tv2
-        var tv3: TextView = binding.tv3
-        var tv4: TextView = binding.tv4
-        var tv5: TextView = binding.tv5
-        var tv6: TextView = binding.tv6
-        var tv7: TextView = binding.tv7
-        var tv8: TextView = binding.tv8
-        var tv9: TextView = binding.tv9
-        var tv10: TextView = binding.tv10
+        var tv1 = binding.tv1
+        var tv2 = binding.tv2
+        var tv3 = binding.tv3
+        var tv4 = binding.tv4
+        var tv5 = binding.tv5
+        var tv6 = binding.tv6
+        var tv7 = binding.tv7
+        var tv8 = binding.tv8
+        var tv9 = binding.tv9
+        var tv10 = binding.tv10
+        var btnApply = binding.btnApply
+        var btnAlreadyApplied = binding.btnAlreadyApplied
 
-        var label1: TextView = binding.label1
-        var label2: TextView = binding.label2
-        var label3: TextView = binding.label3
-        var label4: TextView = binding.label4
-        var label5: TextView = binding.label5
-        var label6: TextView = binding.label6
-        var label7: TextView = binding.label7
-        var label8: TextView = binding.label8
-        var label9: TextView = binding.label9
-        var label10: TextView = binding.label10
+        var label1 = binding.label1
+        var label2 = binding.label2
+        var label3 = binding.label3
+        var label4 = binding.label4
+        var label5 = binding.label5
+        var label6 = binding.label6
+        var label7 = binding.label7
+        var label8 = binding.label8
+        var label9 = binding.label9
+        var label10 = binding.label10
+        var label11 = binding.label11
+
 
         val btnGoDeep = binding.btnGoDeep
 
@@ -64,7 +69,7 @@ class SearchJobsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            RvItemGenericBinding.inflate(
+            RvItemJobSearchBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -88,6 +93,7 @@ class SearchJobsAdapter(
         holder.row8.isVisible = true
         holder.row9.isVisible = true
         holder.row10.isVisible = false
+        holder.row11.isVisible = true
 
         holder.tv5.maxLines = 2
 
@@ -113,7 +119,14 @@ class SearchJobsAdapter(
         holder.tv9.text = item.applied.size.toString()
         holder.tv10.text = item.status
 
-        holder.layout.setOnClickListener { onItemClikced?.invoke(item) }
+        val hasNurseApplied = item.nurseApplied == "True"
+
+        if (hasNurseApplied) holder.btnAlreadyApplied.also { it.isVisible = true }
+        else holder.btnApply.also { it.isVisible = true }
+
+
+        holder.btnGoDeep.setOnClickListener { onItemClicked?.invoke(item) }
+        holder.btnApply.setOnClickListener { applyForJob?.invoke(item) }
 
     }
 

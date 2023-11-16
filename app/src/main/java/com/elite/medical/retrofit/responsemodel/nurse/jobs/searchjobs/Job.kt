@@ -35,5 +35,7 @@ data class Job(
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("vacancy")
-    val vacancy: String
+    val vacancy: String,
+    @SerializedName("nurse_applied")
+    val nurseApplied: String
 )

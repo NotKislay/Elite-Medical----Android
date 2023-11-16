@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.databinding.FragmentSearchJobDetailBinding
 import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.SearchJobsModel
 
 
 class SearchJobDetail : Fragment() {

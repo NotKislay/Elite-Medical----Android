@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DashboardViewModel : ViewModel() {
+class NurseDashboardVM : ViewModel() {
 
 
     var notificationDetails: MutableLiveData<List<NotificationModel.Notification>> =
@@ -82,5 +82,6 @@ class DashboardViewModel : ViewModel() {
                 override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
             })
     }
+
 
 }

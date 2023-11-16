@@ -10,13 +10,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.databinding.FragmentProfileBinding
-import com.elite.medical.nurse.viewmodels.dashboard.DashboardViewModel
+import com.elite.medical.nurse.viewmodels.dashboard.NurseDashboardVM
 
 
 class Profile : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var viewmodel: DashboardViewModel
+    private lateinit var viewmodel: NurseDashboardVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class Profile : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
-        viewmodel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
+        viewmodel = ViewModelProvider(requireActivity())[NurseDashboardVM::class.java]
 
 
 

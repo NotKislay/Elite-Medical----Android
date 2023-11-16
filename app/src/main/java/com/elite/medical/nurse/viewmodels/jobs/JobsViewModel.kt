@@ -9,6 +9,7 @@ import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJo
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.SearchJobsModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +25,7 @@ class JobsViewModel : ViewModel() {
 
     var jobListCallback: ((JobList) -> Unit)? = null
     var jobSearchRequestCallback: ((GenericSuccessErrorModel) -> Unit)? = null
+    var applyJobByIDCallback: ((GenericSuccessErrorModel) -> Unit)? = null
 
 
     init {
@@ -53,6 +55,8 @@ class JobsViewModel : ViewModel() {
                     response: Response<JobDetailModel?>
                 ) {
 
+                    val res = response
+
                     if (response.isSuccessful) {
                         val details = response.body()?.jobs
                         searchJobDetail.postValue(details)
@@ -62,7 +66,6 @@ class JobsViewModel : ViewModel() {
                 override fun onFailure(call: Call<JobDetailModel?>, t: Throwable) {}
             })
     }
-
 
 
     fun jobSearchRequest() {
@@ -120,6 +123,30 @@ class JobsViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<AppliedJobDetailsModel?>, t: Throwable) {}
+            })
+    }
+
+    fun applyJobByID(jobID: String) {
+        EliteMedical.retrofitNurse.applyJobByID(jobID)
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        applyJobByIDCallback?.invoke(body!!)
+                    } else {
+                        val error = response.errorBody()!!
+                        val errorModel = Gson().fromJson(
+                            error.charStream(),
+                            GenericSuccessErrorModel::class.java
+                        )
+                        applyJobByIDCallback?.invoke(errorModel)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
             })
     }
 
