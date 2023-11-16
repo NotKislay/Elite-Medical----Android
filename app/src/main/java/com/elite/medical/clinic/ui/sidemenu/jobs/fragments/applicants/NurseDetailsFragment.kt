@@ -103,8 +103,8 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
             "Experience: ${nurseDetails.experience}",
             "US Immigration Status: ${nurseDetails.usImmgStatus}",
             "CGFNS Status: ${nurseDetails.cgfnsStatus}",
-            "Nurse Availability: need from api",
-            "Hiring Status: need from api"
+            "Nurse Availability: ---------",
+            "Hiring Status: ----------"
         )
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayData)

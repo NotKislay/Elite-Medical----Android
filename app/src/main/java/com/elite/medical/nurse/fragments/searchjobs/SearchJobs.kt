@@ -20,6 +20,7 @@ import com.elite.medical.nurse.adapters.jobs.SearchJobsAdapter
 import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.SearchJobsModel
 
 class SearchJobs : Fragment() {
     private lateinit var binding: FragmentSearchJobsBinding
@@ -49,6 +50,8 @@ class SearchJobs : Fragment() {
         viewModelJobs.jobListCallback = {
             populateJobs(it)
         }
+
+
 
         filterListByJobTitle()
 
@@ -103,9 +106,16 @@ class SearchJobs : Fragment() {
             setupSpinner()
 
 
-            adapter.onItemClikced = {
+            adapter.onItemClicked = {
                 viewModelJobs.updateCurrentJobID(it.id.toString())
                 findNavController().navigate(com.elite.medical.R.id.action_searchJobsTab_to_searchJobDetail2)
+            }
+
+            adapter.applyForJob = { viewModelJobs.applyJobByID(it.id.toString()) }
+
+            viewModelJobs.applyJobByIDCallback = {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                activity?.onBackPressed()
             }
 
 

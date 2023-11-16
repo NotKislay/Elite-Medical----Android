@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.R
 import com.elite.medical.databinding.FragmentNotificationBinding
 import com.elite.medical.nurse.adapters.dashboard.NurseNotificationAdapter
-import com.elite.medical.nurse.viewmodels.dashboard.DashboardViewModel
+import com.elite.medical.nurse.viewmodels.dashboard.NurseDashboardVM
 
 class NotificationsNurse : Fragment() {
 
 
     private lateinit var binding: FragmentNotificationBinding
-    private lateinit var viewmodel: DashboardViewModel
+    private lateinit var viewmodel: NurseDashboardVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +28,7 @@ class NotificationsNurse : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentNotificationBinding.inflate(inflater, container, false)
-        viewmodel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
+        viewmodel = ViewModelProvider(requireActivity())[NurseDashboardVM::class.java]
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
         populateNotifications()
 

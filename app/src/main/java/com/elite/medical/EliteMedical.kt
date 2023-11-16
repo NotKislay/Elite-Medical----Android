@@ -9,6 +9,7 @@ import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.RetrofitInterfaceNurse
 import com.elite.medical.utils.Constants
 import com.elite.medical.utils.ConstantsClinic
+import com.elite.medical.utils.ConstantsNurse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -100,7 +101,7 @@ class EliteMedical : Application() {
         retrofitAdmin = Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientAdmin).build()
 
-        retrofitNurse = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+        retrofitNurse = Retrofit.Builder().baseUrl(ConstantsNurse.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientNurse).build()
             .create(RetrofitInterfaceNurse::class.java)
 
