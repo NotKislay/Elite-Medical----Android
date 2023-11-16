@@ -1,7 +1,9 @@
 package com.elite.medical.clinic.ui.sidemenu.jobs
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -16,6 +18,8 @@ import com.elite.medical.databinding.ActivityCreateJobBinding
 import com.elite.medical.retrofit.requestmodels.clinic.PostJobRequestModel
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.textfield.TextInputEditText
+import java.sql.Date
+import java.util.Calendar
 
 class CreateJob : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityCreateJobBinding
@@ -66,26 +70,8 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         binding.btnStartDate.setOnClickListener(this)
         binding.btnEndDate.setOnClickListener(this)
 
-        binding.datePicker1.setOnDateChangedListener { datePicker, _, _, _ ->
-            val start = "${datePicker.year}/${datePicker.month + 1}/${datePicker.dayOfMonth}"
-            binding.tvStartDate.text = start
-            binding.tvStartDate.error = null
-            binding.btnStartDate.setTextColor(Color.parseColor("#FFFFFF"))
-
-            toggleVisibility(datePicker)
-        }
-
-        binding.datePicker2.setOnDateChangedListener { datePicker, _, _, _ ->
-            datePicker.dayOfMonth
-            datePicker.month
-            datePicker.year
-            val end = "${datePicker.year}/${datePicker.month + 1}/${datePicker.dayOfMonth}"
-            binding.tvEndDate.text = end
-            binding.tvEndDate.error = null
-            binding.btnEndDate.setTextColor(Color.parseColor("#FFFFFF"))
-
-            toggleVisibility(datePicker)
-        }
+        binding.btnStartDate.setOnClickListener { openDatePicker(startDate) }
+        binding.btnEndDate.setOnClickListener { openDatePicker(endDate) }
 
 
     }
@@ -101,6 +87,7 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun createJob() {
+        HelperMethods.hideKeyboard(this@CreateJob)
         val inputFields = arrayOf(
             title,
             vacancy,
@@ -110,13 +97,6 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         )
 
         inputFields.map {
-            if (it.id == binding.tvStartDate.id && it.text.isEmpty()) {
-                binding.btnStartDate.setTextColor(Color.parseColor("#FF0000"))
-                binding.btnStartDate.requestFocus()
-            } else if (it.id == binding.tvEndDate.id && it.text.isEmpty()) {
-                binding.btnEndDate.setTextColor(Color.parseColor("#FF0000"))
-                binding.btnEndDate.requestFocus()
-            }
             if (it.text.toString().isEmpty()) {
                 it.error = "Shouldn't be empty"
                 it.requestFocus()
@@ -154,42 +134,28 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         }
 
 
-
-
     }
 
-    private fun toggleVisibility(view: View) {
-        if (view.visibility == View.VISIBLE) view.visibility = View.GONE
-        else view.visibility = View.VISIBLE
+    override fun onClick(view: View?) {}
 
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-
-            binding.btnStartDate.id -> {
-                HelperMethods.hideKeyboard(this@CreateJob)
-                toggleVisibility(binding.datePicker1)
-                binding.datePicker2.visibility = View.GONE
-            }
-
-            binding.btnEndDate.id -> {
-                HelperMethods.hideKeyboard(this@CreateJob)
-                binding.datePicker1.visibility = View.GONE
-                toggleVisibility(binding.datePicker2)
-            }
-
-            binding.datePicker1.id -> {
-                binding.datePicker1.setOnDateChangedListener { datePicker, i, i2, i3 ->
-                    toggleVisibility(datePicker)
-                }
-            }
-
-            binding.datePicker2.id -> {
-
-
-            }
+    private fun openDatePicker(button: TextView) {
+        val c = Calendar.getInstance()
+        val y = c.get(Calendar.YEAR)
+        val m = c.get(Calendar.MONTH)
+        val d = c.get(Calendar.DAY_OF_MONTH)
+        val dialog = DatePickerDialog(
+            this, DatePickerDialog.THEME_DEVICE_DEFAULT_DARK, { _, year, month, dayOfMonth ->
+                val date = Date(year - 1900, month, dayOfMonth)
+                val str = "$date"
+                button.text = str
+                button.setTextColor(Color.BLACK)
+            }, y, m, d
+        )
+        dialog.show()
+        dialog.setOnCancelListener {
+            button.text = ""
         }
+        button.error = null
     }
 
 }

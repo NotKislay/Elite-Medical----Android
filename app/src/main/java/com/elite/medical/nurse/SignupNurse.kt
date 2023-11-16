@@ -157,6 +157,7 @@ class SignupNurse : AppCompatActivity() {
                     AuthAPI.registerNurse(userDetails, object : AuthAPI.Companion.AuthSignUpCallbackNurse {
                         override fun onSignUpSuccess(message: String) {
                             Toast.makeText(this@SignupNurse, message, Toast.LENGTH_SHORT).show()
+                            finish()
                         }
                     }
                     )
@@ -213,7 +214,6 @@ class SignupNurse : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
                 binding.etUploadLicense.text = uri.path
-            } else {
             }
         }
 

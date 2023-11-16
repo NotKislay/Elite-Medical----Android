@@ -143,12 +143,6 @@
                     android:text="Select Start Date"
                     android:textColor="@color/black" />
 
-                <DatePicker
-                    android:id="@+id/datePicker1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/Theme.Material3.Light"
-                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,12 +176,6 @@
                     android:text="Select End Date"
                     android:textColor="@color/black" />
 
-                <DatePicker
-                    android:id="@+id/datePicker2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/Theme.Material3.Light"
-                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"

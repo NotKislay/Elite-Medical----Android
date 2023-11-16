@@ -21,13 +21,13 @@ class SignupClinic : AppCompatActivity() {
     lateinit var name: TextInputEditText
     lateinit var email: TextInputEditText
     lateinit var address: TextInputEditText
-    lateinit var phone: TextInputEditText
+    private lateinit var phone: TextInputEditText
     lateinit var city: TextInputEditText
     lateinit var state: TextInputEditText
     lateinit var zip: TextInputEditText
     lateinit var clinicType: TextInputEditText
     lateinit var location: TextInputEditText
-    lateinit var uploadLicense: MaterialButton
+    private lateinit var uploadLicense: MaterialButton
     lateinit var vatNo: TextInputEditText
     lateinit var cstNo: TextInputEditText
     lateinit var serviceTaxNo: TextInputEditText
@@ -103,6 +103,7 @@ class SignupClinic : AppCompatActivity() {
                             override fun onSignUpSuccess(message: String) {
                                 Toast.makeText(this@SignupClinic, message, Toast.LENGTH_SHORT)
                                     .show()
+                                finish()
                             }
                         }
                     )

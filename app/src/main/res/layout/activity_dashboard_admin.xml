@@ -369,6 +369,8 @@
 
             android:id="@+id/expandablelistview"
             android:background="#012A4A"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
             android:layout_width="235dp"
             android:layout_height="match_parent"
             android:indicatorRight="?android:attr/expandableListPreferredChildIndicatorRight"
