@@ -14,7 +14,7 @@ class DashboardClinicAPIs {
         interface NotificationsCallback {
             fun onListReceived(notification: List<NotificationDetailsFromAdminNotificationsModel>)
         }
-        fun getClinicNotifications(callback: DashboardClinicAPIs.Companion.NotificationsCallback){
+        fun getClinicNotifications(callback: NotificationsCallback){
             val api= EliteMedical.retrofitClinic
             val result= api.getNotifications()
             result.enqueue(object: Callback<ClinicNotificationsModel> {

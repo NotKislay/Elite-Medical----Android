@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_clinicDashboardFragment_to_profileClinicFragment"
             app:destination="@id/profileClinicFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_clinicNotificationsFragment"
+            app:destination="@id/clinicNotificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentJobApplicantsFragment"
@@ -35,4 +38,9 @@
         android:name="com.elite.medical.clinic.fragments.ProfileClinicFragment"
         android:label="fragment_profile_clinic"
         tools:layout="@layout/fragment_profile_clinic" />
+    <fragment
+        android:id="@+id/clinicNotificationsFragment"
+        android:name="com.elite.medical.clinic.fragments.dashboard.ClinicNotificationsFragment"
+        android:label="fragment_clinic_notifications"
+        tools:layout="@layout/fragment_clinic_notifications" />
 </navigation>

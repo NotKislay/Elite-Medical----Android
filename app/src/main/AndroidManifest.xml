@@ -177,9 +177,6 @@
             android:exported="true" />
 
 
-        <activity
-            android:name=".clinic.ui.sidemenu.dashboard.ActivityNotificationsClinic"
-            android:exported="false" />
 
 
         <activity

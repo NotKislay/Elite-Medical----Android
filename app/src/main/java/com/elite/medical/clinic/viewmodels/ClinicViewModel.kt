@@ -4,9 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
+import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.notifications.ClinicNotificationsModel
+import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.notifications.NotificationDetailsFromAdminNotificationsModel
 import com.elite.medical.retrofit.responsemodel.clinic.ClinicProfileDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
-import com.elite.medical.utils.HelperMethods
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +18,8 @@ class ClinicViewModel : ViewModel() {
     var dashboardDataCallback: ((ClinicDashboardModel) -> Unit)? = null
     var profileDetailsCallback: ((ClinicProfileDetailsModel) -> Unit)? = null
     var updateProfileCallback: ((GenericSuccessErrorModel) -> Unit)? = null
+    var clinicNotificationCallback: ((List<NotificationDetailsFromAdminNotificationsModel>) -> Unit)? =
+        null
 
     var recentJobApplicants: MutableLiveData<List<ClinicDashboardModel.NurseApplicant>> =
         MutableLiveData()
@@ -81,6 +84,25 @@ class ClinicViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
+            })
+    }
+
+    fun getClinicNotifications() {
+        EliteMedical.retrofitClinic.getNotifications()
+            .enqueue(object : Callback<ClinicNotificationsModel> {
+                override fun onResponse(
+                    call: Call<ClinicNotificationsModel>,
+                    response: Response<ClinicNotificationsModel>
+                ) {
+                    if (response.isSuccessful) {
+                        val resData = response.body()!!
+                        val notifications = resData.notifications
+                        clinicNotificationCallback?.invoke(notifications)
+                    }
+                }
+
+                override fun onFailure(call: Call<ClinicNotificationsModel>, t: Throwable) {}
+
             })
     }
 

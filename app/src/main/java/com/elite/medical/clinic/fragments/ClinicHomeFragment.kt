@@ -21,7 +21,6 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.SideMenuAdapterClinic
 import com.elite.medical.clinic.auth.LoginClinic
-import com.elite.medical.clinic.ui.sidemenu.dashboard.ActivityNotificationsClinic
 import com.elite.medical.clinic.ui.sidemenu.jobs.CreateJob
 import com.elite.medical.clinic.ui.sidemenu.jobs.JobNApplicants
 import com.elite.medical.clinic.ui.sidemenu.jobs.MyJobs
@@ -106,13 +105,9 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
 
         menu.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->     // OnClink Listeners for Sub Menu Items
             when (sideMenuSubItems[sideMenuItems[groupPosition]]?.get(childPosition)) {
-                "Home" -> {
-                }
+                "Home" -> {}
 
-                "Notifications" -> {
-                    val intent = Intent(requireContext(), ActivityNotificationsClinic::class.java)
-                    startActivity(intent)
-                }
+                "Notifications" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_clinicNotificationsFragment)
 
                 "Profile" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_profileClinicFragment)
 
@@ -226,30 +221,30 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         dialog.show()
     }
 
-/*    private fun postUpdatedCredentialsToAPI(name: String, email: String) {
-        DDClinicAPI.postUpdatedUserDetails(
-            name,
-            email,
-            object : DDClinicAPI.Companion.ProfileUpdateCallback {
-                override fun onSuccess(msg: String?, statusCode: Int?) {
+    /*    private fun postUpdatedCredentialsToAPI(name: String, email: String) {
+            DDClinicAPI.postUpdatedUserDetails(
+                name,
+                email,
+                object : DDClinicAPI.Companion.ProfileUpdateCallback {
+                    override fun onSuccess(msg: String?, statusCode: Int?) {
 
-                    if (statusCode == 200) {
-                        Toast.makeText(this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT)
-                            .show()
-                        finish()
-                        val intent =
-                            Intent(this@ActivityClinicProfile, ClinicHomeFragment::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT
-                        ).show()
+                        if (statusCode == 200) {
+                            Toast.makeText(this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
+                            val intent =
+                                Intent(this@ActivityClinicProfile, ClinicHomeFragment::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(
+                                this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
                     }
 
-                }
-
-            })
-    }*/
+                })
+        }*/
 
 
 }

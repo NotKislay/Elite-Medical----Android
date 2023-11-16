@@ -1,6 +1,5 @@
-package com.elite.medical.admin.adapters.sidemenu.review
+package com.elite.medical.clinic.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,9 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ClinicReviewFromClinicReviewModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.ClinicReviewModelFromAvlblNurseDetails
 
-class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewModelFromAvlblNurseDetails>, private val context: Context) :
+class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewModelFromAvlblNurseDetails>) :
     RecyclerView.Adapter<ReviewAdapterSearchNurses.ModelViewHolder>() {
 
     class ModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
