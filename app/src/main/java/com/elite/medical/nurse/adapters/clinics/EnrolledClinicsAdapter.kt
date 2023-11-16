@@ -8,7 +8,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.databinding.CustomTableItemWArrowBinding
-import com.elite.medical.nurse.NurseViewModel
 import com.elite.medical.nurse.viewmodels.clinics.ClinicsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.Clinics
 

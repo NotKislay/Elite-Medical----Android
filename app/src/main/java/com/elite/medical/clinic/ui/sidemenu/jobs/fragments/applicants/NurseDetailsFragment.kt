@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.R
@@ -71,10 +72,13 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
             btn4.text = "Reviews"
             btn5.text = "Cancel"
 
+            btn4.isVisible = false
+
             btn1.setOnClickListener(this)
             btn2.setOnClickListener(this)
             btn3.setOnClickListener(this)
             btn4.setOnClickListener(this)
+            btn5.setOnClickListener(this)
 
             dialog.show()
         }
@@ -119,9 +123,8 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
                 viewModel.HireActionCallback = {
                     dialog.dismiss()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                    activity?.onBackPressed()
                 }
-
             }
 
             dialogBinding.btn2.id -> {
@@ -131,9 +134,8 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
                 viewModel.HireActionCallback = {
                     dialog.dismiss()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                    activity?.onBackPressed()
                 }
-
             }
 
             dialogBinding.btn3.id -> {
@@ -143,12 +145,15 @@ class NurseDetailsFragment : Fragment(), View.OnClickListener {
                 viewModel.HireActionCallback = {
                     dialog.dismiss()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_nurseDetailsFragment_to_jobNApplicantsFragment)
+                    activity?.onBackPressed()
                 }
-
             }
 
             dialogBinding.btn4.id -> {
+                dialog.dismiss()
+            }
+
+            dialogBinding.btn5.id -> {
                 dialog.dismiss()
             }
 

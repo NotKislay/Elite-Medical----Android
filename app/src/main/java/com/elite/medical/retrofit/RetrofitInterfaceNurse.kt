@@ -57,6 +57,13 @@ interface RetrofitInterfaceNurse {
         @Field("email") email: String,
     ): Call<PostRequestResponseModel>
 
+    @POST(ConstantsNurse.NURSE_REVIEW)
+    @FormUrlEncoded
+    fun storeNurseReview(
+        @Field("clinicId") clinicId: Int,
+        @Field("rating") rating: Int,
+        @Field("comment") comment: String,
+    ): Call<PostRequestResponseModel>
 
     /*    @GET(Constants.CLINIC_JOB_LOCATIONS)
         fun getJobLocations(): Call<ClinicJobLocationsModel>*/

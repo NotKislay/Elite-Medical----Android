@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.R
 import com.elite.medical.databinding.ActivityNurseDashboardBinding
 import com.elite.medical.nurse.fragments.clinics.ClinicReviewsFragment
+import com.elite.medical.nurse.viewmodels.NurseViewModel
 
 
 class NurseDashboard : AppCompatActivity(), Communicator {

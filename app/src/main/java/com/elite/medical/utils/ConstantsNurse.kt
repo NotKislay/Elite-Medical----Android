@@ -15,4 +15,5 @@ object ConstantsNurse {
     const val CLINIC_DETAILS_BY_ID= "nurse/enrolled-clinic"
     const val NURSE_NOTIFICATIONS= "notifications"
     const val PROFILE_DATA= "profile"
+    const val NURSE_REVIEW= "nurse/review"
 }
