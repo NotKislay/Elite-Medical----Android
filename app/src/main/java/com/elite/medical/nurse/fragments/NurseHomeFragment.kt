@@ -15,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentMainScreenBinding
     private lateinit var hamburger: ImageButton
     private lateinit var profileIcon: ImageView
+    private lateinit var timesheet: TextView
     private lateinit var sideMenu: ExpandableListView
 
 
@@ -100,10 +102,11 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         hamburger = binding.hamburger
         sideMenu = binding.menu
         profileIcon = binding.avatarImageView
+        timesheet = binding.tvTimesheet
 
         hamburger.setOnClickListener(this)
         profileIcon.setOnClickListener(this)
-
+        timesheet.setOnClickListener(this)
 
     }
 
@@ -152,6 +155,10 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
 
             binding.avatarImageView.id -> {
                 showCustomAvatarDialog()
+            }
+
+            binding.tvTimesheet.id->{
+                findNavController().navigate(R.id.action_mainScreenFragment_to_timesheetFragment)
             }
         }
     }

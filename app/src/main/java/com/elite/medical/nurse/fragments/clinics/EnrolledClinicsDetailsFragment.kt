@@ -33,7 +33,6 @@ class EnrolledClinicsDetailsFragment : Fragment() {
         currentID = viewmodel.currentClinicID.value!!
 
         getClinicDetailsByID(currentID)
-
         return binding.root
     }
 

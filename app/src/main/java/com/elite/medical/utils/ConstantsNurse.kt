@@ -16,4 +16,5 @@ object ConstantsNurse {
     const val NURSE_NOTIFICATIONS= "notifications"
     const val PROFILE_DATA= "profile"
     const val NURSE_REVIEW= "nurse/review"
+    const val TIMESHEET = "nurse/timesheet"
 }

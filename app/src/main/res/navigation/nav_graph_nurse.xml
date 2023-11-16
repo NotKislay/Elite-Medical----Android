@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_profileTab"
             app:destination="@id/profileTab" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_timesheetFragment"
+            app:destination="@id/timesheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/EnrolledClinicsFragment"
@@ -88,4 +91,9 @@
         android:name="com.elite.medical.nurse.fragments.appliedjobs.AppliedJobDetails"
         android:label="fragment_applied_job_details"
         tools:layout="@layout/fragment_applied_job_details" />
+    <fragment
+        android:id="@+id/timesheetFragment"
+        android:name="com.elite.medical.TimesheetFragment"
+        android:label="fragment_timesheet"
+        tools:layout="@layout/fragment_timesheet" />
 </navigation>
