@@ -78,6 +78,8 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
             reviewsBtn.setOnClickListener {
                 customDialog.dismiss()
                 val intent = Intent(this, ActivityReviewsByClinicToNurses::class.java)
+
+                intent.putExtra("NurseID", getid)
                 intent.putParcelableArrayListExtra("ClinicReviewforNurse", ArrayList(reviewslist))
                 startActivity(intent)//
             }

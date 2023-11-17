@@ -248,12 +248,12 @@ class NursesClinicAPIs {
             })
         }
 
-        fun postnursereview(nurseid: String, comment: String, rating: Int) {
+        /*fun postnursereview(nurseid: String, comment: String, rating: Int) {
             val reviewAPI = EliteMedical.retrofitClinic
             val result = reviewAPI.postNurseReview(nurseid, comment, rating)
             //todo START HERE
 //            result.enqueue()
-        }
+        }*/
 
     }
 
