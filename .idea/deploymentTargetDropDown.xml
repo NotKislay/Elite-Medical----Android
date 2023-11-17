@@ -2,6 +2,20 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <runningDeviceTargetSelectedWithDropDown>
+<<<<<<< HEAD
+=======
+      <Target>
+        <type value="RUNNING_DEVICE_TARGET" />
+        <deviceKey>
+          <Key>
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\PC-95\.android\avd\Pixel_6_Pro_API_27.avd" />
+          </Key>
+        </deviceKey>
+      </Target>
+    </runningDeviceTargetSelectedWithDropDown>
+    <targetSelectedWithDropDown>
+>>>>>>> 6b1303468982558977c1bc14f938beff04a82644
       <Target>
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
@@ -11,7 +25,12 @@
           </Key>
         </deviceKey>
       </Target>
+<<<<<<< HEAD
     </runningDeviceTargetSelectedWithDropDown>
     <timeTargetWasSelectedWithDropDown value="2023-11-17T20:42:58.714991800Z" />
+=======
+    </targetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2023-11-17T18:30:18.656511700Z" />
+>>>>>>> 6b1303468982558977c1bc14f938beff04a82644
   </component>
 </project>

@@ -68,7 +68,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/inter_medium"
                 android:hint="Email"
-                android:text="nokkosurdo@gufum.com"
+                android:text="mdashfaque@ibarts.in"
                 android:textColor="#3D6E95"
                 android:textColorHint="#3D6E95"
                 android:textCursorDrawable="@drawable/color_cursor" />
@@ -93,7 +93,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/inter_medium"
                 android:hint="Password"
-                android:text="23a8909d"
+                android:text="930e08af"
                 android:textColor="#3D6E95"
                 android:textColorHint="#3D6E95"
                 android:textCursorDrawable="@drawable/color_cursor" />

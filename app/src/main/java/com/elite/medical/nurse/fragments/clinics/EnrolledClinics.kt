@@ -36,8 +36,13 @@ class EnrolledClinics : Fragment(), View.OnClickListener {
         viewmodel.clinicList.observe(viewLifecycleOwner) { clinics ->
             if (clinics.isNullOrEmpty()) {
                 binding.textabovervlistofassocnurse.isVisible = false
-
-                HelperMethods.showDialog("No Clinics Enrolled", "Go Back", requireContext(),activity)
+                HelperMethods.showDialog(
+                    "No Clinics Enrolled",
+                    "Go Back",
+                    requireContext(),
+                    activity
+                )
+                activity?.onBackPressedDispatcher?.onBackPressed()
 
             } else {
                 val adapter = EnrolledClinicsAdapter(clinics!!, viewmodel, requireContext())

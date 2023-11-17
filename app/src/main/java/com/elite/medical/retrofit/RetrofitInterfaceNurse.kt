@@ -1,6 +1,5 @@
 package com.elite.medical.retrofit
 
-import android.location.Location
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.ClinicDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.EnrolledClinicsModel
@@ -30,8 +29,10 @@ interface RetrofitInterfaceNurse {
 
     @GET(ConstantsNurse.DASHBOARD)
     fun getNurseDashboardData(): Call<DashboardDataNurseModel>
+
     @GET(ConstantsNurse.TIMESHEET)
     fun getTimesheet(): Call<NurseTimeSheetModel>
+
     @GET(ConstantsNurse.SEARCH_JOBS)
     fun searchJobs(): Call<JobList>
 
@@ -70,6 +71,13 @@ interface RetrofitInterfaceNurse {
     fun updateProfile(
         @Field("name") name: String,
         @Field("email") email: String,
+    ): Call<GenericSuccessErrorModel>
+
+
+    @POST(Constants.CLOCK_IN)
+    @FormUrlEncoded
+    fun clockIN(
+        @Field("location") location: String,
     ): Call<GenericSuccessErrorModel>
 
     @POST(ConstantsNurse.NURSE_REVIEW)

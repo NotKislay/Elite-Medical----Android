@@ -6,6 +6,7 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
+import com.elite.medical.utils.GPSLocation
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,6 +16,7 @@ class NurseViewModel : ViewModel() {
 
     var timeSheetCallback: ((List<NurseTimeSheetModel.Timesheet>?, GenericSuccessErrorModel?) -> Unit)? =
         null
+    var clockINCallback: ((GenericSuccessErrorModel?) -> Unit)? = null
     var nurseDashboardDataCallback: ((DashboardDataNurseModel) -> Unit)? = null
 
     fun getTimeSheets() {
@@ -65,6 +67,32 @@ class NurseViewModel : ViewModel() {
             })
     }
 
+    fun clockIN(location: GPSLocation) {
+
+        val locationGPS = "${location.latitude},${location.latitude}"
+
+        EliteMedical.retrofitNurse.clockIN(locationGPS)
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val body = response.body()!!
+                        clockINCallback?.invoke(body)
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel = Gson().fromJson(
+                            errorBody.charStream(),
+                            GenericSuccessErrorModel::class.java
+                        )
+                        clockINCallback?.invoke(errorModel)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
+            })
+    }
 
 
 }
