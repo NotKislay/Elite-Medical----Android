@@ -45,6 +45,9 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         binding.tvTopRatedNurse.setOnClickListener {
             findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
         }
+        binding.tvClockOut.setOnClickListener {
+//            findNavController().navigate(R.id.action_mainScreenFragment_to_clockInOutFragment)
+        }
 
 
         requireActivity().onBackPressedDispatcher.addCallback(this) { callLogout() }

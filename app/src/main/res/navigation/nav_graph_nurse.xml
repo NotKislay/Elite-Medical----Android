@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_topRatedClinicsFragment"
             app:destination="@id/topRatedClinicsFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_clockInOutFragment"
+            app:destination="@id/clockInOutFragment" />
     </fragment>
     <fragment
         android:id="@+id/EnrolledClinicsFragment"
@@ -105,4 +108,9 @@
         android:name="com.elite.medical.nurse.fragments.home.TopRatedClinicsFragment"
         android:label="fragment_top_rated_clinics"
         tools:layout="@layout/fragment_top_rated_clinics" />
+    <fragment
+        android:id="@+id/clockInOutFragment"
+        android:name="com.elite.medical.ClockInOutFragment"
+        android:label="fragment_clock_in_out"
+        tools:layout="@layout/fragment_clock_in_out" />
 </navigation>

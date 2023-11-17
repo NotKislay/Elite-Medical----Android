@@ -64,10 +64,10 @@ interface RetrofitInterfaceClinic {
     fun getListOfAvailableSearchNurses(): Call<SearchNurseModel>
 
     @GET("${ConstantsClinic.VIEW_NURSE_BY_ID}/{id}")
-    fun getEnrolledNurseByid(@Path("id") id: String): Call<EnrolledNurseByidModel>
+    fun getEnrolledNurseByID(@Path("id") id: String): Call<EnrolledNurseByidModel>
 
     @GET("${ConstantsClinic.SEARCH_NURSE_BY_ID}/{id}")
-    fun getAvailableNursedetailsbyId(@Path("id") id: String): Call<AvailableNurseDetailsModel>
+    fun getAvailableNurseDetailsByID(@Path("id") id: String): Call<AvailableNurseDetailsModel>
 
     @POST(ConstantsClinic.POST_REVIEW)
     @FormUrlEncoded

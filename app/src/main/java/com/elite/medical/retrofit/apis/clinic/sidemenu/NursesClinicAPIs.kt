@@ -134,7 +134,7 @@ class NursesClinicAPIs {
 
         fun getNurseEnrByid(id: String, callback: EnrolledNursesByIdCallback) {
             val api = EliteMedical.retrofitClinic
-            val result = api.getEnrolledNurseByid(id)
+            val result = api.getEnrolledNurseByID(id)
             result.enqueue(object : Callback<EnrolledNurseByidModel?> {
                 override fun onResponse(
                     call: Call<EnrolledNurseByidModel?>,
@@ -193,7 +193,7 @@ class NursesClinicAPIs {
 
         fun getAvlblNurseDetailsByid(id: String, callback: avlblNurseDetailsByIdCallback) {
             val api = EliteMedical.retrofitClinic
-            val result = api.getAvailableNursedetailsbyId(id)
+            val result = api.getAvailableNurseDetailsByID(id)
             result.enqueue(object : Callback<AvailableNurseDetailsModel?> {
                 override fun onResponse(
                     call: Call<AvailableNurseDetailsModel?>,
