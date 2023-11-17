@@ -12,7 +12,7 @@ class Constants {
         const val CLINIC_DASHBOARD_DATA = "dashboard"
         const val PROFILE_DATA= "profile"
         const val UPDATE_PROFILE = "profile/update"
-        const val CLOCK_IN = "nurse/clock-in"
+
 
         //CLINIC
         const val ENROLLED_NURSES="clinic/enrolled-nurse"

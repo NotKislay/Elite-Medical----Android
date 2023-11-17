@@ -24,7 +24,7 @@ object HelperMethods {
     fun requestCameraPermission(activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,
-            arrayOf("android.permission.CAMERA"),
+            arrayOf("android.permission.CAMERA","android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE"),
             CAMERA_PERMISSION_CODE
         )
     }

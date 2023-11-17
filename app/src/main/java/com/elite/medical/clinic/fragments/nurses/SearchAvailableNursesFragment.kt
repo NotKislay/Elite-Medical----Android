@@ -94,14 +94,16 @@ class SearchAvailableNursesFragment : Fragment() {
                                 p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                             ) {
                                 if (p2 != 0) {
-                                    val filteredList = mainList.filter {
-                                        it.city.contains(cityFilter.elementAt(p2))
-                                    } as MutableList<Nurse>
-                                    binding.tvNoData.isVisible = filteredList.isEmpty()
-                                    recyclerViewAdapter.filterList(filteredList)
+                                    setFilteredList()
+//                                    val filteredList = mainList.filter {
+//                                        it.city.contains(cityFilter.elementAt(p2))
+//                                    } as MutableList<Nurse>
+//                                    binding.tvNoData.isVisible = filteredList.isEmpty()
+//                                    recyclerViewAdapter.filterList(filteredList)
                                 } else {
-                                    binding.tvNoData.isVisible = false
-                                    recyclerViewAdapter.filterList(mainList)
+                                    setFilteredList()
+                                    //binding.tvNoData.isVisible = false
+//                                    recyclerViewAdapter.filterList(mainList)
                                 }
                             }
 
@@ -114,14 +116,16 @@ class SearchAvailableNursesFragment : Fragment() {
                                 p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                             ) {
                                 if (p2 != 0) {
-                                    val filteredList = mainList.filter {
-                                        it.licenseType.contains(licenceTypeFilter.elementAt(p2))
-                                    } as MutableList<Nurse>
-                                    binding.tvNoData.isVisible = filteredList.isEmpty()
-                                    recyclerViewAdapter.filterList(filteredList)
+                                    setFilteredList()
+//                                    val filteredList = mainList.filter {
+//                                        it.licenseType.contains(licenceTypeFilter.elementAt(p2))
+//                                    } as MutableList<Nurse>
+//                                    binding.tvNoData.isVisible = filteredList.isEmpty()
+//                                    recyclerViewAdapter.filterList(filteredList)
                                 } else {
-                                    binding.tvNoData.isVisible = false
-                                    recyclerViewAdapter.filterList(mainList)
+                                    setFilteredList()
+                                    //binding.tvNoData.isVisible = false
+//                                    recyclerViewAdapter.filterList(mainList)
                                 }
 
                             }
@@ -155,12 +159,35 @@ class SearchAvailableNursesFragment : Fragment() {
         val selectedCity = cityFilter.elementAt(spinnerCity.selectedItemPosition)
         val selectedLicenseType =
             licenceTypeFilter.elementAt(spinnerLicenceType.selectedItemPosition)
+        var filteredList: List<Nurse>
+        println("Selected data: $selectedCity and $selectedLicenseType")
 
-        val filteredList = mainList.filter { items ->
-            (items.city.contains(selectedCity, ignoreCase = true)) && (items.licenseType.contains(
-                selectedLicenseType, ignoreCase = true
-            ))
+
+        if (selectedCity == "Select Location" && selectedLicenseType != "Select Licence Type") {
+            filteredList = mainList.filter { items ->
+                (items.city.contains(selectedCity))
+            }
+        } else if (selectedCity != "Select Location" && selectedLicenseType == "Select Licence Type"){
+            filteredList = mainList.filter { items ->
+                (items.licenseType.contains(selectedLicenseType))
+            }
         }
+        else{
+            filteredList =mainList.filter { items->
+                (items.city.contains(selectedCity))
+            }
+            filteredList= filteredList.filter { items->
+                (items.licenseType.contains(selectedLicenseType))
+            }
+        }
+//            filteredList = mainList.filter { items ->
+//                (items.city.contains(
+//                    selectedCity,
+//                    ignoreCase = true
+//                )) && (items.licenseType.contains(
+//                    selectedLicenseType, ignoreCase = true
+//                ))
+//            }
         //todo currently not working
         /*if (!filteredList.isNullOrEmpty()) {
             binding.textabovervlistofavalblnurse.text = "List of All Available Nurses"

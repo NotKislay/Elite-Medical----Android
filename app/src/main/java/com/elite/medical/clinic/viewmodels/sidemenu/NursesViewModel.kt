@@ -38,4 +38,5 @@ class NursesViewModel : ViewModel() {
             })
     }
 
+
 }

@@ -1,9 +1,15 @@
 package com.elite.medical.nurse.fragments.home
 
 import android.app.Dialog
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.MediaStore.Files
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +22,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -31,6 +40,11 @@ import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseMod
 import com.elite.medical.utils.GPSLocation
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 
 class NurseHomeFragment : Fragment(), View.OnClickListener {
@@ -42,6 +56,8 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var dashboardData: DashboardDataNurseModel
     private var clockOutVisible = false
     private val viewModel by viewModels<NurseViewModel>()
+
+    private lateinit var photoFile: File
 
 
     lateinit var location: GPSLocation
@@ -57,8 +73,8 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         fetchDashboardData()
         HelperMethods.requestLocationPermission(requireActivity())
 
-/*        binding.cardClockIn.isVisible = !clockOutVisible
-        binding.cardClockOut.isVisible = clockOutVisible*/
+        /*        binding.cardClockIn.isVisible = !clockOutVisible
+                binding.cardClockOut.isVisible = clockOutVisible*/
 
 
 
@@ -74,6 +90,10 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         viewModel.nurseDashboardDataCallback = {
             dashboardData = it
             clockOutVisible = it.latestClockType.equals("in")
+        }
+
+        viewModel.clockOUTCallback = {
+            Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
         }
 
 
@@ -206,7 +226,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(requireContext(), location.toString(), Toast.LENGTH_SHORT).show()
             }
 
-/*            binding.cardClockIn.id -> {
+            binding.cardClockIn.id -> {
                 if (location.errorMSG.isNullOrEmpty()) {
                     doClockIN()
                 } else {
@@ -215,15 +235,35 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
             }
 
             binding.cardClockOut.id -> {
-                Toast.makeText(requireContext(), "clicked..", Toast.LENGTH_SHORT).show()
-                binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
-                binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible
-            }*/
+                takePhoto()
+                /*                Toast.makeText(requireContext(), "clicked..", Toast.LENGTH_SHORT).show()
+                                binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
+                                binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible*/
+            }
 
             binding.tvTopRatedNurse.id -> {
                 findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
             }
         }
+    }
+
+    private fun takePhoto() {
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private fun createMultipartBodyFromImage() {
+        val mediaType: String = "image/jpg"
+        val fileName: String =  System.currentTimeMillis().toString() + ".jpg"
+
+        val reqFile = photoFile.asRequestBody(mediaType.toMediaTypeOrNull())
+        val profilePic = MultipartBody.Part.createFormData( "image",fileName, reqFile)
+        clockOut(location, profilePic)
+    }
+
+    private fun clockOut(location: GPSLocation, profilePic: MultipartBody.Part) {
+        val gps = "${location.latitude},${location.longitude}"
+        val gpsS = RequestBody.create("text/plain".toMediaTypeOrNull(), gps)
+        viewModel.clockOut(gpsS, profilePic)
     }
 
     private fun doClockIN() {
@@ -256,6 +296,39 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
             startActivity(intent)
         }
         dialogBtn.show()
+    }
+
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+
+                photoFile = getFileFromUri(uri)!!
+                createMultipartBodyFromImage()
+
+
+
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
+
+    private fun getFileFromUri(uri: Uri): File? {
+        val filePath = uriToFilePath(uri)
+        return if (filePath != null) File(filePath) else null
+    }
+
+    private fun uriToFilePath(uri: Uri): String? {
+        val context = requireContext()
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        return cursor?.use {
+            it.moveToFirst()
+            val columnIndex = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            if (columnIndex != -1) {
+                it.getString(columnIndex)
+            } else {
+                null
+            }
+        }
     }
 
 }

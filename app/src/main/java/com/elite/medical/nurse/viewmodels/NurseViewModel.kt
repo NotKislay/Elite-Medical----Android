@@ -1,6 +1,5 @@
 package com.elite.medical.nurse.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
@@ -8,15 +7,19 @@ import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseMod
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 import com.elite.medical.utils.GPSLocation
 import com.google.gson.Gson
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class NurseViewModel : ViewModel() {
 
     var timeSheetCallback: ((List<NurseTimeSheetModel.Timesheet>?, GenericSuccessErrorModel?) -> Unit)? =
         null
     var clockINCallback: ((GenericSuccessErrorModel?) -> Unit)? = null
+    var clockOUTCallback: ((GenericSuccessErrorModel?) -> Unit)? = null
     var nurseDashboardDataCallback: ((DashboardDataNurseModel) -> Unit)? = null
 
     fun getTimeSheets() {
@@ -92,6 +95,35 @@ class NurseViewModel : ViewModel() {
 
                 override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
             })
+    }
+
+    fun clockOut(gps: RequestBody, profilePic: MultipartBody.Part) {
+
+        EliteMedical.retrofitNurse.nurseClockOut(gps, profilePic)
+            .enqueue(object : Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    val res = response
+                    if (response.isSuccessful) {
+                        val body = response.body()!!
+                        clockOUTCallback?.invoke(body)
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel = Gson().fromJson(
+                            errorBody.charStream(),
+                            GenericSuccessErrorModel::class.java
+                        )
+                        clockOUTCallback?.invoke(errorModel)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                    println(t.message)
+                }
+            })
+
     }
 
 

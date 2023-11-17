@@ -20,7 +20,8 @@ object ConstantsNurse {
     const val PROFILE_DATA= "profile"
     const val NURSE_REVIEW= "nurse/review"
     const val TIMESHEET = "nurse/timesheet"
-    const val CLOCK_OUT = "nurse/clock-out"
 
+    const val CLOCK_IN = "nurse/clock-in"
+    const val CLOCK_OUT = "nurse/clock-out"
 
 }

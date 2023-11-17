@@ -14,6 +14,7 @@ import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
 import com.elite.medical.utils.Constants
 import com.elite.medical.utils.ConstantsNurse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Field
@@ -74,11 +75,21 @@ interface RetrofitInterfaceNurse {
     ): Call<GenericSuccessErrorModel>
 
 
-    @POST(Constants.CLOCK_IN)
+    @POST(ConstantsNurse.CLOCK_IN)
     @FormUrlEncoded
     fun clockIN(
         @Field("location") location: String,
     ): Call<GenericSuccessErrorModel>
+
+    @Multipart
+    @POST(ConstantsNurse.CLOCK_OUT)
+    fun nurseClockOut(
+        @Part("location") location: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Call<GenericSuccessErrorModel>
+
+
+
 
     @POST(ConstantsNurse.NURSE_REVIEW)
     @FormUrlEncoded
@@ -88,12 +99,6 @@ interface RetrofitInterfaceNurse {
         @Field("comment") comment: String,
     ): Call<GenericSuccessErrorModel>
 
-    @Multipart
-    @POST
-    fun clockOut(
-        @Part("location") location: String,
-        @Part image: MultipartBody.Part
-    ): Call<ResponseBody>
 
     /*    @GET(Constants.CLINIC_JOB_LOCATIONS)
         fun getJobLocations(): Call<ClinicJobLocationsModel>*/
