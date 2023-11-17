@@ -75,5 +75,9 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
+//    Dependency for live location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
 }
 

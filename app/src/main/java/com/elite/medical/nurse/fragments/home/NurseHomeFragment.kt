@@ -14,15 +14,22 @@ import android.widget.ExpandableListView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.databinding.FragmentMainScreenBinding
 import com.elite.medical.nurse.LoginNurse
 import com.elite.medical.nurse.adapters.home.MenuAdapter
+import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
+import com.elite.medical.utils.GPSLocation
+import com.elite.medical.utils.HelperMethods
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -32,6 +39,12 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var profileIcon: ImageView
     private lateinit var timesheet: TextView
     private lateinit var sideMenu: ExpandableListView
+    private lateinit var dashboardData: DashboardDataNurseModel
+    private var clockOutVisible = false
+    private val viewModel by viewModels<NurseViewModel>()
+
+
+    lateinit var location: GPSLocation
 
 
     override fun onCreateView(
@@ -41,14 +54,31 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         binding = FragmentMainScreenBinding.inflate(inflater, container, false)
         initBindings()
         setupMenu()
+        fetchDashboardData()
+        HelperMethods.requestLocationPermission(requireActivity())
 
-        binding.tvTopRatedNurse.setOnClickListener {
-            findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
-        }
+        binding.cardClockIn.isVisible = !clockOutVisible
+        binding.cardClockOut.isVisible = clockOutVisible
+
+
+
+
 
 
         requireActivity().onBackPressedDispatcher.addCallback(this) { callLogout() }
         return binding.root
+    }
+
+    private fun fetchDashboardData() {
+        viewModel.getNurseDashboardData()
+        location = HelperMethods.getLocation(requireActivity())
+
+        viewModel.nurseDashboardDataCallback = {
+            dashboardData = it
+            clockOutVisible = it.latestClockType.equals("in")
+        }
+
+
     }
 
     private fun setupMenu() {
@@ -109,6 +139,10 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         hamburger.setOnClickListener(this)
         profileIcon.setOnClickListener(this)
         timesheet.setOnClickListener(this)
+        binding.cardClockIn.setOnClickListener(this)
+        binding.cardClockOut.setOnClickListener(this)
+        binding.tvTimesheet.setOnClickListener(this)
+        binding.tvTopRatedNurse.setOnClickListener(this)
 
     }
 
@@ -122,9 +156,15 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         val customTitle = customDialog.findViewById<TextView>(R.id.tv_more_details)
         customTitle.text = "Profile"
 
+        customTitle.setOnClickListener {
+            Toast.makeText(requireContext(), location.toString(), Toast.LENGTH_SHORT).show()
+
+        }
+
         val viewProfileBtn = customDialog.findViewById<Button>(R.id.btnNurseAssoc_modal)
         viewProfileBtn.text = "View Profile"
         viewProfileBtn.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
+
 
         val logoutBtn = customDialog.findViewById<Button>(R.id.btnReviews_modal)
         logoutBtn.text = "Logout"
@@ -162,6 +202,41 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
 
             binding.tvTimesheet.id -> {
                 findNavController().navigate(R.id.action_mainScreenFragment_to_timesheetFragment)
+            }
+
+            binding.tvTitle.id -> {
+                Toast.makeText(requireContext(), location.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+            binding.cardClockIn.id -> {
+                if (location.errorMSG.isNullOrEmpty()) {
+                    doClockIN()
+                } else {
+                    Toast.makeText(requireContext(), location.errorMSG, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            binding.cardClockOut.id -> {
+                Toast.makeText(requireContext(), "clicked..", Toast.LENGTH_SHORT).show()
+                binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
+                binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible
+            }
+
+            binding.tvTopRatedNurse.id -> {
+                findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
+            }
+        }
+    }
+
+    private fun doClockIN() {
+        viewModel.clockIN(location)
+        viewModel.clockINCallback = {
+            if (it?.status.equals("success")) {
+                Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
+                binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
+                binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible
+            } else {
+                HelperMethods.showDialog(it!!.message, "OK", requireContext(), activity)
             }
         }
     }
