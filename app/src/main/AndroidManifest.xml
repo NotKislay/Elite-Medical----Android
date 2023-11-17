@@ -33,27 +33,19 @@
         <activity
             android:name=".nurse.NurseDashboard"
             android:exported="false" />
-        <activity
-            android:name=".clinic.ui.sidemenu.nurses.ActivitySearchNurses"
-            android:exported="false" />
+
         <activity
             android:name=".clinic.ui.sidemenu.nurses.TimesheetNurseFromClinic"
             android:exported="false" />
-        <activity
-            android:name=".clinic.ui.sidemenu.jobs.JobNApplicants"
-            android:exported="false" />
+
         <activity
             android:name=".clinic.ui.sidemenu.nurses.more.ActivityReviewsByClinicToNurses"
             android:exported="false" />
         <activity
             android:name=".clinic.ui.sidemenu.nurses.ActivityEnrolledNurseDetails"
             android:exported="false" />
-        <activity
-            android:name=".clinic.ui.sidemenu.jobs.CreateJob"
-            android:exported="false" />
-        <activity
-            android:name=".clinic.ui.sidemenu.jobs.MyJobs"
-            android:exported="false" />
+
+
         <activity
             android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityReviewsByClinic"
             android:exported="false" />

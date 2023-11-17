@@ -6,10 +6,57 @@
     app:startDestination="@id/clinicDashboardFragment">
 
     <fragment
+        android:id="@+id/nurseDetailsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.applicants.NurseDetailsFragment"
+        android:label="fragment_nurse_details"
+        tools:layout="@layout/fragment_nurse_details" />
+    <fragment
+        android:id="@+id/jobNApplicantsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.applicants.JobListFragment"
+        android:label="fragment_job_n_applicants"
+        tools:layout="@layout/fragment_job_n_applicants" >
+        <action
+            android:id="@+id/action_jobNApplicantsFragment_to_listJobApplicantsFragment"
+            app:destination="@id/listJobApplicantsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listJobApplicantsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.applicants.NursesListFragment"
+        android:label="fragment_list_job_applicants"
+        tools:layout="@layout/fragment_list_job_applicants" >
+        <action
+            android:id="@+id/action_listJobApplicantsFragment_to_nurseDetailsFragment"
+            app:destination="@id/nurseDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nurseDetailsFragment2"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.NurseDetailsFragment"
+        android:label="fragment_nurse_details2"
+        tools:layout="@layout/fragment_nurse_details2">
+        <action
+            android:id="@+id/action_nurseDetailsFragment2_to_nurseRatingFragment"
+            app:destination="@id/nurseRatingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/nurseRatingFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.NurseRatingFragment"
+        android:label="fragment_nurse_rating"
+        tools:layout="@layout/fragment_nurse_rating" />
+    <fragment
+        android:id="@+id/nurseListFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.NurseListFragment"
+        android:label="fragment_nurse_list"
+        tools:layout="@layout/fragment_nurse_list">
+        <action
+            android:id="@+id/action_nurseListFragment_to_nurseDetailsFragment22"
+            app:destination="@id/nurseDetailsFragment2" />
+    </fragment>
+    <fragment
         android:id="@+id/clinicDashboardFragment"
         android:name="com.elite.medical.clinic.fragments.ClinicHomeFragment"
         android:label="fragment_clinic_dashboard"
-        tools:layout="@layout/fragment_clinic_dashboard" >
+        tools:layout="@layout/fragment_clinic_dashboard">
         <action
             android:id="@+id/action_clinicDashboardFragment_to_recentJobApplicantsFragment"
             app:destination="@id/recentJobApplicantsFragment" />
@@ -22,7 +69,23 @@
         <action
             android:id="@+id/action_clinicDashboardFragment_to_clinicNotificationsFragment"
             app:destination="@id/clinicNotificationsFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_jobListFragment"
+            app:destination="@id/jobListFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_jobNApplicantsFragment"
+            app:destination="@id/jobNApplicantsFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_createJobFragment"
+            app:destination="@id/createJobFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_searchAvailableNursesFragment"
+            app:destination="@id/searchAvailableNursesFragment" />
+        <action
+            android:id="@+id/action_clinicDashboardFragment_to_enrolledNursesFragment"
+            app:destination="@id/enrolledNursesFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/recentJobApplicantsFragment"
         android:name="com.elite.medical.clinic.fragments.RecentJobApplicantsFragment"
@@ -43,4 +106,40 @@
         android:name="com.elite.medical.clinic.fragments.dashboard.ClinicNotificationsFragment"
         android:label="fragment_clinic_notifications"
         tools:layout="@layout/fragment_clinic_notifications" />
+
+    <fragment
+        android:id="@+id/jobListFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.JobListFragment"
+        android:label="fragment_job_list"
+        tools:layout="@layout/fragment_job_list" >
+        <action
+            android:id="@+id/action_jobListFragment_to_jobDetailsFragment2"
+            app:destination="@id/jobDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/jobDetailsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.JobDetailsFragment"
+        android:label="fragment_job_details"
+        tools:layout="@layout/fragment_job_details" >
+        <action
+            android:id="@+id/action_jobDetailsFragment_to_nurseListFragment2"
+            app:destination="@id/nurseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createJobFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.create.CreateJobFragment"
+        android:label="fragment_create_job"
+        tools:layout="@layout/fragment_create_job" />
+    <fragment
+        android:id="@+id/searchAvailableNursesFragment"
+        android:name="com.elite.medical.clinic.fragments.nurses.SearchAvailableNursesFragment"
+        android:label="fragment_search_available_nurses"
+        tools:layout="@layout/fragment_search_available_nurses" />
+    <fragment
+        android:id="@+id/enrolledNursesFragment"
+        android:name="com.elite.medical.clinic.fragments.nurses.EnrolledNursesFragment"
+        android:label="fragment_enrolled_nurses"
+        tools:layout="@layout/fragment_enrolled_nurses" />
+
 </navigation>

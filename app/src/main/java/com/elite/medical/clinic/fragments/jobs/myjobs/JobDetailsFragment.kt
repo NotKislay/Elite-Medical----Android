@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.myjobs
+package com.elite.medical.clinic.fragments.jobs.myjobs
 
 import android.app.Dialog
 import android.content.Intent
@@ -99,7 +99,7 @@ class JobDetailsFragment : Fragment(), View.OnClickListener {
             nurseDetailsButton.text = "Nurse List"
             nurseDetailsButton.setOnClickListener {
                 customDialog.dismiss()
-                findNavController().navigate(R.id.action_jobDetailsFragment_to_nurseListFragment)
+                findNavController().navigate(R.id.action_jobDetailsFragment_to_nurseListFragment2)
             }
 
             cancelButton.setOnClickListener { customDialog.dismiss() }

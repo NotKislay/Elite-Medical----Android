@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.myjobs
+package com.elite.medical.clinic.fragments.jobs.myjobs
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Nurse
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Job
 
-
-class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>, private val viewModel: MyJobsViewModel) :
-    RecyclerView.Adapter<NurseListAdapter.ViewHolder>() {
+class JobListAdapter(val itemList: List<Job>, private val viewModel: MyJobsViewModel) :
+    RecyclerView.Adapter<JobListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnGoDeep.visibility = View.VISIBLE
         }
+
+        val layout = binding.layout
 
         var row1: TableRow = binding.row1
         var row2: TableRow = binding.row2
@@ -30,15 +30,13 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
         var row5: TableRow = binding.row5
         var row6: TableRow = binding.row6
         var row7: TableRow = binding.row7
-        var row8: TableRow = binding.row8
 
-        var txt1: TextView = binding.tv1
-        var txt2: TextView = binding.tv2
-        var txt3: TextView = binding.tv3
-        var txt4: TextView = binding.tv4
-        var txt6: TextView = binding.tv6
-        var txt7: TextView = binding.tv7
-        var txt8: TextView = binding.tv8
+        var tv1: TextView = binding.tv1
+        var tv2: TextView = binding.tv2
+        var tv3: TextView = binding.tv3
+        var tv4: TextView = binding.tv4
+        var tv6: TextView = binding.tv6
+        var tv7: TextView = binding.tv7
 
         var label1: TextView = binding.label1
         var label2: TextView = binding.label2
@@ -46,7 +44,6 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
         var label4: TextView = binding.label4
         var label6: TextView = binding.label6
         var label7: TextView = binding.label7
-        var label8: TextView = binding.label8
 
     }
 
@@ -65,24 +62,29 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
         holder.row6.visibility = View.VISIBLE
         holder.row7.visibility = View.VISIBLE
 
-        holder.label1.text = "Name"
-        holder.label2.text = "Licence Type"
-        holder.label3.text = "License Expiry"
-        holder.label4.text = "Experience (In Years)"
-        holder.label6.text = "Status"
-        holder.label7.text = "Availability"
 
-        holder.txt1.text = itemList[position].name
-        holder.txt2.text = itemList[position].licenseType
-        holder.txt3.text = itemList[position].licenseExpiry
-        holder.txt4.text = itemList[position].experience
-        holder.txt6.text = itemList[position].hiringStatus
-        holder.txt7.text = itemList[position].availability
+        holder.label1.text = "Job Title"
+        holder.label2.text = "Job Type"
+        holder.label3.text = "Description"
+        holder.label4.text = "Applied"
+        holder.label6.text = "Job Status"
+        holder.label7.text = "Date Created"
 
-        holder.binding.root.setOnClickListener {
+        holder.tv1.text = itemList[position].title
+        holder.tv2.text = itemList[position].type
+        holder.tv3.text = itemList[position].description
+        holder.tv4.text = itemList[position].applied.size.toString()
+        holder.tv6.text = itemList[position].status
+        holder.tv7.text = itemList[position].createdAt
 
-            viewModel.currentNurseDetails = itemList[position]
-            it.findNavController().navigate(R.id.action_nurseListFragment_to_nurseDetailsFragment2)
+        holder.tv3.maxLines = 2
+
+        holder.layout.setOnClickListener {
+            viewModel.updateJobID(itemList[position].id)
+            viewModel.updateJobStatus(itemList[position].status)
+
+            viewModel.currentJobDetails = itemList[position]
+            it.findNavController().navigate(R.id.action_jobListFragment_to_jobDetailsFragment2)
 
         }
 

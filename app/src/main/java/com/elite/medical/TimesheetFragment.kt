@@ -34,7 +34,7 @@ class TimesheetFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentTimesheetBinding.inflate(inflater, container, false)
         viewmodel = ViewModelProvider(this)[NurseViewModel::class.java]
-        binding.btnBack.setOnClickListener { activity?.onBackPressed() }
+        binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
 
         viewmodel.getTimeSheets()
         setTimeSheetData()
@@ -53,7 +53,7 @@ class TimesheetFragment : Fragment() {
                         genericSuccessErrorModel?.message,
                         Toast.LENGTH_SHORT
                     ).show()
-                    activity?.onBackPressed()
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 } else {
 
                     if (timesheets.isEmpty()) {
@@ -75,11 +75,10 @@ class TimesheetFragment : Fragment() {
                         btn3.isVisible = false
                         btn4.isVisible = false
                         btn5.text = "Go back"
-                        btn5.setOnClickListener { activity?.onBackPressed() }
+                        btn5.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
 
                         dialog.show()
-                    }
-                    else{
+                    } else {
                         val rvAdapter = TimeSheetAdapter(timesheets)
                         binding.rvTimedata.adapter = rvAdapter
                         binding.rvTimedata.layoutManager = LinearLayoutManager(requireContext())

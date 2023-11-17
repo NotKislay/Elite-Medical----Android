@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".clinic.fragments.jobs.myjobs.JobDetailsFragment">
+    tools:context=".clinic.fragments.nurses.EnrolledNursesFragment">
 
     <!--            TOP App Bar         -->
     <LinearLayout
@@ -27,62 +27,38 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="-30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Jobs Details"
+            android:text="Enrolled Nurses"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btn_more"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="More"
-            android:backgroundTint="@color/elite_medical_blue"
-            android:textColor="@color/white"
-            android:textSize="17sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listview_job_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:itemCount="1"
-            tools:listitem="@layout/custom_list_item" />
-
-        <Button
-            android:id="@+id/close_job"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="80dp"
-            android:backgroundTint="@color/md_red_100"
-            android:text="Close Job"
-            android:textColor="@color/md_red_700" />
-
-
     </LinearLayout>
 
 
-<!--    <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textabovervlistofassocnurse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:padding="5dp"
+            android:text="List of All Enrolled Nurses"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listview"
+            android:id="@+id/rv_enrolled_nurses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/custom_list_item" />
+            android:layout_below="@+id/textabovervlistofassocnurse"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ProgressBar
             android:id="@+id/loader"
@@ -94,14 +70,10 @@
             android:layout_marginBottom="100dp"
             android:indeterminateTint="#012A4A" />
 
-        <TextView
-            android:id="@+id/no_data_found"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="22sp"
-            android:visibility="gone" />
 
-    </RelativeLayout>-->
+    </RelativeLayout>
+
+    <!--        tools:listitem="@layout/item_nurse"-->
+
 
 </LinearLayout>

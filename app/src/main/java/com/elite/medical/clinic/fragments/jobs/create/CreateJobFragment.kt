@@ -1,30 +1,32 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs
+package com.elite.medical.clinic.fragments.jobs.create
 
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
-import com.elite.medical.databinding.ActivityCreateJobBinding
+import com.elite.medical.databinding.FragmentCreateJobBinding
+import com.elite.medical.databinding.FragmentProfileClinicBinding
 import com.elite.medical.retrofit.requestmodels.clinic.PostJobRequestModel
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.textfield.TextInputEditText
 import java.sql.Date
 import java.util.Calendar
 
-class CreateJob : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityCreateJobBinding
-    private lateinit var viewModel: MyJobsViewModel
+class CreateJobFragment : Fragment(), View.OnClickListener {
 
+    private lateinit var binding: FragmentCreateJobBinding
+    private lateinit var viewModel: MyJobsViewModel
     private lateinit var title: TextInputEditText
     private lateinit var vacancy: TextInputEditText
     private lateinit var startDate: TextView
@@ -32,38 +34,43 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
     private lateinit var description: TextInputEditText
     private lateinit var location: Spinner
     private lateinit var jobType: Spinner
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_job)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCreateJobBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[MyJobsViewModel::class.java]
-        binding.btnBack.setOnClickListener { finish() }
-        binding.btnSubmit.setOnClickListener { createJob() }
 
         initBindings()
 
-
         viewModel.getJobLocations()
 
-        viewModel.jobLocation.observe(this) {
+        viewModel.jobLocation.observe(viewLifecycleOwner) {
             val spinnerAdapter = ArrayAdapter(
-                this,
+                requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 it!!.clinicLocations
             )
             binding.spinner1.adapter = spinnerAdapter
         }
 
-        viewModel.isJobCreatedSuccessfully.observe(this) {
+        viewModel.isJobCreatedSuccessfully.observe(viewLifecycleOwner) {
             if (it) {
-                Toast.makeText(this, "Job Created Successfully", Toast.LENGTH_SHORT).show()
-                finish()
+                Toast.makeText(requireContext(), "Job Created Successfully", Toast.LENGTH_SHORT)
+                    .show()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
 
         }
 
         val jobTypeSpinnerItems = arrayOf("Part Time", "Full Time")
         val jobTypeSpinnerAdapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, jobTypeSpinnerItems)
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                jobTypeSpinnerItems
+            )
         binding.spinner2.adapter = jobTypeSpinnerAdapter
 
 
@@ -74,6 +81,16 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         binding.btnEndDate.setOnClickListener { openDatePicker(endDate) }
 
 
+        binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+        binding.btnSubmit.setOnClickListener { createJob() }
+
+
+
+
+
+
+
+        return binding.root
     }
 
     private fun initBindings() {
@@ -87,7 +104,7 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun createJob() {
-        HelperMethods.hideKeyboard(this@CreateJob)
+        HelperMethods.hideKeyboard(requireActivity())
         val inputFields = arrayOf(
             title,
             vacancy,
@@ -118,7 +135,7 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
             startDateText.isEmpty() ||
             descriptionText.isEmpty()
         ) {
-            Toast.makeText(this, "all fields are required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "all fields are required", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.postJob(
                 PostJobRequestModel(
@@ -144,12 +161,17 @@ class CreateJob : AppCompatActivity(), View.OnClickListener {
         val m = c.get(Calendar.MONTH)
         val d = c.get(Calendar.DAY_OF_MONTH)
         val dialog = DatePickerDialog(
-            this, DatePickerDialog.THEME_DEVICE_DEFAULT_DARK, { _, year, month, dayOfMonth ->
+            requireContext(),
+            DatePickerDialog.THEME_DEVICE_DEFAULT_DARK,
+            { _, year, month, dayOfMonth ->
                 val date = Date(year - 1900, month, dayOfMonth)
                 val str = "$date"
                 button.text = str
                 button.setTextColor(Color.BLACK)
-            }, y, m, d
+            },
+            y,
+            m,
+            d
         )
         dialog.show()
         dialog.setOnCancelListener {

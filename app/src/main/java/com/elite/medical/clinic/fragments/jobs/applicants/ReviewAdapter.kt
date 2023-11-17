@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.applicants
+package com.elite.medical.clinic.fragments.jobs.applicants
 
 
 import android.view.LayoutInflater

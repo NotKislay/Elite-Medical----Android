@@ -37,8 +37,8 @@ class ClinicViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         val body = response.body()
                         dashboardDataCallback?.invoke(body!!)
-                        recentJobApplicants.postValue(body?.nurseApplicants)
-                        topNurses.postValue(body?.topNurses)
+                        recentJobApplicants.postValue(body!!.nurseApplicants)
+                        topNurses.postValue(body.topNurses)
                     }
                 }
 

@@ -15,24 +15,20 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.SideMenuAdapterClinic
 import com.elite.medical.clinic.auth.LoginClinic
-import com.elite.medical.clinic.ui.sidemenu.jobs.CreateJob
-import com.elite.medical.clinic.ui.sidemenu.jobs.JobNApplicants
-import com.elite.medical.clinic.ui.sidemenu.jobs.MyJobs
-import com.elite.medical.clinic.ui.sidemenu.nurses.ActivitySearchNurses
-import com.elite.medical.clinic.ui.sidemenu.nurses.EnrolledNurses
 import com.elite.medical.clinic.viewmodels.ClinicViewModel
 import com.elite.medical.databinding.FragmentClinicDashboardBinding
 import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
 
 class ClinicHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentClinicDashboardBinding
-    private lateinit var viewModel: ClinicViewModel
+    private lateinit var viewModel:ClinicViewModel
 
     private lateinit var clinicDashboardData: ClinicDashboardModel
 
@@ -42,6 +38,9 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
     ): View {
         binding = FragmentClinicDashboardBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[ClinicViewModel::class.java]
+
+        viewModel.getDashboardData()
+        fetchDashboardData()
 
         setupDrawer()
 
@@ -55,11 +54,6 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getDashboardData()
-        fetchDashboardData()
-    }
 
     private fun fetchDashboardData() {
         viewModel.dashboardDataCallback = {
@@ -96,7 +90,6 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         menuAdapter = SideMenuAdapterClinic(requireContext(), sideMenuItems, sideMenuSubItems)
         menu.setAdapter(menuAdapter)    //  Setting Adapter for side menu
 
-
         menu.setOnGroupClickListener { _, _, groupPosition, _ ->        // OnClink Listeners for Menu Items
             if (menu.isGroupExpanded(groupPosition)) menu.collapseGroup(groupPosition)
             else menu.expandGroup(groupPosition)
@@ -106,36 +99,13 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         menu.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->     // OnClink Listeners for Sub Menu Items
             when (sideMenuSubItems[sideMenuItems[groupPosition]]?.get(childPosition)) {
                 "Home" -> {}
-
                 "Notifications" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_clinicNotificationsFragment)
-
                 "Profile" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_profileClinicFragment)
-
-                "My Jobs" -> {
-                    val intent = Intent(requireContext(), MyJobs::class.java)
-                    startActivity(intent)
-                }
-
-                "Create" -> {
-                    val intent = Intent(requireContext(), CreateJob::class.java)
-                    startActivity(intent)
-                }
-
-                "Applicants" -> {
-                    val intent = Intent(requireContext(), JobNApplicants::class.java)
-                    startActivity(intent)
-                }
-
-                "Search" -> {
-                    val intent = Intent(requireContext(), ActivitySearchNurses::class.java)
-                    startActivity(intent)
-                }
-
-                "Enrolled" -> {
-                    val intent = Intent(requireContext(), EnrolledNurses::class.java)
-                    startActivity(intent)
-                }
-
+                "My Jobs" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_jobListFragment)
+                "Create" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_createJobFragment)
+                "Applicants" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_jobNApplicantsFragment)
+                "Search" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_searchAvailableNursesFragment)
+                "Enrolled" -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_enrolledNursesFragment)
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
@@ -145,7 +115,6 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-
             binding.btnNavMenu.id -> {
                 if (!binding.drawerLayout.isDrawerOpen(GravityCompat.START)) binding.drawerLayout.openDrawer(
                     GravityCompat.START
@@ -153,24 +122,18 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
                 else binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            binding.avatarImageView.id -> showCustomAvatarDialog()
-
-
+            binding.avatarImageView.id -> showAvatarDialog()
             binding.tvJobApplicants.id -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_recentJobApplicantsFragment)
-
-
             binding.tvTopRatedNurse.id -> findNavController().navigate(R.id.action_clinicDashboardFragment_to_topRatedNursesFragment)
-
         }
     }
 
-    private fun showCustomAvatarDialog() {
+    private fun showAvatarDialog() {
         val customDialog = Dialog(requireContext())
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         customDialog.setContentView(R.layout.modal_layout_clinic_details_more)
 
         // Customize the dialog components
-
         val customTitle = customDialog.findViewById<TextView>(R.id.tv_more_details)
         customTitle.text = "Profile"
 
@@ -196,6 +159,7 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
             customDialog.dismiss()
             showLogoutConfirmationDialog()
         }
+
         customDialog.show()
     }
 
@@ -203,7 +167,6 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle("Logout")
         builder.setMessage("Want to logout?")
-
 
         builder.setPositiveButton("Yes") { dialog, _ ->
             EliteMedical.updateClinicToken(null)
@@ -221,30 +184,10 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
         dialog.show()
     }
 
-    /*    private fun postUpdatedCredentialsToAPI(name: String, email: String) {
-            DDClinicAPI.postUpdatedUserDetails(
-                name,
-                email,
-                object : DDClinicAPI.Companion.ProfileUpdateCallback {
-                    override fun onSuccess(msg: String?, statusCode: Int?) {
+    override fun onResume() {
+        super.onResume()
 
-                        if (statusCode == 200) {
-                            Toast.makeText(this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT)
-                                .show()
-                            finish()
-                            val intent =
-                                Intent(this@ActivityClinicProfile, ClinicHomeFragment::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(
-                                this@ActivityClinicProfile, "$msg", Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    }
-
-                })
-        }*/
+    }
 
 
 }

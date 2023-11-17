@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".clinic.ui.sidemenu.jobs.fragments.applicants.NurseDetailsFragment">
+        tools:context=".clinic.fragments.jobs.applicants.NurseDetailsFragment">
 
         <!--            TOP App Bar         -->
         <LinearLayout

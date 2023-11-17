@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.applicants
+package com.elite.medical.clinic.fragments.jobs.applicants
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,9 +27,9 @@ class JobListFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[JobNApplicantsViewModel::class.java]
 
 
+        viewModel.getJobsList()
 
 
-//        return inflater.inflate(R.layout.fragment_job_n_applicants, container, false)
         return binding.root
     }
 

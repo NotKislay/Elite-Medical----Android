@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.myjobs
+package com.elite.medical.clinic.fragments.jobs.myjobs
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -20,6 +20,9 @@ class JobListFragment : Fragment() {
     ): View {
         binding = FragmentJobListBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MyJobsViewModel::class.java]
+
+        viewModel.loadJobList()
+
 
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 

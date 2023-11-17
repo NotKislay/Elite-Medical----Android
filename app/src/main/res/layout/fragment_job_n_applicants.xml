@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".clinic.ui.sidemenu.jobs.fragments.applicants.JobListFragment">
+        tools:context=".clinic.fragments.jobs.applicants.JobListFragment">
 
         <!--            TOP App Bar         -->
         <LinearLayout

@@ -1,4 +1,4 @@
-package com.elite.medical.clinic.ui.sidemenu.jobs.fragments.myjobs
+package com.elite.medical.clinic.fragments.jobs.myjobs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
