@@ -6,6 +6,7 @@ import com.elite.medical.retrofit.responsemodel.nurse.clinics.ClinicDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.EnrolledClinicsModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.notification.NotificationModel
 import com.elite.medical.retrofit.responsemodel.nurse.dashboard.profile.NurseProfileDetailsModel
+import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobDetailsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
@@ -26,6 +27,9 @@ import retrofit2.http.Path
 
 interface RetrofitInterfaceNurse {
 
+
+    @GET(ConstantsNurse.DASHBOARD)
+    fun getNurseDashboardData(): Call<DashboardDataNurseModel>
     @GET(ConstantsNurse.TIMESHEET)
     fun getTimesheet(): Call<NurseTimeSheetModel>
     @GET(ConstantsNurse.SEARCH_JOBS)

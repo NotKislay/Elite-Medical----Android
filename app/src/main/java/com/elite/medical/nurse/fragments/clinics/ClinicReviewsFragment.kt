@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.databinding.FragmentClinicReviewsBinding
-import com.elite.medical.nurse.adapters.ClinicReviewByNurseAdapter
+import com.elite.medical.nurse.adapters.clinics.ClinicReviewByNurseAdapter
 import com.elite.medical.nurse.viewmodels.clinics.ClinicsViewModel
 import kotlin.properties.Delegates
 

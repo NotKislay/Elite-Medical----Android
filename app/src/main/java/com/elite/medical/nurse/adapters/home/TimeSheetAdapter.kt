@@ -1,4 +1,4 @@
-package com.elite.medical.nurse.adapters
+package com.elite.medical.nurse.adapters.home
 
 
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.TimesheetDataModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 
 class TimeSheetAdapter(private val sheetItems: List<NurseTimeSheetModel.Timesheet>) :

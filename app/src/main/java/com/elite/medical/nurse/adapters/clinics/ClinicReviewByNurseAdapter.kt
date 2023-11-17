@@ -1,4 +1,4 @@
-package com.elite.medical.nurse.adapters
+package com.elite.medical.nurse.adapters.clinics
 
 import android.content.Context
 import android.view.LayoutInflater

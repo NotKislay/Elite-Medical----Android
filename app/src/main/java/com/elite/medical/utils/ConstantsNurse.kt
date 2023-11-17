@@ -4,6 +4,8 @@ object ConstantsNurse {
 
     const val BASE_URL = "https://staging.emfwebapp.ikshudigital.com/api/"
 
+    const val DASHBOARD = "dashboard"
+
     const val SEARCH_JOBS = "nurse/jobs/search"
     const val SEARCH_JOBS_BY_ID = "nurse/jobs/searched"
     const val REQUEST_SEARCH_JOBS = "nurse/job-search-request"

@@ -1,4 +1,4 @@
-package com.elite.medical.nurse.fragments
+package com.elite.medical.nurse.fragments.home
 
 import android.app.Dialog
 import android.content.Intent
@@ -15,7 +15,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
-import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,7 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.databinding.FragmentMainScreenBinding
 import com.elite.medical.nurse.LoginNurse
-import com.elite.medical.nurse.adapters.MenuAdapter
+import com.elite.medical.nurse.adapters.home.MenuAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -43,6 +42,9 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         initBindings()
         setupMenu()
 
+        binding.tvTopRatedNurse.setOnClickListener {
+            findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
+        }
 
 
         requireActivity().onBackPressedDispatcher.addCallback(this) { callLogout() }
@@ -144,6 +146,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         }
         customDialog.show()
     }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.hamburger.id -> {
@@ -157,7 +160,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                 showCustomAvatarDialog()
             }
 
-            binding.tvTimesheet.id->{
+            binding.tvTimesheet.id -> {
                 findNavController().navigate(R.id.action_mainScreenFragment_to_timesheetFragment)
             }
         }

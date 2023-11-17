@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainScreenFragment"
-        android:name="com.elite.medical.nurse.fragments.NurseHomeFragment"
+        android:name="com.elite.medical.nurse.fragments.home.NurseHomeFragment"
         android:label="Main Screen"
         tools:layout="@layout/fragment_main_screen">
         <action
@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_timesheetFragment"
             app:destination="@id/timesheetFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_topRatedClinicsFragment"
+            app:destination="@id/topRatedClinicsFragment" />
     </fragment>
     <fragment
         android:id="@+id/EnrolledClinicsFragment"
@@ -96,4 +99,10 @@
         android:name="com.elite.medical.TimesheetFragment"
         android:label="fragment_timesheet"
         tools:layout="@layout/fragment_timesheet" />
+
+    <fragment
+        android:id="@+id/topRatedClinicsFragment"
+        android:name="com.elite.medical.nurse.fragments.home.TopRatedClinicsFragment"
+        android:label="fragment_top_rated_clinics"
+        tools:layout="@layout/fragment_top_rated_clinics" />
 </navigation>

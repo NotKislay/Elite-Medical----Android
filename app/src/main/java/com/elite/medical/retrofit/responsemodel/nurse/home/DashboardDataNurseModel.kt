@@ -7,10 +7,10 @@ import android.os.Parcelable
 
 @Parcelize
 data class DashboardDataNurseModel(
-    @SerializedName("currentEmployeeId")
-    val currentEmployeeId: Int,
-    @SerializedName("latestClockType")
-    val latestClockType: String,
+//    @SerializedName("currentEmployeeId")
+//    val currentEmployeeId: Int?,
+//    @SerializedName("latestClockType")
+//    val latestClockType: String?,
     @SerializedName("message")
     val message: String,
     @SerializedName("name")

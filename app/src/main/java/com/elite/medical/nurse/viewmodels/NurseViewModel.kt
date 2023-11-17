@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
+import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 import com.google.gson.Gson
 import retrofit2.Call
@@ -14,6 +15,7 @@ class NurseViewModel : ViewModel() {
 
     var timeSheetCallback: ((List<NurseTimeSheetModel.Timesheet>?, GenericSuccessErrorModel?) -> Unit)? =
         null
+    var nurseDashboardDataCallback: ((DashboardDataNurseModel) -> Unit)? = null
 
     fun getTimeSheets() {
         EliteMedical.retrofitNurse.getTimesheet()
@@ -42,5 +44,27 @@ class NurseViewModel : ViewModel() {
                 override fun onFailure(call: Call<NurseTimeSheetModel?>, t: Throwable) {}
             })
     }
+
+    fun getNurseDashboardData() {
+        EliteMedical.retrofitNurse.getNurseDashboardData()
+            .enqueue(object : Callback<DashboardDataNurseModel?> {
+
+                override fun onResponse(
+                    call: Call<DashboardDataNurseModel?>,
+                    response: Response<DashboardDataNurseModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        nurseDashboardDataCallback?.invoke(body!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<DashboardDataNurseModel?>, t: Throwable) {
+                    println(t.message)
+                }
+            })
+    }
+
+
 
 }

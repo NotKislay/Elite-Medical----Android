@@ -7,16 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.elite.medical.databinding.FragmentTimesheetBinding
 import com.elite.medical.databinding.ModalLayoutBinding
-import com.elite.medical.nurse.adapters.TimeSheetAdapter
+import com.elite.medical.nurse.adapters.home.TimeSheetAdapter
 import com.elite.medical.nurse.viewmodels.NurseViewModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel

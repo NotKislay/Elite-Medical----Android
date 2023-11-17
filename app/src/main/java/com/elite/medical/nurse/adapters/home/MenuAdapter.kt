@@ -1,4 +1,4 @@
-package com.elite.medical.nurse.adapters
+package com.elite.medical.nurse.adapters.home
 
 import android.content.Context
 import android.graphics.Typeface

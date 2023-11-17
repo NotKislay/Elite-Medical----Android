@@ -119,7 +119,7 @@ class SearchJobsAdapter(
         holder.tv9.text = item.applied.size.toString()
         holder.tv10.text = item.status
 
-        val hasNurseApplied = item.nurseApplied == "True"
+        val hasNurseApplied = item.nurseApplied
 
         if (hasNurseApplied) holder.btnAlreadyApplied.also { it.isVisible = true }
         else holder.btnApply.also { it.isVisible = true }
