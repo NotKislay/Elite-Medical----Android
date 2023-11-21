@@ -157,7 +157,35 @@ class SearchJobs : Fragment() {
 
         }
     }
-
+//    private fun applyFilters() {
+//        val cityFilterIndex = spinnerCity.selectedItemPosition
+//        val licenceTypeFilterIndex = spinnerLicenceType.selectedItemPosition
+//
+//        tempList = mainList
+//
+//        if (cityFilterIndex != 0) {
+//            val filteredByCity =
+//                tempList.filter { it.city.contains(cities.elementAt(cityFilterIndex)) }
+//            tempList = filteredByCity as MutableList<Nurse>
+//        }
+//
+//
+//        if (licenceTypeFilterIndex != 0) {
+//            val filteredByLicenseType =
+//                tempList.filter {
+//                    it.licenseType.contains(
+//                        licenceTypeFilter.elementAt(
+//                            licenceTypeFilterIndex
+//                        )
+//                    )
+//                }
+//            tempList = filteredByLicenseType as MutableList<Nurse>
+//        }
+//
+//
+//        binding.tvNoData.isVisible = tempList.isEmpty()
+//        recyclerViewAdapter.filterList(tempList)
+//    }
     private fun setupSpinner() {
         val jobTypeAdapter =
             ArrayAdapter(

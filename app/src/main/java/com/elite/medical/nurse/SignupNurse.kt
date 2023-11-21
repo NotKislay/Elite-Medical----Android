@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -25,6 +26,8 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.sql.Date
 import java.util.Calendar
 
@@ -68,6 +71,7 @@ class SignupNurse : AppCompatActivity() {
     lateinit var licenceExpiryDate: MaterialButton
     lateinit var yearsOfExperience: TextInputEditText
     lateinit var speciality: TextInputEditText
+    private var photoURI: Uri? = null
 
     private lateinit var binding: ActivitySignupNurseBinding
 
@@ -131,6 +135,13 @@ class SignupNurse : AppCompatActivity() {
         }
         binding.btnSignup.setOnClickListener {
 
+            //val fileDir = activity?.applicationContext?.filesDir
+            val fileDir = applicationContext?.filesDir
+            val file = File(fileDir, "image.png")
+//            val inputStream = contentResolver?.openInputStream(photoURI!!)
+//            val outputStream = FileOutputStream(file)
+//            inputStream!!.copyTo(outputStream)
+//            println("Dir- $fileDir, FIle is $file, istream $inputStream")
             if (validateInputs()) {
 
                 val userDetails = RegisterNurseModel(
@@ -147,6 +158,7 @@ class SignupNurse : AppCompatActivity() {
                     spinnercgfnStatus.selectedItem.toString(),
                     spinnerNurseType.selectedItem.toString(),
                     "test",
+                    //uploadLicense.text.toString(),
                     licenceIssueDate.text.toString(),
                     licenceExpiryDate.text.toString(),
                     yearsOfExperience.text.toString(),
@@ -238,6 +250,11 @@ class SignupNurse : AppCompatActivity() {
 
                 "Upload from storage" -> {
                     pickMedia.launch(arrayOf("*/*"))
+
+//                    registerForActivityResult(ActivityResultContracts.GetContent()){uri: Uri?->
+//
+//                        println(uri)
+//                    }
                 }
 
                 "Exit" -> {

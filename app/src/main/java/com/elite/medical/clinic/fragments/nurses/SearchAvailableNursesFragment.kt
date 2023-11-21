@@ -36,6 +36,7 @@ class SearchAvailableNursesFragment : Fragment() {
     private lateinit var spinnerCity: Spinner
     private lateinit var spinnerLicenceType: Spinner
     private lateinit var mainList: MutableList<Nurse>
+    private lateinit var tempList: MutableList<Nurse>
 
 
     override fun onCreateView(
@@ -71,8 +72,7 @@ class SearchAvailableNursesFragment : Fragment() {
                     populateNursesList(data.nurses)
 
                     callFilterListener()
-                }
-                else {
+                } else {
                     Toast.makeText(requireContext(), error?.message, Toast.LENGTH_SHORT).show()
                     activity?.onBackPressedDispatcher?.onBackPressed()
                 }
@@ -90,7 +90,8 @@ class SearchAvailableNursesFragment : Fragment() {
                 override fun onItemSelected(
                     p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                 ) {
-                    if (p2 != 0) {
+                    applyFilters()
+                    /*if (p2 != 0) {
                         val filteredList =
                             mainList.filter { it.city.contains(cities.elementAt(p2)) }
                         binding.tvNoData.isVisible = filteredList.isEmpty()
@@ -98,7 +99,7 @@ class SearchAvailableNursesFragment : Fragment() {
                     } else {
                         binding.tvNoData.isVisible = false
                         recyclerViewAdapter.filterList(mainList)
-                    }
+                    }*/
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -109,7 +110,8 @@ class SearchAvailableNursesFragment : Fragment() {
                 override fun onItemSelected(
                     p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                 ) {
-                    if (p2 != 0) {
+                    applyFilters()
+                    /*if (p2 != 0) {
                         val filteredList =
                             mainList.filter { it.licenseType.contains(licenceTypeFilter.elementAt(p2)) }
                         binding.tvNoData.isVisible = filteredList.isEmpty()
@@ -117,13 +119,43 @@ class SearchAvailableNursesFragment : Fragment() {
                     } else {
                         binding.tvNoData.isVisible = false
                         recyclerViewAdapter.filterList(mainList)
-                    }
+                    }*/
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
 
+    }
+
+    private fun applyFilters() {
+        val cityFilterIndex = spinnerCity.selectedItemPosition
+        val licenceTypeFilterIndex = spinnerLicenceType.selectedItemPosition
+
+        tempList = mainList
+
+        if (cityFilterIndex != 0) {
+            val filteredByCity =
+                tempList.filter { it.city.contains(cities.elementAt(cityFilterIndex)) }
+            tempList = filteredByCity as MutableList<Nurse>
+        }
+
+
+        if (licenceTypeFilterIndex != 0) {
+            val filteredByLicenseType =
+                tempList.filter {
+                    it.licenseType.contains(
+                        licenceTypeFilter.elementAt(
+                            licenceTypeFilterIndex
+                        )
+                    )
+                }
+            tempList = filteredByLicenseType as MutableList<Nurse>
+        }
+
+
+        binding.tvNoData.isVisible = tempList.isEmpty()
+        recyclerViewAdapter.filterList(tempList)
     }
 
     private fun populateCityFilter(cities: MutableList<String>) {
@@ -140,7 +172,6 @@ class SearchAvailableNursesFragment : Fragment() {
     private fun populateNursesList(nurses: List<Nurse>) {
 
         mainList = nurses as MutableList<Nurse>
-
 
         if (nurses.isNotEmpty()) {
 
