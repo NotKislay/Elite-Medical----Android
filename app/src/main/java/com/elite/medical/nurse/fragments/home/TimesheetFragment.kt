@@ -1,4 +1,4 @@
-package com.elite.medical
+package com.elite.medical.nurse.fragments.home
 
 import android.annotation.SuppressLint
 import android.app.Dialog

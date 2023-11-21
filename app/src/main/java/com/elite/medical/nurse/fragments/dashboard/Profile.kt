@@ -71,6 +71,10 @@ class Profile : Fragment() {
                     userEmail.error = "This can't be blank"
                     binding.btnUpdateProfile.isEnabled = false
                 }
+                else {
+                    binding.btnUpdateProfile.isEnabled = true
+
+                }
 
             }
             userName.doOnTextChanged { text, start, before, count ->
@@ -79,6 +83,10 @@ class Profile : Fragment() {
 
                     userName.error = "This can't be blank"
                     binding.btnUpdateProfile.isEnabled = false
+                }
+                else {
+                    binding.btnUpdateProfile.isEnabled = true
+
                 }
 
             }

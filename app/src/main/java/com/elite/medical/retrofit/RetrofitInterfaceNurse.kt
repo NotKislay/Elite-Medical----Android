@@ -85,7 +85,7 @@ interface RetrofitInterfaceNurse {
     @POST(ConstantsNurse.CLOCK_OUT)
     fun nurseClockOut(
         @Part("location") location: RequestBody,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part?
     ): Call<GenericSuccessErrorModel>
 
 

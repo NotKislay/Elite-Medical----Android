@@ -6,52 +6,31 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
+import com.elite.medical.admin.adapters.sidemenu.review.ClinicReviewAdapter
+import com.elite.medical.databinding.ItemNurseReviewBinding
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.ClinicReview
 
 class RecentClinicReviewAdapter(private val listItem: List<ClinicReview>) :
     RecyclerView.Adapter<RecentClinicReviewAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(binding: ItemNurseReviewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        //        var id:TextView
-//        var nurse_register_id:TextView
-//        var clinic_register_id:TextView
-        var rating: RatingBar
-        var comment: TextView
-
-        //        var created_at:TextView
-//        var updated_at:TextView
-        var time_ago: TextView
-        var clinicName: TextView
-
-        //        var ratingsImg:RatingBar
-        var reviewLayout: LinearLayout
-
-
-        init {
-//            id = itemView.findViewById(R.id.id)
-//            nurse_register_id = itemView.findViewById(R.id.nurse_register_id)
-//            clinic_register_id = itemView.findViewById(R.id.clinic_register_id)
-            rating = itemView.findViewById(R.id.rating)
-            comment = itemView.findViewById(R.id.comment)
-//            created_at = itemView.findViewById(R.id.created_at)
-//            updated_at = itemView.findViewById(R.id.updated_at)
-            time_ago = itemView.findViewById(R.id.tv_days_ago)
-            clinicName = itemView.findViewById(R.id.clinic_name)
-//            ratingsImg = itemView.findViewById(R.id.ratings_img)
-            reviewLayout = itemView.findViewById(R.id.review_layout)
-
-
-        }
+        val clinicName: TextView = binding.clinicName
+        var nurseName = binding.nurseName
+        val daysAgo: TextView = binding.tvDaysAgo
+        val rating: RatingBar = binding.rating
+        val commentContent: TextView = binding.comment
+        val reviewLayout: LinearLayout = binding.reviewLayout
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_nurse_review, parent, false)
-        )
+        val binding =
+            ItemNurseReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -59,18 +38,23 @@ class RecentClinicReviewAdapter(private val listItem: List<ClinicReview>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.clinicName.text = listItem[position].nurseName
-        holder.rating.rating = listItem[position].rating.toFloat()
-        holder.comment.text = listItem[position].comment
-        holder.time_ago.text = listItem[position].timeAgo
+
+        val currentItem = listItem[position]
+
+        holder.clinicName.text = currentItem.clinicName
+        holder.nurseName.text = currentItem.nurseName
+        holder.nurseName.isVisible = true
+        holder.daysAgo.text = currentItem.timeAgo
+        holder.rating.rating = currentItem.rating.toFloat()
+        holder.commentContent.text = currentItem.comment
 
         var fullLength = false
         holder.reviewLayout.setOnClickListener {
             fullLength = !fullLength
             if (fullLength)
-                holder.comment.maxLines = 40
+                holder.commentContent.maxLines = 40
             else
-                holder.comment.maxLines = 2
+                holder.commentContent.maxLines = 2
         }
 
     }

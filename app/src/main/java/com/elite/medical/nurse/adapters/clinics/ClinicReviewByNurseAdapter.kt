@@ -21,7 +21,7 @@ class ClinicReviewByNurseAdapter(
         var time_ago= binding.tvDaysAgo
         var clinicName = binding.clinicName
         var review_layout = binding.reviewLayout
-        val update_btn = binding.btnSubmitReview
+        val updateBtn = binding.btnSubmitReview
         val edit_text = binding.addComment
 
 
@@ -45,7 +45,7 @@ class ClinicReviewByNurseAdapter(
         holder.edit_text.visibility = View.GONE
         holder.time_ago.visibility = View.GONE
         holder.comment_body.text = data.comment
-        holder.update_btn.visibility = View.GONE
+        holder.updateBtn.visibility = View.GONE
         holder.comment_body.maxLines = 2
 
 
@@ -59,7 +59,7 @@ class ClinicReviewByNurseAdapter(
                 holder.comment_body.maxLines = 2
         }
 
-        holder.update_btn.setOnClickListener {
+        holder.updateBtn.setOnClickListener {
             Toast.makeText(context, "Build me, Im inside adapter", Toast.LENGTH_LONG).show()
         }
 

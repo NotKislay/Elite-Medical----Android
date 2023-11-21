@@ -20,21 +20,25 @@ class TopRatedClinicsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentTopRatedClinicsBinding.inflate(inflater, container, false)
-
         viewModel.getNurseDashboardData()
+        viewModel.nurseDashboardDataCallback = { p1, p2 ->
 
-        viewModel.nurseDashboardDataCallback = {
-            val topRatedClinics = it.topClinics
+            if (p1 != null) {
 
-            if (topRatedClinics.isNotEmpty()) {
-                val adapter = TopRatedClinicsAdapter(topRatedClinics)
-                binding.listview.adapter = adapter
-                binding.loader.isVisible = false
-            } else {
-                Toast.makeText(requireContext(), "No Data Available", Toast.LENGTH_SHORT).show()
-                activity?.onBackPressedDispatcher?.onBackPressed()
+                val topRatedClinics = p1.topClinics
+
+                if (topRatedClinics.isNotEmpty()) {
+                    val adapter = TopRatedClinicsAdapter(topRatedClinics)
+                    binding.listview.adapter = adapter
+                    binding.loader.isVisible = false
+                } else {
+                    Toast.makeText(requireContext(), "No Data Available", Toast.LENGTH_SHORT).show()
+                    activity?.onBackPressedDispatcher?.onBackPressed()
+                }
             }
+
 
         }
 

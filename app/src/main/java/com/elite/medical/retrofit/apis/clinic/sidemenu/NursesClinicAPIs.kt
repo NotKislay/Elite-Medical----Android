@@ -125,9 +125,7 @@ class NursesClinicAPIs {
                     }
                 }
 
-                override fun onFailure(call: Call<SearchNurseModel?>, t: Throwable) {
-
-                }
+                override fun onFailure(call: Call<SearchNurseModel?>, t: Throwable) {}
 
             })
         }

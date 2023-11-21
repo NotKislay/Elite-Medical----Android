@@ -19,21 +19,20 @@ class EnrolledClinics : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentEnrolledClinicsBinding
     private lateinit var backBtn: ImageButton
     private lateinit var loader: ProgressBar
-    private lateinit var viewmodel: ClinicsViewModel
-
+    private lateinit var viewModel: ClinicsViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentEnrolledClinicsBinding.inflate(inflater, container, false)
-        viewmodel = ViewModelProvider(requireActivity())[ClinicsViewModel::class.java]
-        viewmodel.getEnrolledClinicsList()
+        viewModel = ViewModelProvider(requireActivity())[ClinicsViewModel::class.java]
+        viewModel.getEnrolledClinicsList()
         initBindings()
 
         binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
-        viewmodel.clinicList.observe(viewLifecycleOwner) { clinics ->
+        viewModel.clinicList.observe(viewLifecycleOwner) { clinics ->
             if (clinics.isNullOrEmpty()) {
                 binding.textabovervlistofassocnurse.isVisible = false
                 HelperMethods.showDialog(
@@ -45,7 +44,7 @@ class EnrolledClinics : Fragment(), View.OnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
 
             } else {
-                val adapter = EnrolledClinicsAdapter(clinics!!, viewmodel, requireContext())
+                val adapter = EnrolledClinicsAdapter(clinics!!, viewModel, requireContext())
                 binding.rvEnrolledClinics.layoutManager = LinearLayoutManager(requireContext())
                 binding.rvEnrolledClinics.adapter = adapter
             }

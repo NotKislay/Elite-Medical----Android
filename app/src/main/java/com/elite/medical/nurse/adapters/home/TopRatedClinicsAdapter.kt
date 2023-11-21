@@ -3,6 +3,7 @@ package com.elite.medical.nurse.adapters.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.CustomTableItemWArrowBinding
 import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
@@ -32,6 +33,8 @@ class TopRatedClinicsAdapter(
         var label5 = binding.label5CstmTable
         var label6 = binding.label6CstmTable
 
+        var go_deep_btn = binding.nextArrow
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,13 +56,13 @@ class TopRatedClinicsAdapter(
         holder.label6.visibility = View.GONE
 
 
-
         holder.clinicName.text = item.name
         holder.location.text = item.city
         holder.rating.text = item.clinicReview[0].rating
         holder.dobcontent.visibility = View.GONE
         holder.licexpirycontent.visibility = View.GONE
         holder.experiencecontent.visibility = View.GONE
+        holder.go_deep_btn.isVisible = false
 
 
     }

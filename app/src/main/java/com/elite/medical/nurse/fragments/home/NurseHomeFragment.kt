@@ -1,15 +1,11 @@
 package com.elite.medical.nurse.fragments.home
 
 import android.app.Dialog
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.provider.MediaStore.Files
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +18,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -40,11 +33,8 @@ import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseMod
 import com.elite.medical.utils.GPSLocation
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.Locale
 
 
 class NurseHomeFragment : Fragment(), View.OnClickListener {
@@ -54,10 +44,11 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var timesheet: TextView
     private lateinit var sideMenu: ExpandableListView
     private lateinit var dashboardData: DashboardDataNurseModel
-    private var clockOutVisible = false
+    private var clockInVisible = false
     private val viewModel by viewModels<NurseViewModel>()
 
     private lateinit var photoFile: File
+    private lateinit var photoURI: Uri
 
 
     lateinit var location: GPSLocation
@@ -73,8 +64,9 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         fetchDashboardData()
         HelperMethods.requestLocationPermission(requireActivity())
 
-        /*        binding.cardClockIn.isVisible = !clockOutVisible
-                binding.cardClockOut.isVisible = clockOutVisible*/
+
+
+
 
 
 
@@ -87,15 +79,16 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         viewModel.getNurseDashboardData()
         location = HelperMethods.getLocation(requireActivity())
 
-        viewModel.nurseDashboardDataCallback = {
-            dashboardData = it
-            clockOutVisible = it.latestClockType.equals("in")
-        }
+        viewModel.nurseDashboardDataCallback = { p1, p2 ->
 
-        viewModel.clockOUTCallback = {
-            Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
-        }
+            if (p1 != null) {
+                dashboardData = p1
+                clockInVisible = p1.latestClockType.equals("out")
+                binding.cardClockIn.isVisible = clockInVisible
+                binding.cardClockOut.isVisible = !clockInVisible
+            }
 
+        }
 
     }
 
@@ -161,6 +154,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         binding.cardClockOut.setOnClickListener(this)
         binding.tvTimesheet.setOnClickListener(this)
         binding.tvTopRatedNurse.setOnClickListener(this)
+        binding.tvTitle.setOnClickListener(this)
 
     }
 
@@ -173,11 +167,6 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
 
         val customTitle = customDialog.findViewById<TextView>(R.id.tv_more_details)
         customTitle.text = "Profile"
-
-        customTitle.setOnClickListener {
-            Toast.makeText(requireContext(), location.toString(), Toast.LENGTH_SHORT).show()
-
-        }
 
         val viewProfileBtn = customDialog.findViewById<Button>(R.id.btnNurseAssoc_modal)
         viewProfileBtn.text = "View Profile"
@@ -205,6 +194,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         customDialog.show()
     }
 
+
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.hamburger.id -> {
@@ -214,60 +204,38 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                 else binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
 
-            binding.avatarImageView.id -> {
-                showCustomAvatarDialog()
-            }
+            binding.avatarImageView.id -> showCustomAvatarDialog()
 
-            binding.tvTimesheet.id -> {
-                findNavController().navigate(R.id.action_mainScreenFragment_to_timesheetFragment)
-            }
+
+            binding.tvTimesheet.id -> findNavController().navigate(R.id.action_mainScreenFragment_to_timesheetFragment)
+
 
             binding.tvTitle.id -> {
-                Toast.makeText(requireContext(), location.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(), makefullAddress(location), Toast.LENGTH_SHORT
+                ).show()
             }
 
             binding.cardClockIn.id -> {
-                if (location.errorMSG.isNullOrEmpty()) {
-                    doClockIN()
-                } else {
-                    Toast.makeText(requireContext(), location.errorMSG, Toast.LENGTH_SHORT).show()
-                }
+                if (location.errorMSG.isNullOrEmpty()) doClockIN()
+                else Toast.makeText(requireContext(), location.errorMSG, Toast.LENGTH_SHORT).show()
             }
 
-            binding.cardClockOut.id -> {
-                takePhoto()
-                /*                Toast.makeText(requireContext(), "clicked..", Toast.LENGTH_SHORT).show()
-                                binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
-                                binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible*/
-            }
+            binding.cardClockOut.id -> findNavController().navigate(R.id.action_mainScreenFragment_to_clockInOutFragment)
 
-            binding.tvTopRatedNurse.id -> {
-                findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
-            }
+
+            binding.tvTopRatedNurse.id -> findNavController().navigate(R.id.action_mainScreenFragment_to_topRatedClinicsFragment)
+
         }
     }
 
-    private fun takePhoto() {
-        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
-    private fun createMultipartBodyFromImage() {
-        val mediaType: String = "image/jpg"
-        val fileName: String =  System.currentTimeMillis().toString() + ".jpg"
-
-        val reqFile = photoFile.asRequestBody(mediaType.toMediaTypeOrNull())
-        val profilePic = MultipartBody.Part.createFormData( "image",fileName, reqFile)
-        clockOut(location, profilePic)
-    }
-
-    private fun clockOut(location: GPSLocation, profilePic: MultipartBody.Part) {
-        val gps = "${location.latitude},${location.longitude}"
-        val gpsS = RequestBody.create("text/plain".toMediaTypeOrNull(), gps)
-        viewModel.clockOut(gpsS, profilePic)
-    }
-
     private fun doClockIN() {
-        viewModel.clockIN(location)
+        viewModel.clockIN(
+            HelperMethods.makeAddressFromLocation(
+                requireContext(),
+                location
+            )!!
+        )
         viewModel.clockINCallback = {
             if (it?.status.equals("success")) {
                 Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
@@ -277,6 +245,19 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                 HelperMethods.showDialog(it!!.message, "OK", requireContext(), activity)
             }
         }
+    }
+
+    private fun makefullAddress(location: GPSLocation): String? {
+        val geocoder = Geocoder(requireContext(), Locale.ENGLISH)
+        val addresses =
+            geocoder.getFromLocation(
+                location.latitude!!.toDouble(),
+                location.longitude!!.toDouble(),
+                1
+            )
+        val address = addresses!![0].getAddressLine(0)
+        return address
+
     }
 
     private fun callLogout() {
@@ -298,37 +279,5 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
         dialogBtn.show()
     }
 
-    private val pickMedia =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-
-                photoFile = getFileFromUri(uri)!!
-                createMultipartBodyFromImage()
-
-
-
-            } else {
-                Log.d("PhotoPicker", "No media selected")
-            }
-        }
-
-    private fun getFileFromUri(uri: Uri): File? {
-        val filePath = uriToFilePath(uri)
-        return if (filePath != null) File(filePath) else null
-    }
-
-    private fun uriToFilePath(uri: Uri): String? {
-        val context = requireContext()
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
-        return cursor?.use {
-            it.moveToFirst()
-            val columnIndex = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            if (columnIndex != -1) {
-                it.getString(columnIndex)
-            } else {
-                null
-            }
-        }
-    }
 
 }

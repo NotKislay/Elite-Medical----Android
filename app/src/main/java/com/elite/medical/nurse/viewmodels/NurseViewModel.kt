@@ -1,11 +1,13 @@
 package com.elite.medical.nurse.viewmodels
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 import com.elite.medical.utils.GPSLocation
+import com.elite.medical.utils.HelperMethods
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,7 +22,9 @@ class NurseViewModel : ViewModel() {
         null
     var clockINCallback: ((GenericSuccessErrorModel?) -> Unit)? = null
     var clockOUTCallback: ((GenericSuccessErrorModel?) -> Unit)? = null
-    var nurseDashboardDataCallback: ((DashboardDataNurseModel) -> Unit)? = null
+    var nurseDashboardDataCallback: ((DashboardDataNurseModel?, GenericSuccessErrorModel?) -> Unit)? = null
+
+
 
     fun getTimeSheets() {
         EliteMedical.retrofitNurse.getTimesheet()
@@ -58,9 +62,18 @@ class NurseViewModel : ViewModel() {
                     call: Call<DashboardDataNurseModel?>,
                     response: Response<DashboardDataNurseModel?>
                 ) {
+                    val res = response
                     if (response.isSuccessful) {
                         val body = response.body()
-                        nurseDashboardDataCallback?.invoke(body!!)
+                        nurseDashboardDataCallback?.invoke(body!!,null)
+                    }
+                    else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel = Gson().fromJson(
+                            errorBody.charStream(),
+                            GenericSuccessErrorModel::class.java
+                        )
+                        nurseDashboardDataCallback?.invoke(null,errorModel)
                     }
                 }
 
@@ -70,11 +83,8 @@ class NurseViewModel : ViewModel() {
             })
     }
 
-    fun clockIN(location: GPSLocation) {
-
-        val locationGPS = "${location.latitude},${location.latitude}"
-
-        EliteMedical.retrofitNurse.clockIN(locationGPS)
+    fun clockIN(location: String) {
+        EliteMedical.retrofitNurse.clockIN(location)
             .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(
                     call: Call<GenericSuccessErrorModel?>,
@@ -97,8 +107,7 @@ class NurseViewModel : ViewModel() {
             })
     }
 
-    fun clockOut(gps: RequestBody, profilePic: MultipartBody.Part) {
-
+    fun clockOut(gps: RequestBody, profilePic: MultipartBody.Part?) {
         EliteMedical.retrofitNurse.nurseClockOut(gps, profilePic)
             .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(

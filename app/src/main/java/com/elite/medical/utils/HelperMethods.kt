@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.elite.medical.databinding.ModalLayoutClinicDetailsMoreBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.util.Locale
 
 object HelperMethods {
 
@@ -87,6 +89,19 @@ object HelperMethods {
         if (currentFocusView != null) {
             inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
         }
+    }
+
+    fun makeAddressFromLocation(context: Context, location: GPSLocation): String? {
+        val geocoder = Geocoder(context, Locale.ENGLISH)
+        val addresses =
+            geocoder.getFromLocation(
+                location.latitude!!.toDouble(),
+                location.longitude!!.toDouble(),
+                1
+            )
+        val address = addresses!![0].getAddressLine(0)
+        return address
+
     }
 
     fun showDialog(title: String, cancelText: String, requireContext: Context, activity: FragmentActivity?) {

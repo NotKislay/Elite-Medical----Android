@@ -2,47 +2,53 @@ package com.elite.medical.admin.adapters.sidemenu.review
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.R
+import com.elite.medical.databinding.ItemNurseReviewBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ClinicReviewFromClinicReviewModel
 
-class ClinicReviewAdapter(private val cardItems: ArrayList<ClinicReviewFromClinicReviewModel>, private val context: Context) :
-    RecyclerView.Adapter<ClinicReviewAdapter.ModelViewHolder>() {
+class ClinicReviewAdapter(
+    private val cardItems: ArrayList<ClinicReviewFromClinicReviewModel>,
+    private val context: Context
+) :
+    RecyclerView.Adapter<ClinicReviewAdapter.ViewHolder>() {
 
-    class ModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.clinic_name)
-        val daysago: TextView = itemView.findViewById(R.id.tv_days_ago)
-        val rating: RatingBar = itemView.findViewById(R.id.rating)
-        val commentcontent: TextView = itemView.findViewById(R.id.comment)
-
-        val review_layout: LinearLayout = itemView.findViewById(R.id.review_layout)//item layout
+    class ViewHolder(binding: ItemNurseReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+        val clinicName: TextView = binding.clinicName
+        var nurseName = binding.nurseName
+        val daysAgo: TextView = binding.tvDaysAgo
+        val rating: RatingBar = binding.rating
+        val comment: TextView = binding.comment
+        val reviewLayout: LinearLayout = binding.reviewLayout
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModelViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_nurse_review, parent, false)
-        return ModelViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding =
+            ItemNurseReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = cardItems[position]
 
-        holder.name.text = currentItem.clinicName
-        holder.daysago.text= currentItem.timeAgo
-        holder.rating.rating= currentItem.rating.toFloat()
-        holder.commentcontent.text= currentItem.comment
+        holder.clinicName.text = currentItem.clinicName
+        holder.nurseName.text = currentItem.nurseName
+        holder.nurseName.isVisible = true
+        holder.daysAgo.text = currentItem.timeAgo
+        holder.rating.rating = currentItem.rating.toFloat()
+        holder.comment.text = currentItem.comment
         var fullLength = false
-        holder.review_layout.setOnClickListener {
+        holder.reviewLayout.setOnClickListener {
             fullLength = !fullLength
 
             if (fullLength)
-                holder.commentcontent.maxLines = 40
+                holder.comment.maxLines = 40
             else
-                holder.commentcontent.maxLines = 2
+                holder.comment.maxLines = 2
         }
     }
 

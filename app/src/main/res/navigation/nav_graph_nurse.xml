@@ -99,7 +99,7 @@
         tools:layout="@layout/fragment_applied_job_details" />
     <fragment
         android:id="@+id/timesheetFragment"
-        android:name="com.elite.medical.TimesheetFragment"
+        android:name="com.elite.medical.nurse.fragments.home.TimesheetFragment"
         android:label="fragment_timesheet"
         tools:layout="@layout/fragment_timesheet" />
 
@@ -110,7 +110,7 @@
         tools:layout="@layout/fragment_top_rated_clinics" />
     <fragment
         android:id="@+id/clockInOutFragment"
-        android:name="com.elite.medical.ClockInOutFragment"
+        android:name="com.elite.medical.nurse.fragments.home.ClockInOutFragment"
         android:label="fragment_clock_in_out"
         tools:layout="@layout/fragment_clock_in_out" />
 </navigation>

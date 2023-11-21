@@ -37,7 +37,7 @@ class ActivitySearchNurseDetails : AppCompatActivity() {
 
 
         getid = intent.getStringExtra("Nurse_id")!!
-        fetchAvailableNursedetailbyid(getid)
+        fetchAvailableNurseDetailByID(getid)
 
         binding.moreBtnEnrNurseDetails.setOnClickListener {
             // Creating a custom dialog
@@ -133,7 +133,7 @@ class ActivitySearchNurseDetails : AppCompatActivity() {
             })
     }
 
-    private fun fetchAvailableNursedetailbyid(id: String) {
+    private fun fetchAvailableNurseDetailByID(id: String) {
 
         NursesClinicAPIs.getAvlblNurseDetailsByid(id,
             object : NursesClinicAPIs.Companion.avlblNurseDetailsByIdCallback {
