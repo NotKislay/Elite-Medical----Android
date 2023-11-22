@@ -20,7 +20,6 @@ import com.elite.medical.nurse.adapters.jobs.SearchJobsAdapter
 import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
-import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.SearchJobsModel
 
 class SearchJobs : Fragment() {
     private lateinit var binding: FragmentSearchJobsBinding
@@ -29,6 +28,7 @@ class SearchJobs : Fragment() {
     private lateinit var adapter: SearchJobsAdapter
     private lateinit var listView: RecyclerView
     private lateinit var listJobs: List<Job>
+    private lateinit var tempList: List<Job>
 
     private lateinit var jobTypeItems: MutableList<String>
     private lateinit var locationItems: MutableList<String>
@@ -122,15 +122,7 @@ class SearchJobs : Fragment() {
             binding.spinnerJobType.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        if (p2 != 0) {
-                            val item = jobTypeItems.elementAt(p2)
-                            val filterList = listJobs.filter { it.type.contains(item) }
-                            binding.tvNoData.isVisible = filterList.isEmpty()
-                            adapter.filterList(filterList)
-                        } else {
-                            adapter.filterList(listJobs)
-                            binding.tvNoData.isVisible = false
-                        }
+                        applyFilters()
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -139,17 +131,7 @@ class SearchJobs : Fragment() {
             binding.spinnerLocation.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        if (p2 != 0) {
-                            val item = locationItems.elementAt(p2)
-                            val filterList = listJobs.filter {
-                                it.locations.joinToString(",").contains(item)
-                            }
-                            binding.tvNoData.isVisible = filterList.isEmpty()
-                            adapter.filterList(filterList)
-                        } else {
-                            adapter.filterList(listJobs)
-                            binding.tvNoData.isVisible = false
-                        }
+                        applyFilters()
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -157,35 +139,37 @@ class SearchJobs : Fragment() {
 
         }
     }
-//    private fun applyFilters() {
-//        val cityFilterIndex = spinnerCity.selectedItemPosition
-//        val licenceTypeFilterIndex = spinnerLicenceType.selectedItemPosition
-//
-//        tempList = mainList
-//
-//        if (cityFilterIndex != 0) {
-//            val filteredByCity =
-//                tempList.filter { it.city.contains(cities.elementAt(cityFilterIndex)) }
-//            tempList = filteredByCity as MutableList<Nurse>
-//        }
-//
-//
-//        if (licenceTypeFilterIndex != 0) {
-//            val filteredByLicenseType =
-//                tempList.filter {
-//                    it.licenseType.contains(
-//                        licenceTypeFilter.elementAt(
-//                            licenceTypeFilterIndex
-//                        )
-//                    )
-//                }
-//            tempList = filteredByLicenseType as MutableList<Nurse>
-//        }
-//
-//
-//        binding.tvNoData.isVisible = tempList.isEmpty()
-//        recyclerViewAdapter.filterList(tempList)
-//    }
+
+    private fun applyFilters() {
+        val jobTypeFilterIndex = binding.spinnerJobType.selectedItemPosition
+        val locationFilterIndex = binding.spinnerLocation.selectedItemPosition
+
+        tempList = listJobs
+
+        if (jobTypeFilterIndex != 0) {
+            val filteredByCity =
+                tempList.filter { it.type.contains(jobTypeItems.elementAt(jobTypeFilterIndex)) }
+            tempList = filteredByCity as MutableList<Job>
+        }
+
+
+        if (locationFilterIndex != 0) {
+            val filteredByLicenseType =
+                tempList.filter {
+                    it.locations.contains(
+                        locationItems.elementAt(
+                            locationFilterIndex
+                        )
+                    )
+                }
+            tempList = filteredByLicenseType as MutableList<Job>
+        }
+
+
+        binding.tvNoData.isVisible = tempList.isEmpty()
+        adapter.filterList(tempList)
+    }
+
     private fun setupSpinner() {
         val jobTypeAdapter =
             ArrayAdapter(

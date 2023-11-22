@@ -91,15 +91,6 @@ class SearchAvailableNursesFragment : Fragment() {
                     p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                 ) {
                     applyFilters()
-                    /*if (p2 != 0) {
-                        val filteredList =
-                            mainList.filter { it.city.contains(cities.elementAt(p2)) }
-                        binding.tvNoData.isVisible = filteredList.isEmpty()
-                        recyclerViewAdapter.filterList(filteredList)
-                    } else {
-                        binding.tvNoData.isVisible = false
-                        recyclerViewAdapter.filterList(mainList)
-                    }*/
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -111,15 +102,6 @@ class SearchAvailableNursesFragment : Fragment() {
                     p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long
                 ) {
                     applyFilters()
-                    /*if (p2 != 0) {
-                        val filteredList =
-                            mainList.filter { it.licenseType.contains(licenceTypeFilter.elementAt(p2)) }
-                        binding.tvNoData.isVisible = filteredList.isEmpty()
-                        recyclerViewAdapter.filterList(filteredList)
-                    } else {
-                        binding.tvNoData.isVisible = false
-                        recyclerViewAdapter.filterList(mainList)
-                    }*/
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}

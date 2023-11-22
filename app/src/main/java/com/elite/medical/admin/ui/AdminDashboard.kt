@@ -37,6 +37,7 @@ import com.elite.medical.admin.ui.sidemenu.reviews.NurseReviews
 import com.elite.medical.admin.ui.sidemenu.dashboard.jobs.ApprovedJobs
 import com.elite.medical.admin.ui.sidemenu.dashboard.nurses.ApprovedNurses
 import com.elite.medical.databinding.ActivityDashboardAdminBinding
+import com.elite.medical.databinding.ModalLayoutLogoutBinding
 import com.elite.medical.retrofit.apis.admin.DDAdminAPI
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
@@ -95,9 +96,9 @@ class AdminDashboard : AppCompatActivity() {
             object : DDAdminAPI.Companion.DashboardDataCallback {
                 override fun onDataReceived(data: AdminDashboardModel?, statusCode: Int?) {
                     if (statusCode == 200) {
-                        binding.tvActiveClinic.text = "Active Clinics: ${data!!.clinics.size}"
-                        binding.tvActiveNurses.text = "Active Nurses: ${data!!.nurses.size}"
-                        binding.tvActiveJobs.text = "Active Jobs: ${data!!.activeJobs.size}"
+                        binding.tvActiveClinic.text = "Active Clinics: ${data!!.countClinics}"
+                        binding.tvActiveNurses.text = "Active Nurses: ${data!!.countNurses}"
+                        binding.tvActiveJobs.text = "Active Jobs: ${data!!.countActiveJobs}"
 
                         dashboardData = data
                         binding.loader.visibility = View.GONE
@@ -267,25 +268,21 @@ class AdminDashboard : AppCompatActivity() {
     }
 
     private fun showLogoutConfirmationDialog() {
-        val builder = AlertDialog.Builder(this, R.style.MyDialogTheme)
-        builder.setTitle("Logout")
-        builder.setMessage("Want to logout?")
+        val customLogout = Dialog(this)
+        customLogout.setContentView(R.layout.modal_layout_logout)
 
+        customLogout.findViewById<Button>(R.id.btn_ok).setOnClickListener {
+             EliteMedical.updateAdminToken(null)
+             customLogout.dismiss()
+             val intent = Intent(this, LoginAdmin::class.java)
+             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+             startActivity(intent)
+         }
 
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            EliteMedical.updateAdminToken(null)
-            dialog.dismiss()
-            val intent = Intent(this, LoginAdmin::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
+        customLogout.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
+            customLogout.dismiss()
         }
-
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        val dialog = builder.create()
-        dialog.show()
+        customLogout.show()
     }
 
     override fun onResume() {

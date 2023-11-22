@@ -50,11 +50,11 @@
                 <ImageView
                     android:id="@+id/avatarImageView"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:layout_weight="0.2"
-                    android:src="@drawable/icon_person" />
+                    android:background="@drawable/circular_background"
+                    android:paddingVertical="10dp"
+                    android:src="@drawable/icon_avatar" />
 
 
             </LinearLayout>

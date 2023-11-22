@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.R
@@ -52,6 +53,7 @@ class ActivityReviewsByClinicToNurses : AppCompatActivity() {
                 "Post a review for this Nurse"
             itemReviewView.findViewById<TextView>(R.id.tv_days_ago).visibility = View.GONE
             itemReviewView.findViewById<TextView>(R.id.comment).visibility = View.GONE
+            itemReviewView.findViewById<TextView>(R.id.nurse_name).isVisible = false
             val rating = itemReviewView.findViewById<RatingBar>(R.id.rating)
             val comment = itemReviewView.findViewById<EditText>(R.id.add_comment)
             val submitrevbtn = itemReviewView.findViewById<Button>(R.id.btn_submit_review)

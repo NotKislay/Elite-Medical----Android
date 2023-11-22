@@ -177,6 +177,7 @@ class ApprovalAPIs {
                     call: Call<JobSearchApprovalModel?>,
                     response: Response<JobSearchApprovalModel?>
                 ) {
+
                     if (response.isSuccessful) {
                         val responseData = response.body()
                         val employmentDetails = responseData!!.nurseDetails

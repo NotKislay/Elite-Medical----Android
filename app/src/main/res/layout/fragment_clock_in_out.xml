@@ -32,7 +32,7 @@
             android:layout_marginLeft="-30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Job Details"
+            android:text="Clock Out"
             android:textColor="@color/white"
             android:textSize="20sp" />
 

@@ -17,6 +17,15 @@ data class AdminDashboardModel(
     val clinics: List<ClinicDetailsFromClinicApprovalModel>,
     @SerializedName("message")
     val message: String,
+
+    @SerializedName("count_clinics")
+    val countClinics: String,
+    @SerializedName("count_nurses")
+    val countNurses: String,
+    @SerializedName("count_activeJobs")
+    val countActiveJobs: String,
+
+
     @SerializedName("name")
     val name: String,
     @SerializedName("nurseReviews")

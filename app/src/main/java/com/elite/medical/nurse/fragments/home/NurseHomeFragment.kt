@@ -25,6 +25,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
+import com.elite.medical.clinic.auth.LoginClinic
 import com.elite.medical.databinding.FragmentMainScreenBinding
 import com.elite.medical.nurse.LoginNurse
 import com.elite.medical.nurse.adapters.home.MenuAdapter
@@ -261,22 +262,21 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun callLogout() {
-        val dialogBtn = MaterialAlertDialogBuilder(
-            requireContext(),
-            R.style.MyDialogTheme
-        )
-        dialogBtn.setMessage("Do you want to exit?")
-        dialogBtn.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-        dialogBtn.setPositiveButton("Yes") { dialog, _ ->
-            dialog.dismiss()
+        val customLogout = Dialog(requireContext())
+        customLogout.setContentView(R.layout.modal_layout_logout)
+
+        customLogout.findViewById<Button>(R.id.btn_ok).setOnClickListener {
             EliteMedical.updateNurseToken(null)
-            val intent = Intent(requireContext(), LoginNurse::class.java)
+            customLogout.dismiss()
+            val intent = Intent(requireActivity(), LoginNurse::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
-        dialogBtn.show()
+
+        customLogout.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
+            customLogout.dismiss()
+        }
+        customLogout.show()
     }
 
 

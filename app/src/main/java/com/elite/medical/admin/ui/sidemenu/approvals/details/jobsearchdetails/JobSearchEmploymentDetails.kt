@@ -20,18 +20,33 @@ class JobSearchEmploymentDetails : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnBack.setOnClickListener { finish() }
-        binding.details.text="Hiring for Trial"
+
 
         val details =
             intent.getParcelableExtra<Employment>(
                 "details"
             )!!
 
-        val arrayData = arrayOf(
-            "Trial Start: ${details.trialStart}",
-            "Trial End: ${details.trialEnd}",
-        )
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+        if (details.trial == "false") {
+            binding.details.text = "Direct Hiring"
+
+            val arrayData = arrayOf(
+                "Employment Start: ${details.empStart}",
+                "Employment End: ${details.empEnd}",
+            )
+
+            val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
+            binding.listView.adapter = adapter
+
+
+        } else {
+            binding.details.text = "Hiring for Trial"
+            val arrayData = arrayOf(
+                "Trial Start: ${details.trialStart}",
+                "Trial End: ${details.trialEnd}",
+            )
+            val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
+            binding.listView.adapter = adapter
+        }
     }
 }

@@ -26,12 +26,22 @@ class EmploymentApprovalEmploymentDetails : AppCompatActivity() {
                 "details"
             )!!
 
-        val arrayData = arrayOf(
-            "Employment Start: ${details.empStart}",
-            "Employment End: ${details.empEnd}",
-        )
+        if (details.trial == "true") {
+            val arrayData = arrayOf(
+                "Trail Start: ${details.trialStart}",
+                "Trail End: ${details.trialEnd}",
+            )
+            val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
+            binding.listView.adapter = adapter
+        } else {
+            val arrayData = arrayOf(
+                "Employment Start: ${details.empStart}",
+                "Employment End: ${details.empEnd}",
+            )
+            val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
+            binding.listView.adapter = adapter
+        }
 
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+
     }
 }

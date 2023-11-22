@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.SideMenuAdapterClinic
+import com.elite.medical.admin.ui.auth.LoginAdmin
 import com.elite.medical.clinic.auth.LoginClinic
 import com.elite.medical.clinic.viewmodels.ClinicViewModel
 import com.elite.medical.databinding.FragmentClinicDashboardBinding
@@ -164,24 +165,21 @@ class ClinicHomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showLogoutConfirmationDialog() {
-        val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
-        builder.setTitle("Logout")
-        builder.setMessage("Want to logout?")
+        val customLogout = Dialog(requireContext())
+        customLogout.setContentView(R.layout.modal_layout_logout)
 
-        builder.setPositiveButton("Yes") { dialog, _ ->
+        customLogout.findViewById<Button>(R.id.btn_ok).setOnClickListener {
             EliteMedical.updateClinicToken(null)
-            dialog.dismiss()
-            val intent = Intent(requireContext(), LoginClinic::class.java)
+            customLogout.dismiss()
+            val intent = Intent(requireActivity(), LoginClinic::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
 
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
+        customLogout.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
+            customLogout.dismiss()
         }
-
-        val dialog = builder.create()
-        dialog.show()
+        customLogout.show()
     }
 
     override fun onResume() {

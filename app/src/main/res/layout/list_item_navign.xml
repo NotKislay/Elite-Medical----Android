@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="40dp"
+    android:layout_marginStart="40dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -10,16 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="33dp" />
+        android:layout_marginStart="33dp" />
 
     <TextView
         android:id="@+id/expandedListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:paddingVertical="10dp"
         android:textColor="@color/white"
         android:textSize="16sp" />
 

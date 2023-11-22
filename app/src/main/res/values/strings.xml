@@ -34,5 +34,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_city">Select City</string>
     <string name="select_license_type">Select License type</string>
+    <string name="logout">Logout</string>
 
 </resources>

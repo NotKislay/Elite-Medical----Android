@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingVertical="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="15dp"
+        android:text="@string/logout"
+        android:textColor="@color/md_red_400"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/logoutMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="15dp"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="15dp"
+        android:text="Want to Logout?"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn_cancel"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:text="No"
+            android:typeface="normal"
+            android:textColor="#2D8EDA"
+            android:textSize="17dp" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn_ok"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:text="Yes"
+            android:textColor="#2D8EDA"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>
