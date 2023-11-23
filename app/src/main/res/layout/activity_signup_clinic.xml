@@ -234,21 +234,43 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/et_Upload_License"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginVertical="10dp"
-                android:background="@drawable/et_background"
-                android:drawableLeft="@drawable/upload"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:hint="Upload License"
-                android:paddingLeft="10dp"
-                android:textColor="#3D6E95"
-                android:textColorHint="#3D6E95"
-                android:textSize="16sp" />
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+
+                <!-- Circular Image View  -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_preview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/clinic"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="4dp" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/et_Upload_Clinic_License"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_background"
+                    android:drawableStart="@drawable/upload"
+                    android:drawablePadding="10dp"
+                    android:hint="Upload License"
+                    android:paddingStart="10dp"
+                    android:textColor="#3D6E95"
+                    android:textColorHint="#3D6E95"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

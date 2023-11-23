@@ -28,6 +28,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Locale
@@ -154,17 +155,19 @@ class ClockInOutFragment : Fragment() {
     private fun clockOut() {
         binding.loader.isVisible = true
         binding.clockOutBtn.isVisible = false
+
         val fileDir = activity?.applicationContext?.filesDir
         val file = File(fileDir, "image.png")
         val inputStream = activity?.contentResolver?.openInputStream(photoURI!!)
         val outputStream = FileOutputStream(file)
         inputStream!!.copyTo(outputStream)
+        inputStream.close()
 
         val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
 
         val gps = HelperMethods.makeAddressFromLocation(requireContext(),location)!!
-        val gpsS = RequestBody.create("text/plain".toMediaTypeOrNull(), gps)
+        val gpsS = gps.toRequestBody("text/plain".toMediaTypeOrNull())
         viewModel.clockOut(gpsS, part)
 
     }

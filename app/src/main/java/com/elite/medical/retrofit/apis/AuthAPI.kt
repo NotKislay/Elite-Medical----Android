@@ -135,50 +135,7 @@ class AuthAPI {
         }
 
 
-        fun registerNurse(
-            nurseDetails: RegisterNurseModel,
-            callback: AuthSignUpCallbackNurse
-        ) {
-            val registerNurseAPI =
-                RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = registerNurseAPI.registerNurse(nurseDetails)
-            result.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()?.string()
-                        val gson = Gson()
-                        val jsonResponse =
-                            gson.fromJson(responseBody, Map::class.java) as Map<String, String>?
 
-                        val status = jsonResponse?.get("status") ?: ""
-                        val message = jsonResponse?.get("message") ?: ""
-
-                        callback.onSignUpSuccess(message)
-
-
-                    } else {
-                        val responseBody = response.errorBody()?.string()
-                        val gson = Gson()
-                        val jsonResponse =
-                            gson.fromJson(responseBody, Map::class.java) as Map<String, String>?
-                        val status = jsonResponse?.get("status") ?: ""
-                        val message = jsonResponse?.get("message") ?: ""
-
-
-
-                        callback.onSignUpSuccess(message)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-
-
-        }
 
 
         fun registerClinic(

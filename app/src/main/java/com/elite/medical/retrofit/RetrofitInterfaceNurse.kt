@@ -99,6 +99,47 @@ interface RetrofitInterfaceNurse {
         @Field("comment") comment: String,
     ): Call<GenericSuccessErrorModel>
 
+    @FormUrlEncoded
+    @POST(ConstantsNurse.REGISTER_NURSE)
+    fun registerNurse(
+
+        @Field("name")
+        name: String,
+        @Field("email")
+        email: String,
+        @Field("address")
+        address: String,
+        @Field("mobile")
+        mobile: String,
+        @Field("dob")
+        dob: String,
+        @Field("city")
+        city: String,
+        @Field("state")
+        state: String,
+        @Field("zip")
+        zip: String,
+        @Field("nclex_status")
+        nclex_status: String,
+        @Field("us_immg_status")
+        us_immg_status: String,
+        @Field("cgfns_status")
+        cgfns_status: String,
+        @Field("license_type")
+        license_type: String,
+        @Field("nurse_license")
+        nurse_license: String,
+        @Field("license_issue")
+        license_issue: String,
+        @Field("license_expiry")
+        license_expiry: String,
+        @Field("experience")
+        experience: String,
+        @Field("speciality")
+        speciality: String,
+
+        ): Call<GenericSuccessErrorModel>
+
 
     /*    @GET(Constants.CLINIC_JOB_LOCATIONS)
         fun getJobLocations(): Call<ClinicJobLocationsModel>*/

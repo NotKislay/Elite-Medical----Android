@@ -1,5 +1,6 @@
 package com.elite.medical.utils
 
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 private fun String.Companion.validateEmail(email: String): String? {
@@ -48,6 +49,9 @@ class InputValidation {
             else
                 ""
 
+        }
+        fun isFileAttached(circleImageView: CircleImageView) {
+            println(circleImageView.tag as? Int)
         }
     }
 

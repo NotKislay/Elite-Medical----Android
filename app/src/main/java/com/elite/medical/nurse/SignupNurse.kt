@@ -1,38 +1,49 @@
 package com.elite.medical.nurse
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
+import android.util.Base64
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.elite.medical.R
+import com.elite.medical.databinding.ActivitySignupNurseBinding
+import com.elite.medical.nurse.auth.NurseAuthViewModel
 import com.elite.medical.utils.HelperMethods
 import com.elite.medical.utils.InputValidation
-import com.elite.medical.databinding.ActivitySignupNurseBinding
-import com.elite.medical.retrofit.apis.AuthAPI
-import com.elite.medical.retrofit.requestmodels.RegisterNurseModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.DelicateCoroutinesApi
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.sql.Date
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
+import kotlin.properties.Delegates
 
 
-class SignupNurse : AppCompatActivity() {
+class SignupNurse : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var imageBitmap: Bitmap
+    private lateinit var base64Image: String
+    private lateinit var str: String
+    private var isImgAttached by Delegates.notNull<Boolean>()
+
     private val nurseType = arrayOf("C.M.T", "C.N.A", "L.P.N", "R.N", "P.A", "N.P")
     private val usImmigrationStatus = arrayOf(
         "I am a US citizen or I have permission to work in the US",
@@ -71,9 +82,9 @@ class SignupNurse : AppCompatActivity() {
     lateinit var licenceExpiryDate: MaterialButton
     lateinit var yearsOfExperience: TextInputEditText
     lateinit var speciality: TextInputEditText
-    private var photoURI: Uri? = null
 
     private lateinit var binding: ActivitySignupNurseBinding
+    private val viewModel by viewModels<NurseAuthViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,100 +92,78 @@ class SignupNurse : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signup_nurse)
 
         initializeBindings()
+        initListeners()
 
-        spinnerNurseType = binding.nurseType
-        val adapter1 = ArrayAdapter(
-            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nurseType
-        )
-        spinnerNurseType.adapter = adapter1
+        viewModel.registerNurseCallback = {
+            binding.loader.isVisible = false
+            binding.btnSignup.isVisible = true
 
-        spinnerNCLEXStatus = binding.NCLEXStatus
-        val adapter2 = ArrayAdapter(
-            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nclexStatus
-        )
-        spinnerNCLEXStatus.adapter = adapter2
-
-        spinnerUsImmigrationStatus = binding.etUSImmigrationStatus
-        val adapter3 = ArrayAdapter(
-            this,
-            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-            usImmigrationStatus
-        )
-        spinnerUsImmigrationStatus.adapter = adapter3
-
-        spinnercgfnStatus = binding.etCGFNSStatus
-        val adapter4 = ArrayAdapter(
-            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, cgfnStatus
-        )
-        spinnercgfnStatus.adapter = adapter4
-
-        val tvDob = binding.tvDob
-        val tvLicenceIssueDate = binding.tvLicenceIssueDate
-        val tvLicenceExpiryDate = binding.tvLicenceExpiryDate
-
-        binding.tvSignIn.setOnClickListener {
-            val intent = Intent(this, LoginNurse::class.java)
-            startActivity(intent)
-            finish()
+            if (it?.status == "success") {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                finish()
+            } else
+                Toast.makeText(this, it?.message, Toast.LENGTH_SHORT).show()
         }
 
-        binding.btnCancel.setOnClickListener {
-            finish()
-        }
-        binding.etUploadLicense.setOnClickListener {
-            chooseImage(this)
-        }
-        binding.tvDob.setOnClickListener {
-            openDatePicker(tvDob, "D.O.B")
-        }
-        binding.tvLicenceIssueDate.setOnClickListener {
-            openDatePicker(tvLicenceIssueDate, "Issue Date")
-        }
-        binding.tvLicenceExpiryDate.setOnClickListener {
-            openDatePicker(tvLicenceExpiryDate, "Expiry Date")
-        }
+        setupNurseTypeAdapter(nurseType)
+        setupNCLEXStatusAdapter(nclexStatus)
+        setupUSImmigrationStatusAdapter(usImmigrationStatus)
+        setupCGFNStatusAdapter(cgfnStatus)
+
+
         binding.btnSignup.setOnClickListener {
 
-            //val fileDir = activity?.applicationContext?.filesDir
-            val fileDir = applicationContext?.filesDir
-            val file = File(fileDir, "image.png")
-//            val inputStream = contentResolver?.openInputStream(photoURI!!)
-//            val outputStream = FileOutputStream(file)
-//            inputStream!!.copyTo(outputStream)
-//            println("Dir- $fileDir, FIle is $file, istream $inputStream")
-            if (validateInputs()) {
+            binding.loader.isVisible = true
+            binding.btnSignup.isVisible = false
 
-                val userDetails = RegisterNurseModel(
-                    name.text.toString(),
-                    email.text.toString(),
-                    address.text.toString(),
-                    mobile.text.toString(),
-                    dob.text.toString(),
-                    city.text.toString(),
-                    state.text.toString(),
-                    zip.text.toString(),
-                    spinnerNCLEXStatus.selectedItem.toString(),
-                    spinnerUsImmigrationStatus.selectedItem.toString(),
-                    spinnercgfnStatus.selectedItem.toString(),
-                    spinnerNurseType.selectedItem.toString(),
-                    "test",
-                    //uploadLicense.text.toString(),
-                    licenceIssueDate.text.toString(),
-                    licenceExpiryDate.text.toString(),
-                    yearsOfExperience.text.toString(),
-                    speciality.text.toString()
+            //if(validateInputs()){
+                binding.loader.isVisible = false
+                val name = name.text.toString()
+                val email = email.text.toString()
+                val address = address.text.toString()
+                val mobile = mobile.text.toString()
+                val dob = dob.text.toString()
+                val city = city.text.toString()
+                val state = state.text.toString()
+                val zip = zip.text.toString()
+                val spinnerNCLEXStatus = spinnerNCLEXStatus.selectedItem.toString()
+                val spinnerUsImmigrationStatus = spinnerUsImmigrationStatus.selectedItem.toString()
+                val spinnercgfnStatus = spinnercgfnStatus.selectedItem.toString()
+                val spinnerNurseType = spinnerNurseType.selectedItem.toString()
+                val licenceIssueDate = licenceIssueDate.text.toString()
+                val licenceExpiryDate = licenceExpiryDate.text.toString()
+                val yearsOfExperience = yearsOfExperience.text.toString()
+                val speciality = speciality.text.toString()
+                binding.btnSignup.isVisible = false
+
+
+                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+
+
+                viewModel.registerNurse(
+                    name,
+                    email,
+                    address,
+                    mobile,
+                    dob,
+                    city,
+                    state,
+                    zip,
+                    spinnerNCLEXStatus,
+                    spinnerUsImmigrationStatus,
+                    spinnercgfnStatus,
+                    spinnerNurseType,
+                    str,
+                    licenceIssueDate,
+                    licenceExpiryDate,
+                    yearsOfExperience,
+                    speciality
                 )
+            //}
+            /*else{
+                binding.btnSignup.isEnabled= false
+            }*/
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    AuthAPI.registerNurse(userDetails, object : AuthAPI.Companion.AuthSignUpCallbackNurse {
-                        override fun onSignUpSuccess(message: String) {
-                            Toast.makeText(this@SignupNurse, message, Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                    }
-                    )
-                }
-            }
 
 
         }
@@ -182,6 +171,40 @@ class SignupNurse : AppCompatActivity() {
 
         HelperMethods.requestCameraPermission(this)
 
+    }
+
+    private fun setupCGFNStatusAdapter(cgfnStatus: Array<String>) {
+        spinnercgfnStatus = binding.etCGFNSStatus
+        val cGFNStatusAdapter = ArrayAdapter(
+            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, cgfnStatus
+        )
+        spinnercgfnStatus.adapter = cGFNStatusAdapter
+    }
+
+    private fun setupUSImmigrationStatusAdapter(usImmigrationStatus: Array<String>) {
+        spinnerUsImmigrationStatus = binding.etUSImmigrationStatus
+        val usImmigrationStatusAdapter = ArrayAdapter(
+            this,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            usImmigrationStatus
+        )
+        spinnerUsImmigrationStatus.adapter = usImmigrationStatusAdapter
+    }
+
+    private fun setupNCLEXStatusAdapter(nCLEXStatus: Array<String>) {
+        spinnerNCLEXStatus = binding.NCLEXStatus
+        val nCLEXStatusAdapter = ArrayAdapter(
+            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nCLEXStatus
+        )
+        spinnerNCLEXStatus.adapter = nCLEXStatusAdapter
+    }
+
+    private fun setupNurseTypeAdapter(nurseType: Array<String>) {
+        spinnerNurseType = binding.nurseType
+        val nurseTypeAdapter = ArrayAdapter(
+            this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nurseType
+        )
+        spinnerNurseType.adapter = nurseTypeAdapter
     }
 
     private fun initializeBindings() {
@@ -199,7 +222,6 @@ class SignupNurse : AppCompatActivity() {
         licenceExpiryDate = binding.tvLicenceExpiryDate
         yearsOfExperience = binding.etYearsOfExperience
         speciality = binding.etSpeciality
-
 
     }
 
@@ -222,40 +244,30 @@ class SignupNurse : AppCompatActivity() {
         button.error = null
     }
 
-    private val pickMedia =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-            if (uri != null) {
-                binding.etUploadLicense.text = uri.path
-            }
-        }
+    @OptIn(DelicateCoroutinesApi::class)
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+        binding.imgPreview.setImageURI(it)
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val selectedImage = result.data?.data.toString()
-                Toast.makeText(this, selectedImage, Toast.LENGTH_SHORT).show()
-            }
-        }
+        imageBitmap = imageToBitmap(it)!!
+    }
+
+    private fun imageToBitmap(it: Uri?): Bitmap? =
+
+        MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, it)
+
+
 
     private fun chooseImage(context: Context) {
         val optionsMenu = arrayOf("Take Photo", "Upload from storage", "Exit")
         val builder = AlertDialog.Builder(context)
         builder.setItems(optionsMenu) { dialogInterface, i ->
             when (optionsMenu[i]) {
+
                 "Take Photo" -> {
-                    // Open the camera and get the photo
-                    val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
-                    resultLauncher.launch(takePicture)
+                    openCamera()
                 }
 
-                "Upload from storage" -> {
-                    pickMedia.launch(arrayOf("*/*"))
-
-//                    registerForActivityResult(ActivityResultContracts.GetContent()){uri: Uri?->
-//
-//                        println(uri)
-//                    }
-                }
+                "Upload from storage" -> pickMedia.launch(arrayOf("image/jpeg"))
 
                 "Exit" -> {
                     dialogInterface.dismiss()
@@ -264,7 +276,6 @@ class SignupNurse : AppCompatActivity() {
             }
         }
         builder.show()
-        binding.etUploadLicense.error = null
     }
 
     private fun validateInputs(): Boolean {
@@ -280,7 +291,6 @@ class SignupNurse : AppCompatActivity() {
             city,
             state,
             zip,
-            uploadLicense,
             licenceIssueDate,
             licenceExpiryDate,
             yearsOfExperience,
@@ -303,13 +313,119 @@ class SignupNurse : AppCompatActivity() {
             validated = false
         }
 
-        if (InputValidation.isFieldEmpty(uploadLicense.text.toString()) != "") {
+        if (InputValidation.isFieldEmpty(uploadLicense.hint.toString()) != "") {
+            println("text is "+ uploadLicense.text.toString())
             uploadLicense.error = "Please upload a file."
             uploadLicense.requestFocus()
             validated = false
         }
+        else{
+            uploadLicense.error=null
+        }
+
+
 
         return validated
     }
 
+
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+        val image = stream.toByteArray()
+        return Base64.encodeToString(image, Base64.NO_WRAP)
+    }
+
+    private fun initListeners() {
+
+        binding.tvSignIn.setOnClickListener(this)
+        binding.btnCancel.setOnClickListener(this)
+        binding.tvDob.setOnClickListener(this)
+        binding.tvLicenceIssueDate.setOnClickListener(this)
+        binding.tvLicenceExpiryDate.setOnClickListener(this)
+        binding.etUploadLicense.setOnClickListener(this)
+
+    }
+
+    override fun onClick(view: View?) {
+
+        when (view?.id) {
+
+            binding.tvSignIn.id -> {
+                val intent = Intent(this, LoginNurse::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+            binding.btnCancel.id -> finish()
+
+            binding.tvDob.id -> {
+                val tvDob = binding.tvDob
+                openDatePicker(tvDob, "D.O.B")
+            }
+
+            binding.tvLicenceIssueDate.id -> {
+                val tvLicenceIssueDate = binding.tvLicenceIssueDate
+                openDatePicker(tvLicenceIssueDate, "Issue Date")
+            }
+
+            binding.tvLicenceExpiryDate.id -> {
+                val tvLicenceExpiryDate = binding.tvLicenceExpiryDate
+                openDatePicker(tvLicenceExpiryDate, "Expiry Date")
+            }
+
+            binding.etUploadLicense.id -> chooseImage(this@SignupNurse)
+
+        }
+
+    }
+
+    private fun openCamera() {
+        val isStorageAvailable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+        if (isStorageAvailable) {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                "com.elite.medical.FileUsage",
+                createImageFile()
+            )
+            takePicture.launch(photoURI)
+
+        } else {
+            Toast.makeText(
+                this,
+                "Storage Full! make sure you have space in your storage",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private var photoFile: File? = null
+
+    private fun createImageFile(): File {
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(java.util.Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir).apply {
+            photoFile = this
+        }
+    }
+
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+
+                val photoUri: Uri = photoFile?.let {
+                    FileProvider.getUriForFile(
+                        this, "com.elite.medical.FileUsage", it
+                    )
+                } ?: return@registerForActivityResult
+
+                binding.imgPreview.setImageURI(photoUri)
+                imageBitmap = imageToBitmap(photoUri)!!
+                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+
+            } else {
+                Toast.makeText(this, "Unable to capture image", Toast.LENGTH_SHORT).show()
+            }
+        }
 }

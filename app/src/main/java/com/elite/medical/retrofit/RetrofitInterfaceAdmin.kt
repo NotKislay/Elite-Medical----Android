@@ -2,7 +2,6 @@ package com.elite.medical.retrofit
 
 import com.elite.medical.retrofit.requestmodels.LoginModel
 import com.elite.medical.retrofit.requestmodels.RegisterClinicModel
-import com.elite.medical.retrofit.requestmodels.RegisterNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.ProfileDetailsModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
@@ -24,8 +23,10 @@ import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.nurses.
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ClinicReviewModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.NurseReviewModel
 import com.elite.medical.retrofit.responsemodel.auth.LogoutModel
-import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
+import com.elite.medical.retrofit.testing.ImageUploadModel
 import com.elite.medical.utils.Constants
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -33,7 +34,9 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface RetrofitInterfaceAdmin {
@@ -48,28 +51,15 @@ interface RetrofitInterfaceAdmin {
         @Header("Authorization") authorization: String
     ): Call<LogoutModel>
 
-    @POST(Constants.REGISTER_NURSE)
-    fun registerNurse(@Body user: RegisterNurseModel): Call<ResponseBody>
+
 
     @POST(Constants.REGISTER_CLINIC)
     fun registerClinic(@Body user: RegisterClinicModel): Call<ResponseBody>
 
 
-//    Dashboard Screen Details
-
-    /*    @GET(Constants.ADMIN_DASHBOARD_DATA)
-        fun getAdminDashboardData(
-            @Header("Authorization") authorization: String
-        ): Call<AdminDashboardModel>*/
-
     @GET(Constants.ADMIN_DASHBOARD_DATA)
     fun getAdminDashboardData(): Call<AdminDashboardModel>
 
-
-    @GET(Constants.CLINIC_DASHBOARD_DATA)
-    fun getClinicDashboardData(
-        @Header("Authorization") authorization: String
-    ): Call<ClinicDashboardModel>
 
     @GET(Constants.PROFILE_DATA)
     fun getProfileData(): Call<ProfileDetailsModel>
@@ -218,6 +208,11 @@ interface RetrofitInterfaceAdmin {
         @Path("nurse_id") nurseId: String
     ): Call<JobClinicNurseDetailsByID>
 
+    @POST("test-image")
+    @FormUrlEncoded
+    fun uploadImageTest(
+        @Field("base_64") base_64: String,
+    ): Call<ImageUploadModel>
 
 
 }

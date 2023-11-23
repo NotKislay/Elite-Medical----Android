@@ -80,13 +80,11 @@ class EliteMedical : Application() {
             val response = chain.proceed(chain.request())
             if (response.code == 401) {
                 updateNurseToken(null)
-
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra("token", "null")
                 startActivity(intent)
-
             }
 
 
