@@ -4,6 +4,7 @@ class Constants {
     companion object {
 
         const val BASE_URL = "https://staging.emfwebapp.ikshudigital.com/api/"
+        const val URL_FOR_IMAGE = "https://staging.emfwebapp.ikshudigital.com/storage/"
 
         //        Common
         const val LOGIN = "login"

@@ -33,10 +33,6 @@ class AuthAPI {
             fun onSignUpSuccess(message: String)
         }
 
-        interface AuthSignUpCallbackClinic {
-            fun onSignUpSuccess(message: String)
-        }
-
         interface AuthLogoutCallback {
             fun onLogoutSuccess(message: String)
         }
@@ -135,53 +131,6 @@ class AuthAPI {
         }
 
 
-
-
-
-        fun registerClinic(
-            clinicDetails: RegisterClinicModel,
-            callback: AuthSignUpCallbackNurse
-        ) {
-            val registerClinicAPI =
-                RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = registerClinicAPI.registerClinic(clinicDetails)
-            result.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()?.string()
-                        val gson = Gson()
-                        val jsonResponse =
-                            gson.fromJson(responseBody, Map::class.java) as Map<String, String>?
-
-                        val status = jsonResponse?.get("status") ?: ""
-                        val message = jsonResponse?.get("message") ?: ""
-
-                        callback.onSignUpSuccess(message)
-
-
-                    } else {
-                        val responseBody = response.errorBody()?.string()
-                        val gson = Gson()
-                        val jsonResponse =
-                            gson.fromJson(responseBody, Map::class.java) as Map<String, String>?
-                        val status = jsonResponse?.get("status") ?: ""
-                        val message = jsonResponse?.get("message") ?: ""
-
-
-
-                        callback.onSignUpSuccess(message)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-
-
-        }
 
 
         fun logout(

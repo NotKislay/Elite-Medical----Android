@@ -10,12 +10,16 @@ import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.enr_nurse_details.ReviewFromEnrNurseDet
 
-class NurseReviewByClinicAdapter(private val listItem: ArrayList<ReviewFromEnrNurseDet>,private val context: Context):RecyclerView.Adapter<NurseReviewByClinicAdapter.ViewHolder>() {
-    inner class ViewHolder(view : View):RecyclerView.ViewHolder(view){
+class NurseReviewByClinicAdapter(
+    private val listItem: ArrayList<ReviewFromEnrNurseDet>,
+    private val context: Context
+) : RecyclerView.Adapter<NurseReviewByClinicAdapter.ViewHolder>() {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var rating: RatingBar = itemView.findViewById(R.id.rating)
         var comment_body: TextView
@@ -23,7 +27,8 @@ class NurseReviewByClinicAdapter(private val listItem: ArrayList<ReviewFromEnrNu
         var clinicName: TextView
         var review_layout: LinearLayout
         val update_btn: Button
-        val edit_text:EditText
+        val edit_text: EditText
+        val nurse_name: TextView
 
         init {
             comment_body = itemView.findViewById(R.id.comment)
@@ -34,13 +39,17 @@ class NurseReviewByClinicAdapter(private val listItem: ArrayList<ReviewFromEnrNu
             edit_text = itemView.findViewById(R.id.add_comment)
             edit_text.visibility = View.VISIBLE
             update_btn.visibility = View.VISIBLE
+            nurse_name = itemView.findViewById(R.id.nurse_name)
+            nurse_name.isVisible = false
             rating.setIsIndicator(true)
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_nurse_review,parent,false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_nurse_review, parent, false)
+        )
     }
 
     override fun getItemCount() = listItem.size
@@ -52,10 +61,10 @@ class NurseReviewByClinicAdapter(private val listItem: ArrayList<ReviewFromEnrNu
         holder.rating.rating = listItem[position].rating.toFloat()
 
 //        holder.edit_text.setText(listItem[position].comment)
-        holder.edit_text.visibility=View.GONE
+        holder.edit_text.visibility = View.GONE
         holder.time_ago.visibility = View.GONE
         holder.comment_body.text = listItem[position].comment
-        holder.update_btn.visibility=View.GONE
+        holder.update_btn.visibility = View.GONE
         //holder.edit_text.maxLines = 2
         holder.comment_body.maxLines = 2
 
@@ -71,7 +80,7 @@ class NurseReviewByClinicAdapter(private val listItem: ArrayList<ReviewFromEnrNu
         }
 
         holder.update_btn.setOnClickListener {
-            Toast.makeText(context,"Build me, Im inside adapter",Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Build me, Im inside adapter", Toast.LENGTH_LONG).show()
         }
 
     }

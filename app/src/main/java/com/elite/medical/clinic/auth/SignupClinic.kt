@@ -12,11 +12,12 @@ import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import com.elite.medical.utils.InputValidation
 import com.elite.medical.databinding.ActivitySignupClinicBinding
-import com.elite.medical.nurse.LoginNurse
 import com.elite.medical.retrofit.apis.AuthAPI
 import com.elite.medical.retrofit.requestmodels.RegisterClinicModel
 import com.google.android.material.button.MaterialButton
@@ -34,7 +35,7 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySignupClinicBinding
     private lateinit var imageBitmap: Bitmap
     private lateinit var base64Image: String
-    private lateinit var str: String
+    private lateinit var imageBase64: String
     lateinit var name: TextInputEditText
     lateinit var email: TextInputEditText
     lateinit var address: TextInputEditText
@@ -50,6 +51,63 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
     lateinit var serviceTaxNo: TextInputEditText
     lateinit var clinicUIN: TextInputEditText
     lateinit var declaration: TextInputEditText
+
+    private val viewModel by viewModels<ClinicAuthViewModel>()
+    private var isImageSet = false
+    private var photoFile: File? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivitySignupClinicBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        initializeBindings()
+        initListeners()
+
+        viewModel.registerClinicCallback = {
+            binding.loader.isVisible = false
+            binding.btnSignup.isVisible = true
+
+            if (it?.status == "success") {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                finish()
+            } else Toast.makeText(this, it?.message, Toast.LENGTH_SHORT).show()
+        }
+
+
+        binding.btnSignup.setOnClickListener {
+            if (validateInputs()) {
+
+                binding.loader.isVisible = true
+                binding.btnSignup.isVisible = false
+
+                val clinicDetails = RegisterClinicModel(
+                    name.text.toString(),
+                    email.text.toString(),
+                    address.text.toString(),
+                    phone.text.toString(),
+                    city.text.toString(),
+                    state.text.toString(),
+                    zip.text.toString(),
+                    clinicType.text.toString(),
+                    location.text.toString(),
+                    imageBase64,
+                    vatNo.text.toString(),
+                    cstNo.text.toString(),
+                    serviceTaxNo.text.toString(),
+                    clinicUIN.text.toString(),
+                    declaration.text.toString(),
+                )
+
+                viewModel.registerClinic(clinicDetails)
+
+
+            }
+        }
+
+
+    }
 
     private fun initializeBindings() {
         name = binding.etName
@@ -69,74 +127,6 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
         declaration = binding.etDeclaration
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivitySignupClinicBinding.inflate(layoutInflater)
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
-        initializeBindings()
-        initListeners()
-
-//        binding.tvSignIn.setOnClickListener {
-//            val intent = Intent(this, LoginClinic::class.java)
-//            startActivity(intent)
-//
-//        }
-//
-//        binding.btnCancel.setOnClickListener {
-//            finish()
-//        }
-//
-//        binding.etUploadClinicLicense.setOnClickListener {
-//            pickMedia.launch(arrayOf("*/*"))
-//        }
-
-
-        binding.btnSignup.setOnClickListener {
-            //if (validateInputs()) {
-
-                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
-
-                val clinicDetails = RegisterClinicModel(
-                    name.text.toString(),
-                    email.text.toString(),
-                    address.text.toString(),
-                    phone.text.toString(),
-                    city.text.toString(),
-                    state.text.toString(),
-                    zip.text.toString(),
-                    clinicType.text.toString(),
-                    location.text.toString(),
-                    str,
-                    vatNo.text.toString(),
-                    cstNo.text.toString(),
-                    serviceTaxNo.text.toString(),
-                    clinicUIN.text.toString(),
-                    declaration.text.toString(),
-                )
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    AuthAPI.registerClinic(
-                        clinicDetails,
-                        object : AuthAPI.Companion.AuthSignUpCallbackNurse {
-                            override fun onSignUpSuccess(message: String) {
-                                Toast.makeText(this@SignupClinic, message, Toast.LENGTH_SHORT)
-                                    .show()
-                                finish()
-                            }
-                        }
-                    )
-                }
-
-
-            //}
-
-        }
-
-
-    }
-
     private fun initListeners() {
 
         binding.tvSignIn.setOnClickListener(this)
@@ -144,9 +134,9 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
         binding.etUploadClinicLicense.setOnClickListener(this)
 
     }
+
     override fun onClick(view: View?) {
 
-        println("insdie loop")
         when (view?.id) {
 
 
@@ -164,9 +154,16 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
     private fun validateInputs(): Boolean {
 
-        var validated = false
+        var validated: Boolean
+
+        if (!isImageSet) {
+            binding.etUploadClinicLicense.requestFocus()
+            binding.etUploadClinicLicense.error = "choose an image"
+            validated = false
+        } else validated = true
 
         val inputFields = arrayOf(
             name,
@@ -178,7 +175,6 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
             zip,
             clinicType,
             location,
-            uploadLicense,
             vatNo,
             cstNo,
             serviceTaxNo,
@@ -186,59 +182,40 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
             declaration
         )
 
+
+
+
         inputFields.map {
             val str = InputValidation.isFieldEmpty(it.text.toString())
             if (str != "") {
                 it.error = str
                 it.requestFocus()
+                validated = false
             }
-            validated = str == ""
         }
 
-        if (InputValidation.emailValidation(email = email.text.toString()) != "") {
-            email.error = "Please Enter Valid email."
-            email.requestFocus()
-            validated = false
-        }
-
-        if (InputValidation.isFieldEmpty(uploadLicense.text.toString()) != "") {
-            uploadLicense.error = "Please upload a file."
-            uploadLicense.requestFocus()
-            validated = false
-        }
 
         return validated
     }
 
-    private val pickMedia = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-        val etUploadLicense = binding.etUploadClinicLicense
-        etUploadLicense.error = null
-        binding.imgPreview.setImageURI(it)
 
-        imageBitmap = imageToBitmap(it)!!
-    }
     private fun imageToBitmap(it: Uri?): Bitmap? =
 
         MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, it)
 
 
-
     private fun chooseImage(context: Context) {
-        val optionsMenu = arrayOf("Take Photo", "Upload from storage", "Exit")
+        val optionsMenu = arrayOf("Take Photo", "Select from storage", "Exit")
         val builder = AlertDialog.Builder(context)
         builder.setItems(optionsMenu) { dialogInterface, i ->
             when (optionsMenu[i]) {
 
-                "Take Photo" -> {
-                    openCamera()
-                }
+                "Take Photo" -> openImageDialog()
 
-                "Upload from storage" -> pickMedia.launch(arrayOf("image/jpeg"))
+                "Select from storage" -> pickImageFromGallery.launch(arrayOf("image/jpeg"))
 
-                "Exit" -> {
-                    dialogInterface.dismiss()
-                    binding.etUploadClinicLicense.text = ""
-                }
+                "Exit" -> dialogInterface.dismiss()
+
             }
         }
         builder.show()
@@ -252,26 +229,21 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun openCamera() {
+    private fun openImageDialog() {
         val isStorageAvailable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
         if (isStorageAvailable) {
             val photoURI: Uri = FileProvider.getUriForFile(
-                this,
-                "com.elite.medical.FileUsage",
-                createImageFile()
+                this, "com.elite.medical.FileUsage", createImageFile()
             )
-            takePicture.launch(photoURI)
+            pickImageFromCamera.launch(photoURI)
 
         } else {
             Toast.makeText(
-                this,
-                "Storage Full! make sure you have space in your storage",
-                Toast.LENGTH_LONG
+                this, "Storage Full! make sure you have space in your storage", Toast.LENGTH_LONG
             ).show()
         }
     }
 
-    private var photoFile: File? = null
 
     private fun createImageFile(): File {
         val timeStamp: String =
@@ -282,7 +254,7 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private val takePicture =
+    private val pickImageFromCamera =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
 
@@ -292,14 +264,29 @@ class SignupClinic : AppCompatActivity(), View.OnClickListener {
                     )
                 } ?: return@registerForActivityResult
 
-
+                binding.etUploadClinicLicense.error = null
                 binding.imgPreview.setImageURI(photoUri)
                 imageBitmap = imageToBitmap(photoUri)!!
-                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+                imageBase64 = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+                isImageSet = true
 
             } else {
                 Toast.makeText(this, "Unable to capture image", Toast.LENGTH_SHORT).show()
             }
+        }
+
+    private val pickImageFromGallery =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+            if (it != null) {
+                isImageSet = true
+                binding.etUploadClinicLicense.error = null
+                binding.imgPreview.setImageURI(it)
+                imageBitmap = imageToBitmap(it)!!
+                imageBase64 = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+            } else {
+                isImageSet = false
+                Toast.makeText(this, "Image not Selected", Toast.LENGTH_SHORT).show()
+           }
         }
 
 }

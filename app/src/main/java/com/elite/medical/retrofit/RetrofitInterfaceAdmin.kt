@@ -54,7 +54,7 @@ interface RetrofitInterfaceAdmin {
 
 
     @POST(Constants.REGISTER_CLINIC)
-    fun registerClinic(@Body user: RegisterClinicModel): Call<ResponseBody>
+    fun registerClinic(@Body user: RegisterClinicModel): Call<GenericSuccessErrorModel>
 
 
     @GET(Constants.ADMIN_DASHBOARD_DATA)

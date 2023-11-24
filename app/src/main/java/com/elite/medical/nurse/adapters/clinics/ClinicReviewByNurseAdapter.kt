@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.ItemNurseReviewBinding
 import com.elite.medical.retrofit.responsemodel.nurse.clinics.ReviewEnrolledClinic
@@ -23,6 +24,7 @@ class ClinicReviewByNurseAdapter(
         var review_layout = binding.reviewLayout
         val updateBtn = binding.btnSubmitReview
         val edit_text = binding.addComment
+        val nurse_name = binding.nurseName
 
 
     }
@@ -40,6 +42,7 @@ class ClinicReviewByNurseAdapter(
         val data= listItem.elementAt(position)
         holder.clinicName.text = "Your review for this Clinic"
         holder.rating.rating = data.rating.toFloat()
+        holder.nurse_name.isVisible = false
 
         holder.edit_text.setText(data.comment)
         holder.edit_text.visibility = View.GONE

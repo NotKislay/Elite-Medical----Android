@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -27,22 +28,19 @@ import com.elite.medical.utils.HelperMethods
 import com.elite.medical.utils.InputValidation
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.DelicateCoroutinesApi
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlin.properties.Delegates
 
 
 class SignupNurse : AppCompatActivity(), View.OnClickListener {
 
+    private var photoFile: File? = null
     private lateinit var imageBitmap: Bitmap
-    private lateinit var base64Image: String
-    private lateinit var str: String
-    private var isImgAttached by Delegates.notNull<Boolean>()
+    private var imageBase64: String = ""
 
     private val nurseType = arrayOf("C.M.T", "C.N.A", "L.P.N", "R.N", "P.A", "N.P")
     private val usImmigrationStatus = arrayOf(
@@ -85,6 +83,7 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySignupNurseBinding
     private val viewModel by viewModels<NurseAuthViewModel>()
+    private var isImageSet = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,12 +111,13 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
 
 
         binding.btnSignup.setOnClickListener {
+            if (validateInputs()) {
 
-            binding.loader.isVisible = true
-            binding.btnSignup.isVisible = false
+                binding.loader.isVisible = true
+                binding.btnSignup.isVisible = false
 
-            //if(validateInputs()){
-                binding.loader.isVisible = false
+//                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+
                 val name = name.text.toString()
                 val email = email.text.toString()
                 val address = address.text.toString()
@@ -134,11 +134,6 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
                 val licenceExpiryDate = licenceExpiryDate.text.toString()
                 val yearsOfExperience = yearsOfExperience.text.toString()
                 val speciality = speciality.text.toString()
-                binding.btnSignup.isVisible = false
-
-
-                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
-
 
                 viewModel.registerNurse(
                     name,
@@ -153,18 +148,13 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
                     spinnerUsImmigrationStatus,
                     spinnercgfnStatus,
                     spinnerNurseType,
-                    str,
+                    imageBase64,
                     licenceIssueDate,
                     licenceExpiryDate,
                     yearsOfExperience,
                     speciality
                 )
-            //}
-            /*else{
-                binding.btnSignup.isEnabled= false
-            }*/
-
-
+            }
 
         }
 
@@ -244,21 +234,13 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
         button.error = null
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    private val pickMedia = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-        binding.imgPreview.setImageURI(it)
-
-        imageBitmap = imageToBitmap(it)!!
-    }
 
     private fun imageToBitmap(it: Uri?): Bitmap? =
-
         MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, it)
 
 
-
     private fun chooseImage(context: Context) {
-        val optionsMenu = arrayOf("Take Photo", "Upload from storage", "Exit")
+        val optionsMenu = arrayOf("Take Photo", "Select from storage", "Exit")
         val builder = AlertDialog.Builder(context)
         builder.setItems(optionsMenu) { dialogInterface, i ->
             when (optionsMenu[i]) {
@@ -267,7 +249,7 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
                     openCamera()
                 }
 
-                "Upload from storage" -> pickMedia.launch(arrayOf("image/jpeg"))
+                "Select from storage" -> pickMedia.launch(arrayOf("image/jpeg"))
 
                 "Exit" -> {
                     dialogInterface.dismiss()
@@ -280,7 +262,7 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
 
     private fun validateInputs(): Boolean {
 
-        var validated = false
+        var validated: Boolean
 
         val inputArray = arrayOf(
             name,
@@ -297,34 +279,28 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
             speciality
         )
 
+
+        if (!isImageSet) {
+            binding.etUploadLicense.requestFocus()
+            binding.etUploadLicense.error = "choose select an image"
+            validated = false
+
+        } else
+            validated = true
+
         inputArray.map {
             val str = InputValidation.isFieldEmpty(it.text.toString())
             if (str != "") {
+                Log.i("check", "${it.hint} - is empty")
                 it.error = str
                 it.requestFocus()
+                validated = false
             }
-
-            validated = str == ""
-        }
-
-        if (InputValidation.emailValidation(email = email.text.toString()) != "") {
-            email.error = "Please Enter Valid email."
-            email.requestFocus()
-            validated = false
-        }
-
-        if (InputValidation.isFieldEmpty(uploadLicense.hint.toString()) != "") {
-            println("text is "+ uploadLicense.text.toString())
-            uploadLicense.error = "Please upload a file."
-            uploadLicense.requestFocus()
-            validated = false
-        }
-        else{
-            uploadLicense.error=null
         }
 
 
-
+        Log.i("test", "----------------------------------")
+        Log.i("test", "Current state of validation - $validated")
         return validated
     }
 
@@ -399,8 +375,6 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private var photoFile: File? = null
-
     private fun createImageFile(): File {
         val timeStamp: String =
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(java.util.Date())
@@ -413,19 +387,38 @@ class SignupNurse : AppCompatActivity(), View.OnClickListener {
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
-
                 val photoUri: Uri = photoFile?.let {
                     FileProvider.getUriForFile(
                         this, "com.elite.medical.FileUsage", it
                     )
                 } ?: return@registerForActivityResult
 
+                isImageSet = true
+                binding.etUploadLicense.error = null
                 binding.imgPreview.setImageURI(photoUri)
                 imageBitmap = imageToBitmap(photoUri)!!
-                str = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+                imageBase64 = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+
 
             } else {
                 Toast.makeText(this, "Unable to capture image", Toast.LENGTH_SHORT).show()
+                isImageSet = false
             }
         }
+
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+        if(it != null){
+            isImageSet = true
+            binding.etUploadLicense.error = null
+            binding.imgPreview.setImageURI(it)
+            imageBitmap = imageToBitmap(it)!!
+            imageBase64 = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
+        }
+        else{
+            isImageSet = false
+            Toast.makeText(this, "Image not Selected", Toast.LENGTH_SHORT).show()
+
+        }
+
+    }
 }

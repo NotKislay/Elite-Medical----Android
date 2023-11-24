@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
@@ -64,22 +65,20 @@ class NurseApprovalDetails : AppCompatActivity() {
             "US Immigration Status: ${details.usImmgStatus}",
             "NCLEX Status: ${details.nclexStatus}",
             "CGFNS Status: ${details.cgfnsStatus}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.nurseLicense}",
             "Approval Status: ${details.approvalStatus}",
-//            "Created At: ${details.createdAt}",
-//            "City: ${details.city}",
-//            "License Issue: ${details.licenseIssue}",
-//            "Schedule: ${details.schedule}",
-//            "Schedule Status: ${details.scheduleStatus}",
-//            "Schedule Time: ${details.scheduleTime}",
-//            "State: ${details.state}",
-//            "Updated At: ${details.updatedAt}",
-//            "User ID: ${details.userId}",
-//            "ZIP: ${details.zip}"
         )
 
         val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+        binding.listview.adapter = adapter
+
+        binding.btnViewLicence.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(Constants.URL_FOR_IMAGE + details.nurseLicense)
+            )
+            startActivity(urlIntent)
+
+        }
 
         if (details?.approvalStatus == "approved") {
             binding.btnGroup.visibility = View.GONE

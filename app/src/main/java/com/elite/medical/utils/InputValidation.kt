@@ -50,9 +50,7 @@ class InputValidation {
                 ""
 
         }
-        fun isFileAttached(circleImageView: CircleImageView) {
-            println(circleImageView.tag as? Int)
-        }
+
     }
 
 

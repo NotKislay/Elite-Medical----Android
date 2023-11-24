@@ -19,6 +19,8 @@ import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsClinic
 import com.elite.medical.databinding.ActivityClinicApprovalDetailsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ButtonAPIs
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicDetailsFromClinicApprovalModel
+import com.elite.medical.utils.Constants
+import com.elite.medical.utils.ConstantsNurse
 
 class ClinicApprovalDetails : AppCompatActivity() {
 
@@ -49,19 +51,22 @@ class ClinicApprovalDetails : AppCompatActivity() {
             "CST No: ${details.cstNo}",
             "Service Tax No: ${details.serviceTaxNo}",
             "Clinic UIN: ${details.uinNo}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.clinicLicense}",
             "Approval Status: ${details.approvalStatus}",
             "Declaration: ${details.declaration}",
-//            "City: ${details.city}",
-//            "Created At: ${details.createdAt}",
-//            "Locations: ${details.locations.joinToString(", ")}",
-//            "State: ${details.state}",
-//            "Updated At: ${details.updatedAt}",
-//            "ZIP: ${details.zip}"
         )
 
         val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+        //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayData)
+        binding.listview.adapter = adapter
+
+        binding.btnViewLicence.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(Constants.URL_FOR_IMAGE + details.clinicLicense)
+            )
+            startActivity(urlIntent)
+
+        }
 
         if (details.approvalStatus == "approved" || details.approvalStatus == "cancelled") {
             binding.btnGroup.visibility = View.GONE

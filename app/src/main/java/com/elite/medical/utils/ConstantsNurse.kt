@@ -3,6 +3,7 @@ package com.elite.medical.utils
 object ConstantsNurse {
 
     const val BASE_URL = "https://staging.emfwebapp.ikshudigital.com/api/"
+    const val URL_FOR_IMAGE = "https://staging.emfwebapp.ikshudigital.com/storage/"
     const val REGISTER_NURSE = "nurse/register"
 
     const val DASHBOARD = "dashboard"

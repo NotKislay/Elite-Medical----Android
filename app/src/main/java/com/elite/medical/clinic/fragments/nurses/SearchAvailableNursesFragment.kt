@@ -124,15 +124,25 @@ class SearchAvailableNursesFragment : Fragment() {
 
 
         if (licenceTypeFilterIndex != 0) {
-            val filteredByLicenseType =
-                tempList.filter {
-                    it.licenseType.contains(
-                        licenceTypeFilter.elementAt(
-                            licenceTypeFilterIndex
+            var licenceTypeKey = licenceTypeFilter.elementAt(
+                licenceTypeFilterIndex
+            )
+            if (licenceTypeKey == "C.M.T") {
+                var filteredByLicenseType =
+                    tempList.filter { it.licenseType.contains("C.M.T") || it.licenseType.contains("cmt") }
+
+                tempList = filteredByLicenseType as MutableList<Nurse>
+
+            } else {
+                val filteredByLicenseType =
+                    tempList.filter {
+                        it.licenseType.contains(
+                            licenceTypeKey
                         )
-                    )
-                }
-            tempList = filteredByLicenseType as MutableList<Nurse>
+                    }
+                tempList = filteredByLicenseType as MutableList<Nurse>
+            }
+
         }
 
 

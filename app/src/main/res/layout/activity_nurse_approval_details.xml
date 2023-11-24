@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource"
+    android:orientation="vertical">
 
     <!--            TOP App Bar         -->
     <LinearLayout
@@ -36,66 +37,143 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/appBarLayout"
-        android:layout_gravity="start|top"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/btn_group"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scrollbars="vertical"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/btn_group">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="750dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:visibility="visible" />
+                <LinearLayout
+                    android:id="@+id/view_licence_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/h_ruler"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/md_grey_300" />
+
+                    <LinearLayout
+                        android:id="@+id/licence_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="#E8F1F2"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingVertical="5dp"
+                        android:visibility="visible"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:gravity="center_vertical"
+                            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                            android:text="View Licence"
+                            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                            android:textStyle="normal" />
+
+                        <Button
+                            android:id="@+id/btn_view_licence"
+                            style="@style/Widget.Material3.Button"
+                            android:layout_width="70dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="30dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/et_background"
+                            android:backgroundTint="@color/md_blue_200"
+                            android:gravity="center"
+                            android:text="Open"
+                            android:textColor="@color/md_blue_900"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
 
 
-    <LinearLayout
-        android:id="@+id/btn_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <Button
-            android:id="@+id/ScheduleBtn"
-            android:layout_width="300dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="5dp"
-            android:backgroundTint="@color/md_blue_100"
-            android:text="Schedule"
-            android:textAllCaps="false"
-            android:textColor="@color/md_blue_900"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/ApproveBtn"
-            android:layout_width="300dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="5dp"
-            android:backgroundTint="@color/md_green_100"
-            android:text="Approve"
-            android:textAllCaps="false"
-            android:textColor="@color/md_green_900"
-            android:textSize="20sp" />
 
 
-        <Button
-            android:id="@+id/CancelBtn"
-            android:layout_width="300dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/md_red_100"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textColor="@color/md_red_900"
-            android:textSize="20sp" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/btn_group"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <Button
+                android:id="@+id/ScheduleBtn"
+                android:layout_width="300dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@color/md_blue_100"
+                android:text="Schedule"
+                android:textAllCaps="false"
+                android:textColor="@color/md_blue_900"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/ApproveBtn"
+                android:layout_width="300dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@color/md_green_100"
+                android:text="Approve"
+                android:textAllCaps="false"
+                android:textColor="@color/md_green_900"
+                android:textSize="20sp" />
+
+
+            <Button
+                android:id="@+id/CancelBtn"
+                android:layout_width="300dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/md_red_100"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/md_red_900"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
 
 
 

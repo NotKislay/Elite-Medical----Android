@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EliteMedical"
         tools:targetApi="31">
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.elite.medical.FileUsage"
