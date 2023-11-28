@@ -11,8 +11,11 @@ import com.elite.medical.retrofit.responsemodel.clinic.ClinicProfileDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.dashboard.ClinicDashboardModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLocationsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.NurseDetailsNReviewsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.ClinicJobApplicantsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobDetailsByIDModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobsListModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.EnrolledNursesModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.SearchNurseModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.AvailableNurseDetailsModel
@@ -103,12 +106,20 @@ interface RetrofitInterfaceClinic {
         @Field("jobId") jobId: String,
     ): Call<GenericSuccessErrorModel>
 
-    @GET(ConstantsClinic.CLINIC_JOB_N_APPLICANTS)
-    fun getJobNApplicants(): Call<JobsByClinicsModel>
+    @GET(ConstantsClinic.CLINIC_JOB_APPLICANTS)
+    fun getJobApplicantsList(): Call<ClinicJobApplicantsModel>
+
+    @GET(ConstantsClinic.CLINIC_MY_JOBS)
+    fun getMyJobsList(): Call<MyJobsListModel>
 
     @GET("${ConstantsClinic.CLINIC_JOBS}/{id}")
-    fun getJobDetailsByID(@Path("id") id: String): Call<NursesAppliedOnJobModel>
+    fun getJobDetailsByID(@Path("id") id: String): Call<MyJobDetailsByIDModel>
 
+    @GET("clinic/job/{jobID}/applicants/{nurseID}")
+    fun getNurseDetailsMyJobs(
+        @Path("jobID") jobID: String,
+        @Path("nurseID") nurseID: String,
+        ): Call<NurseDetailsNReviewsModel>
 
     @POST(ConstantsClinic.POST_JOB)
     fun postJob(@Body jobDetails: PostJobRequestModel): Call<ResponseBody>

@@ -1,19 +1,16 @@
 package com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
-import com.elite.medical.retrofit.RetrofitInterfaceClinic
-import com.elite.medical.retrofit.apis.clinic.sidemenu.ClinicSideMenuJobsAPIs
+import com.elite.medical.retrofit.requestmodels.clinic.JobHiringActionModel
 import com.elite.medical.retrofit.requestmodels.clinic.PostJobRequestModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLocationsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Job
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.JobRelatedDetailsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Nurse
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.NurseDetailsNReviewsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobDetailsByIDModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobsListModel
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,46 +18,82 @@ import retrofit2.Response
 
 class MyJobsViewModel : ViewModel() {
 
-    val clinicID: MutableLiveData<String> = MutableLiveData()
 
-    private val jobList = MutableLiveData<MyJobsModel?>()
     var jobLocation: MutableLiveData<ClinicJobLocationsModel?> = MutableLiveData()
 
-    var jobDetailsByID = MutableLiveData<NursesAppliedOnJobModel?>()
-    var jobListLiveData: LiveData<MyJobsModel?> = jobList
+    var nurseListFromCurrentJob = MutableLiveData<List<MyJobDetailsByIDModel.Nurse>>()
 
-    var jobID = MutableLiveData<Int>()
-    var jobStatus = MutableLiveData<String>()
+    var nurseReviews: MutableLiveData<List<NurseDetailsNReviewsModel.Nurse.NurseReview>?> =
+        MutableLiveData()
 
-    lateinit var currentJobDetails: Job
-    lateinit var currentNurseDetails: NursesAppliedOnJobModel.Nurse
+    var currentJobID = MutableLiveData<Int>()
+    var currentClinicID: MutableLiveData<Int> = MutableLiveData()
+    var currentNurseID = MutableLiveData<Int>()
+
+    var currentJobDetails: MutableLiveData<MyJobDetailsByIDModel.Job> = MutableLiveData()
+
+    var currentNurseDetails: MutableLiveData<MyJobDetailsByIDModel.Nurse> = MutableLiveData()
 
     var isJobCanceled = MutableLiveData<Boolean?>()
 
     var isJobCreatedSuccessfully = MutableLiveData<Boolean>()
 
 
-    init {
-        loadJobList()
+    var myJobsListCallback: ((MyJobsListModel) -> Unit)? = null
+    var getJobDetailsByIDCallback: ((MyJobDetailsByIDModel) -> Unit)? = null
+    var hireActionCallback: ((GenericSuccessErrorModel) -> Unit)? = null
+
+
+
+    fun fetchMyJobsList() {
+        EliteMedical.retrofitClinic.getMyJobsList()
+            .enqueue(object : Callback<MyJobsListModel?> {
+                override fun onResponse(
+                    call: Call<MyJobsListModel?>,
+                    response: Response<MyJobsListModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val body = response.body()!!
+                        body.jobs.elementAt(0)
+
+                        myJobsListCallback?.invoke(body)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<MyJobsListModel?>, t: Throwable) {
+                    println(t.message)
+                }
+            })
     }
 
+    public fun getJobDetailsByID(jobID: String) {
+        val api = EliteMedical.retrofitClinic
+        api.getJobDetailsByID(jobID).enqueue(object : Callback<MyJobDetailsByIDModel?> {
+            override fun onResponse(
+                call: Call<MyJobDetailsByIDModel?>,
+                response: Response<MyJobDetailsByIDModel?>
+            ) {
 
-    fun loadJobList() {
-        ClinicSideMenuJobsAPIs.getJobs(object : ClinicSideMenuJobsAPIs.Companion.JobsCallback {
-            override fun onJobListReceived(code: Int, body: MyJobsModel?) {
-                if (code == 200) jobList.postValue(body)
+
+                if (response.isSuccessful) {
+                    val body = response.body()!!
+                    getJobDetailsByIDCallback?.invoke(body)
+                }
+
+
+            }
+
+            override fun onFailure(call: Call<MyJobDetailsByIDModel?>, t: Throwable) {
+                println(t.message)
             }
         })
     }
 
-    fun getJobDetailsByID(id: String) {
-        ClinicSideMenuJobsAPIs.getJobsDetailsByID(id,
-            object : ClinicSideMenuJobsAPIs.Companion.JobsDetailsCallback {
-                override fun onJobDetailsReceived(code: Int, body: NursesAppliedOnJobModel?) {
-                    if (code == 200) jobDetailsByID.postValue(body)
-                }
-            })
+    fun getNurseDetailsInJobApplications(){
+
     }
+
 
     fun getJobLocations() {
         val api = EliteMedical.retrofitClinic
@@ -77,6 +110,25 @@ class MyJobsViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ClinicJobLocationsModel?>, t: Throwable) {}
         })
+    }
+
+    fun getNurseDetailsMyJobs(jobID: String, nurseID: String) {
+        val api = EliteMedical.retrofitClinic
+        api.getNurseDetailsMyJobs(jobID, nurseID)
+            .enqueue(object : Callback<NurseDetailsNReviewsModel?> {
+                override fun onResponse(
+                    call: Call<NurseDetailsNReviewsModel?>,
+                    response: Response<NurseDetailsNReviewsModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()!!
+                        val data = responseBody.nurse
+                        nurseReviews.postValue(data.nurseReview)
+                    }
+                }
+
+                override fun onFailure(call: Call<NurseDetailsNReviewsModel?>, t: Throwable) {}
+            })
     }
 
     fun closeJobByID(jobID: String) {
@@ -98,12 +150,9 @@ class MyJobsViewModel : ViewModel() {
     }
 
     fun updateJobID(id: Int) {
-        jobID.value = id
+        currentJobID.value = id
     }
 
-    fun updateJobStatus(status: String) {
-        jobStatus.value = status
-    }
 
     fun postJob(jobDetails: PostJobRequestModel) {
         val api = EliteMedical.retrofitClinic
@@ -115,6 +164,30 @@ class MyJobsViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {}
+        })
+    }
+
+
+    fun callHireAction(hiringDetails: JobHiringActionModel) {
+        println(hiringDetails.toString())
+        val api = EliteMedical.retrofitClinic
+        api.jobHireAction(hiringDetails).enqueue(object : Callback<GenericSuccessErrorModel?> {
+            override fun onResponse(
+                call: Call<GenericSuccessErrorModel?>,
+                response: Response<GenericSuccessErrorModel?>
+            ) {
+                val res = response
+                if (response.isSuccessful) {
+                    hireActionCallback?.invoke(response.body()!!)
+                } else {
+                    val error = response.errorBody()
+                    val errorModel =
+                        Gson().fromJson(error?.charStream(), GenericSuccessErrorModel::class.java)
+                    hireActionCallback?.invoke(errorModel)
+                }
+            }
+
+            override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {}
         })
     }
 

@@ -25,15 +25,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
-import com.elite.medical.clinic.auth.LoginClinic
 import com.elite.medical.databinding.FragmentMainScreenBinding
 import com.elite.medical.nurse.LoginNurse
 import com.elite.medical.nurse.adapters.home.MenuAdapter
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.utils.GPSLocation
 import com.elite.medical.utils.HelperMethods
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.util.Locale
 
@@ -46,7 +44,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var sideMenu: ExpandableListView
     private lateinit var dashboardData: DashboardDataNurseModel
     private var clockInVisible = false
-    private val viewModel by viewModels<NurseViewModel>()
+    private val viewModel by viewModels<UserNurseMainViewModel>()
 
     private lateinit var photoFile: File
     private lateinit var photoURI: Uri
@@ -243,7 +241,13 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                 binding.cardClockIn.isVisible = !binding.cardClockIn.isVisible
                 binding.cardClockOut.isVisible = !binding.cardClockOut.isVisible
             } else {
-                HelperMethods.showDialog(it!!.message, "OK", requireContext(), activity)
+                HelperMethods.showDialog(
+                    it!!.message,
+                    "OK",
+                    requireContext(),
+                    activity,
+                    activity?.onBackPressedDispatcher?.onBackPressed()
+                )
             }
         }
     }

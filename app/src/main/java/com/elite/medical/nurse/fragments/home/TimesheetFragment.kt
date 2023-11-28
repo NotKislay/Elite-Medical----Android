@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.databinding.FragmentTimesheetBinding
 import com.elite.medical.databinding.ModalLayoutBinding
 import com.elite.medical.nurse.adapters.home.TimeSheetAdapter
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
 
@@ -22,7 +22,7 @@ class TimesheetFragment : Fragment() {
 
     private lateinit var binding: FragmentTimesheetBinding
     private lateinit var dialogBinding: ModalLayoutBinding
-    private lateinit var viewmodel: NurseViewModel
+    private lateinit var viewmodel: UserNurseMainViewModel
     private lateinit var dialog: Dialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +30,7 @@ class TimesheetFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentTimesheetBinding.inflate(inflater, container, false)
-        viewmodel = ViewModelProvider(this)[NurseViewModel::class.java]
+        viewmodel = ViewModelProvider(this)[UserNurseMainViewModel::class.java]
         binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
 
         viewmodel.getTimeSheets()

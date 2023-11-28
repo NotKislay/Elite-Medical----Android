@@ -20,10 +20,10 @@ class NurseDetailsActivity : AppCompatActivity() {
 
         val arrayData = arrayOf(
             "Name: ${data.name}",
-            "Email: ${data.email}",
-            "Address: ${data.address}",
             "Contact No: ${data.mobile}",
+            "Email: ${data.email}",
             "D.O.B: ${data.dob}",
+            "Address: ${data.address}",
             "License Type: ${data.licenseType}",
             "License Expiry: ${data.licenseExpiry}",
             "Experience: ${data.experience}",
@@ -31,8 +31,8 @@ class NurseDetailsActivity : AppCompatActivity() {
             "US Immigration Status: ${data.usImmgStatus}",
             "NCLEX Status: ${data.nclexStatus}",
             "CGFNS Status: ${data.cgfnsStatus}",
-            "Approval Status: ${data.approvalStatus}",
             "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${data.nurseLicense}",
+            "Approval Status: ${data.approvalStatus}",
         )
         val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
         binding.listView.adapter = adapter

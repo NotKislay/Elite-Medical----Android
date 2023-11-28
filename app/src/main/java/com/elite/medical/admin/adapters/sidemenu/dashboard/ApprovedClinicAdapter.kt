@@ -82,16 +82,9 @@ class ApprovedClinicAdapter(private val cardItems: List<ClinicDetailsFromApprove
         holder.row10.isVisible = false
 
 
-        holder.label1.text = "Name"
+        holder.label1.text = "Clinic Name"
         holder.label2.text = "Email"
         holder.label3.text = "Clinic Type"
-        holder.label4.text = "Location"
-        holder.label5.text = "Description"
-        holder.label6.text = "Start Date"
-        holder.label7.text = "End Date"
-        holder.label8.text = "Vacancy"
-        holder.label9.text = "Applied"
-        holder.label10.text = "Status"
 
         holder.tv1.text = item.name
         holder.tv2.text = item.clinictype

@@ -7,17 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.R
 import com.elite.medical.databinding.ActivityNurseDashboardBinding
 import com.elite.medical.nurse.fragments.clinics.ClinicReviewsFragment
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 
 
 class NurseDashboard : AppCompatActivity(), Communicator {
     private lateinit var binding: ActivityNurseDashboardBinding
-    private lateinit var viewModel: NurseViewModel
+    private lateinit var viewModel: UserNurseMainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_nurse_dashboard)
-        viewModel = ViewModelProvider(this)[NurseViewModel::class.java]
+        viewModel = ViewModelProvider(this)[UserNurseMainViewModel::class.java]
 
 
     }

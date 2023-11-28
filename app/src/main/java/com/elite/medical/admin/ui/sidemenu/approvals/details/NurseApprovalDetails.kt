@@ -66,19 +66,20 @@ class NurseApprovalDetails : AppCompatActivity() {
             "NCLEX Status: ${details.nclexStatus}",
             "CGFNS Status: ${details.cgfnsStatus}",
             "Approval Status: ${details.approvalStatus}",
+            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.nurseLicense}",
         )
 
         val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
         binding.listview.adapter = adapter
 
-        binding.btnViewLicence.setOnClickListener {
+/*        binding.btnViewLicence.setOnClickListener {
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(Constants.URL_FOR_IMAGE + details.nurseLicense)
             )
             startActivity(urlIntent)
 
-        }
+        }*/
 
         if (details?.approvalStatus == "approved") {
             binding.btnGroup.visibility = View.GONE

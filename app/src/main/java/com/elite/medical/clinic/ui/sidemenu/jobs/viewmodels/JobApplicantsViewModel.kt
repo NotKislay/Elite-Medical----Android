@@ -3,52 +3,57 @@ package com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
-import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.requestmodels.clinic.JobHiringActionModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobNApplicantsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.Nurse
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.ClinicJobApplicantsModel
 import com.google.gson.Gson
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class JobNApplicantsViewModel : ViewModel() {
-    var jobsList: MutableLiveData<List<JobsByClinicsModel.NurseApplicant>?> = MutableLiveData()
+class JobApplicantsViewModel : ViewModel() {
 
+    var jobApplicantsList: MutableLiveData<List<ClinicJobApplicantsModel.NurseApplicant>?> =
+        MutableLiveData()
+
+    var applicantsList: MutableLiveData<List<ClinicJobApplicantsModel.NurseApplicant.Nurse>> =
+        MutableLiveData()
 
     var currentJobDetails: MutableLiveData<Int> = MutableLiveData()
 
     var currentClinicID: MutableLiveData<Int> = MutableLiveData()
-    var currentJobID: MutableLiveData<Int> = MutableLiveData()
+    val currentJobID: MutableLiveData<Int> = MutableLiveData()
+    var currentNurseID: MutableLiveData<Int> = MutableLiveData()
 
 
-    var currentNurseList: MutableLiveData<List<JobsByClinicsModel.NurseApplicant.Nurse>> =
+    var isCurrentJobClosed: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    var currentNurseDetails: MutableLiveData<ClinicJobApplicantsModel.NurseApplicant.Nurse> =
         MutableLiveData()
-    var currentNurseDetails: MutableLiveData<JobsByClinicsModel.NurseApplicant.Nurse> =
-        MutableLiveData()
 
-    var hiringAction: MutableLiveData<Boolean> = MutableLiveData()
+    var hireActionCallback: ((GenericSuccessErrorModel) -> Unit)? = null
 
-    var HireActionCallback: ((GenericSuccessErrorModel) -> Unit)? = null
+
 
     fun getJobsList() {
-        val api = EliteMedical.retrofitClinic
-        api.getJobNApplicants().enqueue(object : Callback<JobsByClinicsModel?> {
-            override fun onResponse(
-                call: Call<JobsByClinicsModel?>,
-                response: Response<JobsByClinicsModel?>
-            ) {
-                if (response.isSuccessful) {
-                    jobsList.postValue(response.body()?.nurseApplicants)
-                    currentClinicID.postValue(response.body()?.clinicId)
+        EliteMedical.retrofitClinic.getJobApplicantsList()
+            .enqueue(object : Callback<ClinicJobApplicantsModel?> {
+                override fun onResponse(
+                    call: Call<ClinicJobApplicantsModel?>,
+                    response: Response<ClinicJobApplicantsModel?>
+                ) {
+                    val res = response
+                    if (response.isSuccessful) {
+                        jobApplicantsList.postValue(response.body()?.nurseApplicants)
+                        currentClinicID.postValue(response.body()?.clinicId)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<JobsByClinicsModel?>, t: Throwable) {}
-        })
+                override fun onFailure(call: Call<ClinicJobApplicantsModel?>, t: Throwable) {
+                    println(t.message)
+                }
+            })
     }
 
     /*fun getApplicantsDetailsByID(jobID: String, clinicID: String) {
@@ -82,12 +87,12 @@ class JobNApplicantsViewModel : ViewModel() {
             ) {
                 val res = response
                 if (response.isSuccessful) {
-                    HireActionCallback?.invoke(response.body()!!)
+                    hireActionCallback?.invoke(response.body()!!)
                 } else {
                     val error = response.errorBody()
                     val errorModel =
                         Gson().fromJson(error?.charStream(), GenericSuccessErrorModel::class.java)
-                    HireActionCallback?.invoke(errorModel)
+                    hireActionCallback?.invoke(errorModel)
                 }
             }
 

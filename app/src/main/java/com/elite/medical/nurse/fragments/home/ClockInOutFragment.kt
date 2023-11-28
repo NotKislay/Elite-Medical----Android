@@ -1,11 +1,13 @@
 package com.elite.medical.nurse.fragments.home
 
 import android.content.ContentValues
+import android.graphics.Bitmap
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,26 +23,22 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.elite.medical.databinding.FragmentClockInOutBinding
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 import com.elite.medical.utils.GPSLocation
 import com.elite.medical.utils.HelperMethods
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
-import java.io.FileOutputStream
+import java.io.ByteArrayOutputStream
 import java.util.Locale
 
 class ClockInOutFragment : Fragment() {
 
     private lateinit var binding: FragmentClockInOutBinding
-    private val viewModel by viewModels<NurseViewModel>()
+    private val viewModel by viewModels<UserNurseMainViewModel>()
     private lateinit var location: GPSLocation
     private var photoURI: Uri? = null
+    private var imageBase64: String = ""
+    private lateinit var imageBitmap: Bitmap
 
-    var imageCapture: ImageCapture? = null
+    private var imageCapture: ImageCapture? = null
     private val TAG = "Camera"
 
 
@@ -49,9 +47,10 @@ class ClockInOutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentClockInOutBinding.inflate(inflater, container, false)
-        HelperMethods.requestCameraPermission(requireActivity())
 
+        HelperMethods.requestCameraPermission(requireActivity())
         location = HelperMethods.getLocation(requireActivity())
+
 
         viewModel.clockOUTCallback = {
             Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
@@ -145,30 +144,36 @@ class ClockInOutFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     photoURI = output.savedUri!!
+                    imageBitmap = imageToBitmap(output.savedUri)!!
                     binding.layoutClockOut.isVisible = photoURI != null
                     binding.imgCaptured.setImageURI(output.savedUri)
+
                 }
             }
         )
     }
 
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+        val image = stream.toByteArray()
+        return Base64.encodeToString(image, Base64.NO_WRAP)
+    }
+
+    private fun imageToBitmap(it: Uri?): Bitmap? =
+        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, it)
+
     private fun clockOut() {
+
         binding.loader.isVisible = true
         binding.clockOutBtn.isVisible = false
 
-        val fileDir = activity?.applicationContext?.filesDir
-        val file = File(fileDir, "image.png")
-        val inputStream = activity?.contentResolver?.openInputStream(photoURI!!)
-        val outputStream = FileOutputStream(file)
-        inputStream!!.copyTo(outputStream)
-        inputStream.close()
 
-        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
+        imageBase64 = "data:image/jpg;base64," + bitmapToBase64(imageBitmap)
 
-        val gps = HelperMethods.makeAddressFromLocation(requireContext(),location)!!
-        val gpsS = gps.toRequestBody("text/plain".toMediaTypeOrNull())
-        viewModel.clockOut(gpsS, part)
+
+        val gps = HelperMethods.makeAddressFromLocation(requireContext(), location)!!
+        viewModel.clockOut(gps, imageBase64)
 
     }
 

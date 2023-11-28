@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
 import com.elite.medical.databinding.FragmentJobListBinding
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobsListModel
 
 class JobListFragment : Fragment() {
 
@@ -21,37 +25,26 @@ class JobListFragment : Fragment() {
         binding = FragmentJobListBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MyJobsViewModel::class.java]
 
-        viewModel.loadJobList()
+        viewModel.fetchMyJobsList()
 
 
-        binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
-/*        viewModel.jobListLiveData.observe(requireActivity()) {
-            val adapter = JobListAdapter(it!!.jobs, viewModel)
+        viewModel.myJobsListCallback = { it ->
+            val adapter = JobListAdapter(it.jobs, viewModel)
             binding.listview.adapter = adapter
             binding.loader.visibility = View.GONE
-        }*/
-
-
-
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.loadJobList()
-
-        viewModel.jobListLiveData.observe(requireActivity()) {
-            val adapter = JobListAdapter(it!!.jobs, viewModel)
-            binding.listview.adapter = adapter
-            binding.loader.visibility = View.GONE
+            adapter.onItemClicked = {
+                viewModel.updateJobID(it.id)
+                findNavController().navigate(R.id.action_jobListFragment_to_jobDetailsFragment2)
+            }
         }
 
 
-
+        binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+        return binding.root
     }
+
+    private fun onItemClicked(details: MyJobsListModel.Job) {}
 
 
 }

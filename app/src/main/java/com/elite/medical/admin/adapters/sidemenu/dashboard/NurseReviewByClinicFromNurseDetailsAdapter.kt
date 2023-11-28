@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.NurseReviewFromNurseReviewModel
@@ -25,11 +26,14 @@ class NurseReviewByClinicFromNurseDetailsAdapter(private val listItem: ArrayList
 //        var updated_at:TextView
         var time_ago: TextView
         var review_layout: LinearLayout
+        var nursename: TextView
 
         init {
             itemView.findViewById<TextView>(R.id.clinic_name).text="Review By Clinic"
             itemView.findViewById<TextView>(R.id.clinic_name).setTypeface(Typeface.DEFAULT,Typeface.NORMAL)
 
+            nursename = itemView.findViewById<TextView?>(R.id.nurse_name)
+            nursename.isVisible = false
             time_ago = itemView.findViewById<TextView?>(R.id.tv_days_ago)
             time_ago.visibility=View.GONE
             review_layout = itemView.findViewById(R.id.review_layout)

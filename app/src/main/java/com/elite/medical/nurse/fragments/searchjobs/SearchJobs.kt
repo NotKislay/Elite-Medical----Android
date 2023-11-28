@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.FragmentSearchJobsBinding
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 import com.elite.medical.nurse.adapters.jobs.SearchJobsAdapter
 import com.elite.medical.nurse.viewmodels.jobs.JobsViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
@@ -23,7 +23,7 @@ import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
 
 class SearchJobs : Fragment() {
     private lateinit var binding: FragmentSearchJobsBinding
-    private lateinit var viewModel: NurseViewModel
+    private lateinit var viewModel: UserNurseMainViewModel
     private lateinit var viewModelJobs: JobsViewModel
     private lateinit var adapter: SearchJobsAdapter
     private lateinit var listView: RecyclerView
@@ -69,7 +69,7 @@ class SearchJobs : Fragment() {
     }
 
     private fun initialize() {
-        viewModel = ViewModelProvider(requireActivity())[NurseViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[UserNurseMainViewModel::class.java]
         viewModelJobs = ViewModelProvider(requireActivity())[JobsViewModel::class.java]
         listView = binding.listview
     }

@@ -30,8 +30,8 @@ class ActivityNurseDetailsFromAssocNurse : AppCompatActivity() {
 
         val arrayData = arrayOf(
             "Name: ${details?.name}",
-            "Email: ${details?.email}",
             "Contact no. ${details?.mobile}",
+            "Email: ${details?.email}",
             "D.O.B. ${details?.dob}",
             "Address: ${details?.address}",
             "License Type: ${details?.licenseType}",
@@ -70,11 +70,11 @@ class ActivityNurseDetailsFromAssocNurse : AppCompatActivity() {
 
         customDialog.findViewById<View>(R.id.divider2).visibility=View.GONE
         customDialog.findViewById<Button>(R.id.btnNurseAssoc_modal).visibility=View.GONE
-        customDialog.findViewById<Button>(R.id.btnReviews_modal).text="Nurse Reviews"
 
         // Customize the dialog components
         val cancelBtn = customDialog.findViewById<Button>(R.id.btnCancel_modal)
         val nurseReviews = customDialog.findViewById<Button>(R.id.btnReviews_modal)
+        nurseReviews.text="Nurse Reviews"
 
         cancelBtn.setOnClickListener {
             customDialog.dismiss()
@@ -83,7 +83,7 @@ class ActivityNurseDetailsFromAssocNurse : AppCompatActivity() {
             customDialog.dismiss()
 
 
-            if (details != null) {
+            if (details.review != null) {
                 val reviewList = details.review
 
                 // Create a new list to store only rating and comment

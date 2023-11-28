@@ -21,7 +21,7 @@ class RecentClinics : AppCompatActivity() {
         if (clinicList != null) {
             binding.tvRecentClinics.layoutManager =
                 GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val adapter = ApprovalClinicsAdapter(ArrayList(clinicList), this,false)
+            val adapter = ApprovalClinicsAdapter(ArrayList(clinicList), this,false,"Recent Clinics")
             binding.tvRecentClinics.adapter = adapter
         }
     }

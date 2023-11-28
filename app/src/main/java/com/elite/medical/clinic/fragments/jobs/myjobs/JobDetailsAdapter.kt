@@ -7,9 +7,9 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Job
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobDetailsByIDModel
 
-class JobDetailsAdapter(val data: Job) :
+class JobDetailsAdapter(val data: MyJobDetailsByIDModel.Job) :
     RecyclerView.Adapter<JobDetailsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -54,6 +54,8 @@ class JobDetailsAdapter(val data: Job) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
+
+
         holder.row6.visibility = View.VISIBLE
         holder.row7.visibility = View.VISIBLE
         holder.row8.visibility = View.VISIBLE
@@ -68,7 +70,7 @@ class JobDetailsAdapter(val data: Job) :
 
         holder.txt1.text = data.title
         holder.txt2.text = data.type
-        holder.txt3.text = data.createdAt
+        holder.txt3.text = data.formattedCreatedAt
         holder.txt4.text = data.engageFrom
         holder.txt6.text = data.engageTo
         holder.txt7.text = data.applied.size.toString()

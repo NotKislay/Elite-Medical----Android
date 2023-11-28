@@ -50,7 +50,7 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
 
         getid = intent.getIntExtra("Nurse_id", 0)
 
-        fetchEnrolledNursebyid(getid.toString())
+        fetchEnrolledNurseByID(getid.toString())
         binding.btnTimesheet.setOnClickListener {
             val intent = Intent(this, TimesheetNurseFromClinic::class.java)
             intent.putExtra("ID", getid)
@@ -72,7 +72,7 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
 
             terminateBtn.setOnClickListener {
                 customDialog.dismiss()
-                terminatenurse(empenddate, getid.toString())
+                terminateNurse(empenddate, getid.toString())
             }
 
             reviewsBtn.setOnClickListener {
@@ -91,7 +91,7 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
         }
     }
 
-    private fun fetchEnrolledNursebyid(id: String) {
+    private fun fetchEnrolledNurseByID(id: String) {
         var jobtitle = ""
         var hiringstatus = ""
         empenddate = ""
@@ -104,11 +104,10 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
 
                     empenddate = empdetails.empEnd
                     jobtitle = empdetails.jobtitle
-                    if (empdetails?.status == "hiring_approved") {
-                        hiringstatus = "Hired"
-                    }
-                    else{
-                        hiringstatus = "Hiring Approval Pending"
+                    hiringstatus = if (empdetails.status == "hiring_approved") {
+                        "Hired"
+                    } else{
+                        "Hiring Approval Pending"
                     }
                 }
 
@@ -155,7 +154,7 @@ class ActivityEnrolledNurseDetails : AppCompatActivity() {
             })
     }
 
-    private fun terminatenurse(empenddate: String, id: String) {
+    private fun terminateNurse(empenddate: String, id: String) {
         val customDialog = Dialog(this)
         customDialog.setContentView(R.layout.modal_layout_clinic_details_more)
         val cancelBtn = customDialog.findViewById<Button>(R.id.btnCancel_modal)

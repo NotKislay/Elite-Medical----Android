@@ -138,7 +138,7 @@
             android:name=".admin.ui.dashboard.RecentClinicReview"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.dashboard.recents.RecentNurses"
+            android:name=".admin.ui.dashboard.RecentNurses"
             android:exported="false" />
         <activity
             android:name=".admin.ui.dashboard.recents.RecentClinics"

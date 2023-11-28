@@ -7,9 +7,13 @@
 
     <fragment
         android:id="@+id/nurseDetailsFragment"
-        android:name="com.elite.medical.clinic.fragments.jobs.applicants.NurseDetailsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.applicants.NurseDetailsFragmentApplicants"
         android:label="fragment_nurse_details"
-        tools:layout="@layout/fragment_nurse_details" />
+        tools:layout="@layout/fragment_nurse_details" >
+        <action
+            android:id="@+id/action_nurseDetailsFragment_to_applicantNurseReviewsFragment"
+            app:destination="@id/applicantNurseReviewsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/jobNApplicantsFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.applicants.JobListFragment"
@@ -30,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/nurseDetailsFragment2"
-        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.NurseDetailsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.myjobs.NurseDetailsFragmentMyJobs"
         android:label="fragment_nurse_details2"
         tools:layout="@layout/fragment_nurse_details2">
         <action
@@ -141,5 +145,10 @@
         android:name="com.elite.medical.clinic.fragments.nurses.EnrolledNursesFragment"
         android:label="fragment_enrolled_nurses"
         tools:layout="@layout/fragment_enrolled_nurses" />
+    <fragment
+        android:id="@+id/applicantNurseReviewsFragment"
+        android:name="com.elite.medical.clinic.fragments.jobs.applicants.ApplicantNurseReviewsFragment"
+        android:label="fragment_applicant_nurse_reviews"
+        tools:layout="@layout/fragment_applicant_nurse_reviews" />
 
 </navigation>

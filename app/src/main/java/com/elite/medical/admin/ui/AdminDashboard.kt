@@ -10,9 +10,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ExpandableListAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -28,7 +26,7 @@ import com.elite.medical.admin.ui.sidemenu.dashboard.NotificationsAdmin
 import com.elite.medical.admin.ui.dashboard.RecentClinicReview
 import com.elite.medical.admin.ui.dashboard.recents.RecentClinics
 import com.elite.medical.admin.ui.dashboard.RecentNurseReview
-import com.elite.medical.admin.ui.dashboard.recents.RecentNurses
+import com.elite.medical.admin.ui.dashboard.RecentNurses
 import com.elite.medical.admin.ui.sidemenu.approvals.EmploymentApprovals
 import com.elite.medical.admin.ui.sidemenu.approvals.JobSearchApprovals
 import com.elite.medical.admin.ui.sidemenu.dashboard.jobapplicants.ApprovedJobApplicants
@@ -37,7 +35,6 @@ import com.elite.medical.admin.ui.sidemenu.reviews.NurseReviews
 import com.elite.medical.admin.ui.sidemenu.dashboard.jobs.ApprovedJobs
 import com.elite.medical.admin.ui.sidemenu.dashboard.nurses.ApprovedNurses
 import com.elite.medical.databinding.ActivityDashboardAdminBinding
-import com.elite.medical.databinding.ModalLayoutLogoutBinding
 import com.elite.medical.retrofit.apis.admin.DDAdminAPI
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 

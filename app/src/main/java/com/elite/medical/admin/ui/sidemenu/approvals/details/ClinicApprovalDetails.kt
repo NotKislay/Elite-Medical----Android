@@ -53,20 +53,21 @@ class ClinicApprovalDetails : AppCompatActivity() {
             "Clinic UIN: ${details.uinNo}",
             "Approval Status: ${details.approvalStatus}",
             "Declaration: ${details.declaration}",
+            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.clinicLicense}",
         )
 
         val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayData)
         binding.listview.adapter = adapter
 
-        binding.btnViewLicence.setOnClickListener {
+/*        binding.btnViewLicence.setOnClickListener {
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(Constants.URL_FOR_IMAGE + details.clinicLicense)
             )
             startActivity(urlIntent)
 
-        }
+        }*/
 
         if (details.approvalStatus == "approved" || details.approvalStatus == "cancelled") {
             binding.btnGroup.visibility = View.GONE
@@ -76,68 +77,63 @@ class ClinicApprovalDetails : AppCompatActivity() {
             var token = EliteMedical.AuthTokenAdmin
             token = "Bearer $token"
             val email = details.email
-            if (email != null) {
-                ButtonAPIs.approveUserRequest(token,
-                    email,
-                    object : ButtonAPIs.Companion.ButtonsCallback {
-                        override fun onSuccess(msg: String) {
-                            Toast.makeText(
-                                this@ClinicApprovalDetails,
-                                "Clinic Approved Successfully.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent =
-                                Intent(this@ClinicApprovalDetails, ApprovalsClinic::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            startActivity(intent)
-                        }
+            ButtonAPIs.approveUserRequest(token,
+                email,
+                object : ButtonAPIs.Companion.ButtonsCallback {
+                    override fun onSuccess(msg: String) {
+                        Toast.makeText(
+                            this@ClinicApprovalDetails,
+                            "Clinic Approved Successfully.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val intent =
+                            Intent(this@ClinicApprovalDetails, ApprovalsClinic::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    }
 
-                        override fun onResponseErr(msg: String, statusCode: String) {
+                    override fun onResponseErr(msg: String, statusCode: String) {
 
-                            Toast.makeText(this@ClinicApprovalDetails, msg, Toast.LENGTH_SHORT)
-                                .show()
-                            val intent =
-                                Intent(this@ClinicApprovalDetails, AdminDashboard::class.java)
-                            startActivity(intent)
+                        Toast.makeText(this@ClinicApprovalDetails, msg, Toast.LENGTH_SHORT)
+                            .show()
+                        val intent =
+                            Intent(this@ClinicApprovalDetails, AdminDashboard::class.java)
+                        startActivity(intent)
 
-                        }
+                    }
 
-                    })
-            }
+                })
         }
 
         binding.CancelBtn.setOnClickListener {
             var token = EliteMedical.AuthTokenAdmin
             token = "Bearer $token"
             val id = details.id
-            if (id != null) {
-                ButtonAPIs.cancelClinicRequest(
-                    token!!,
-                    id,
-                    object : ButtonAPIs.Companion.ButtonsCallback {
-                        override fun onSuccess(msg: String) {
-                            Toast.makeText(this@ClinicApprovalDetails, "Clinic Cancelled Successfully", Toast.LENGTH_SHORT)
-                                .show()
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            val intent =
-                                Intent(this@ClinicApprovalDetails, ApprovalsClinic::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            startActivity(intent)
-                        }
+            ButtonAPIs.cancelClinicRequest(
+                token!!,
+                id,
+                object : ButtonAPIs.Companion.ButtonsCallback {
+                    override fun onSuccess(msg: String) {
+                        Toast.makeText(this@ClinicApprovalDetails, "Clinic Cancelled Successfully", Toast.LENGTH_SHORT)
+                            .show()
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        val intent =
+                            Intent(this@ClinicApprovalDetails, ApprovalsClinic::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    }
 
-                        override fun onResponseErr(msg: String, statusCode: String) {
+                    override fun onResponseErr(msg: String, statusCode: String) {
 
-                            Toast.makeText(this@ClinicApprovalDetails, msg, Toast.LENGTH_SHORT)
-                                .show()
-                            val intent =
-                                Intent(this@ClinicApprovalDetails, AdminDashboard::class.java)
-                            startActivity(intent)
-                        }
+                        Toast.makeText(this@ClinicApprovalDetails, msg, Toast.LENGTH_SHORT)
+                            .show()
+                        val intent =
+                            Intent(this@ClinicApprovalDetails, AdminDashboard::class.java)
+                        startActivity(intent)
+                    }
 
 
-                    })
-
-            }
+                })
 
         }
     }

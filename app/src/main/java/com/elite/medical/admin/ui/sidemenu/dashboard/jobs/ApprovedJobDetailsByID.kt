@@ -41,13 +41,13 @@ class ApprovedJobDetailsByID : AppCompatActivity() {
                     binding.tvLocation.text = jobDetails.locations.joinToString(",")
                     binding.tvVacancy.text = jobDetails.vacancy
 
-                    val applied = if (jobDetails.applied.isEmpty()) "N/A"
-                    else jobDetails.applied.joinToString(",")
-                    binding.tvApplied.text = applied
+                    val applied = jobDetails.applied.size
+                    if (applied == 0) binding.tvApplied.text = "N/A"
+                    else binding.tvApplied.text = applied.toString()
 
-                    val hired = if (jobDetails.hired.isEmpty()) "N/A"
-                    else jobDetails.hired.joinToString(",")
-                    binding.tvHired.text = hired
+                    val hired = jobDetails.hired.size
+                    if (hired == 0) binding.tvHired.text = "N/A"
+                    else binding.tvHired.text = hired.toString()
 
 
                     binding.tvApprovalStatus.text = jobDetails.status

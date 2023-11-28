@@ -1,22 +1,17 @@
 package com.elite.medical.nurse.viewmodels
 
-import android.app.Activity
 import androidx.lifecycle.ViewModel
 import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.DashboardDataNurseModel
 import com.elite.medical.retrofit.responsemodel.nurse.home.NurseTimeSheetModel
-import com.elite.medical.utils.GPSLocation
-import com.elite.medical.utils.HelperMethods
 import com.google.gson.Gson
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class NurseViewModel : ViewModel() {
+class UserNurseMainViewModel : ViewModel() {
 
     var timeSheetCallback: ((List<NurseTimeSheetModel.Timesheet>?, GenericSuccessErrorModel?) -> Unit)? =
         null
@@ -70,7 +65,7 @@ class NurseViewModel : ViewModel() {
                     else {
                         val errorBody = response.errorBody()!!
                         val errorModel = Gson().fromJson(
-                            errorBody.charStream(),
+                            errorBody.toString(),
                             GenericSuccessErrorModel::class.java
                         )
                         nurseDashboardDataCallback?.invoke(null,errorModel)
@@ -107,7 +102,9 @@ class NurseViewModel : ViewModel() {
             })
     }
 
-    fun clockOut(gps: RequestBody, profilePic: MultipartBody.Part?) {
+    fun clockOut(gps: String, profilePic: String?) {
+
+
         EliteMedical.retrofitNurse.nurseClockOut(gps, profilePic)
             .enqueue(object : Callback<GenericSuccessErrorModel?> {
                 override fun onResponse(

@@ -10,12 +10,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.elite.medical.databinding.FragmentTopRatedClinicsBinding
 import com.elite.medical.nurse.adapters.home.TopRatedClinicsAdapter
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 
 
 class TopRatedClinicsFragment : Fragment() {
     private lateinit var binding: FragmentTopRatedClinicsBinding
-    private val viewModel by viewModels<NurseViewModel>()
+    private val viewModel by viewModels<UserNurseMainViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

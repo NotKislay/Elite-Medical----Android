@@ -4,18 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
+import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobApplicantsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.ClinicJobApplicantsModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
 
 class NurseListAdapter(
-    private val items: List<JobsByClinicsModel.NurseApplicant.Nurse>,
-    private val viewModel: JobNApplicantsViewModel
+    private val items: List<ClinicJobApplicantsModel.NurseApplicant.Nurse>,
+    private val isJobClosed: Boolean
 ) :
     RecyclerView.Adapter<NurseListAdapter.ViewHolder>() {
+
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -61,12 +64,13 @@ class NurseListAdapter(
         holder.tv4.text = items[position].experience
 
 
-        holder.layout.setOnClickListener {
-            viewModel.currentNurseDetails.postValue(items.elementAt(position))
-            it.findNavController()
-                .navigate(R.id.action_listJobApplicantsFragment_to_nurseDetailsFragment)
-        }
+        if (isJobClosed) holder.btnGoDeep.isVisible = false
+        else holder.layout.setOnClickListener { onItemClicked?.invoke(items.elementAt(position)) }
 
 
     }
+
+    var onItemClicked: ((ClinicJobApplicantsModel.NurseApplicant.Nurse) -> Unit)? = null
+
+
 }

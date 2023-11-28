@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
@@ -24,17 +26,24 @@ class NurseListFragment : Fragment() {
         binding = FragmentNurseListBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MyJobsViewModel::class.java]
 
-        binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
 
 
-        viewModel.jobDetailsByID.observe(viewLifecycleOwner) {
-            val nurseList = it?.nurses as MutableList
-            if (nurseList.isNotEmpty()) {
+        viewModel.nurseListFromCurrentJob.observe(viewLifecycleOwner) { it ->
+            if (it.isNotEmpty()) {
                 val adapter =
-                    NurseListAdapter(nurseList,viewModel)
+                    NurseListAdapter(
+                        it,
+                        viewModel,
+                        viewModel.currentJobDetails.value!!.status
+                    )
                 binding.listview.layoutManager = LinearLayoutManager(requireContext())
                 binding.listview.adapter = adapter
+
+                adapter.onItemClicked = { nurseDetails ->
+                    viewModel.currentNurseDetails.postValue(nurseDetails)
+                    findNavController().navigate(R.id.action_nurseListFragment_to_nurseDetailsFragment22)
+                }
 
             } else {
                 MaterialAlertDialogBuilder(
@@ -42,9 +51,9 @@ class NurseListFragment : Fragment() {
                     R.style.MyDialogTheme
                 )
                     .setMessage("No Data Found")
-                    .setPositiveButton("OK") { dialog, _ ->
+                    .setPositiveButton("Okay") { dialog, _ ->
                         dialog.dismiss()
-                        activity?.onBackPressed()
+                        activity?.onBackPressedDispatcher?.onBackPressed()
                     }
                     .show()
             }
@@ -54,7 +63,7 @@ class NurseListFragment : Fragment() {
 
 
 
-//        return inflater.inflate(R.layout.fragment_nurse_list, container, false)
+        binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
         return binding.root
     }
 

@@ -33,7 +33,7 @@ class AssocNursesAdapter(private val nurseDet: List<NursesDetailsFromAssociatedN
         holder.namecontent.text = "Name: "+currentItem.name
         holder.licensecontent.text= "License Type: "+currentItem.licenseType
         holder.expirystatus.text= "License Expiry: "+currentItem.licenseExpiry
-        holder.status.text= "Approval Status: "+currentItem.approvalStatus
+        holder.status.text= "Schedule Status: ${currentItem.schedule} at ${currentItem.scheduleTime} "
         holder.itemView.setOnClickListener {
 
             val nurseDetails = NursesDetailsFromAssociatedNurseModel(

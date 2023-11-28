@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.RvItemJobSearchBinding
-import com.elite.medical.nurse.viewmodels.NurseViewModel
+import com.elite.medical.nurse.viewmodels.UserNurseMainViewModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.Job
 
 class SearchJobsAdapter(
     private var list: List<Job>,
-    private val viewModel: NurseViewModel,
+    private val viewModel: UserNurseMainViewModel,
     private val context: Context?
 ) :
     RecyclerView.Adapter<SearchJobsAdapter.ViewHolder>() {

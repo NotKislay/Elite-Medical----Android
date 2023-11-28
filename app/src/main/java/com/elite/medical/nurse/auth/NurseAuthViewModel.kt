@@ -60,7 +60,7 @@ class NurseAuthViewModel : ViewModel() {
                 call: Call<GenericSuccessErrorModel>,
                 response: Response<GenericSuccessErrorModel>
             ) {
-                response
+
                 if (response.isSuccessful) {
                     val body = response.body()
                     registerNurseCallback?.invoke(body!!)

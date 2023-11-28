@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.elite.medical.R
-import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobNApplicantsViewModel
+import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.JobApplicantsViewModel
 import com.elite.medical.databinding.FragmentJobNApplicantsBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.JobsByClinicsModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.ClinicJobApplicantsModel
 
 class JobListFragment : Fragment() {
     private lateinit var binding: FragmentJobNApplicantsBinding
-    private lateinit var viewModel: JobNApplicantsViewModel
+    private lateinit var viewModel: JobApplicantsViewModel
 
     private lateinit var adapter: JobListAdapter
 
@@ -24,42 +23,38 @@ class JobListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentJobNApplicantsBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity())[JobNApplicantsViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[JobApplicantsViewModel::class.java]
 
 
         viewModel.getJobsList()
 
 
+        binding.btnBack.setOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
 
-        binding.btnBack.setOnClickListener { activity?.onBackPressed() }
 
-        viewModel.jobsList.observe(viewLifecycleOwner) { it ->
+        viewModel.jobApplicantsList.observe(viewLifecycleOwner) { it ->
             binding.loader.visibility = View.GONE
             adapter = JobListAdapter(it!!, viewModel)
             binding.listview.adapter = adapter
 
-            adapter.onItemClickListener = {details ->
+            adapter.onItemClickListener = { details ->
                 onItemClicked(details)
             }
-
-            /*adapter.onItemClickListener = { details ->
-
-            }*/
 
         }
 
 
     }
 
-    private fun onItemClicked(details: JobsByClinicsModel.NurseApplicant) {
+    private fun onItemClicked(details: ClinicJobApplicantsModel.NurseApplicant) {
         viewModel.currentJobID.postValue(details.jobId)
-        viewModel.currentNurseList.postValue(details.nurses)
-
+        viewModel.isCurrentJobClosed.postValue(details.jobStatus == "closed")
+        viewModel.applicantsList.postValue(details.nurses)
         findNavController()
             .navigate(R.id.action_jobNApplicantsFragment_to_listJobApplicantsFragment)
     }

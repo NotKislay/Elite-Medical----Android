@@ -42,7 +42,8 @@ class ApprovalsClinic : AppCompatActivity() {
                         ApprovalClinicsAdapter(
                             ArrayList(clinics),
                             this@ApprovalsClinic,
-                            true
+                            true,
+                            "ClinicApprovals"
                         )
                     recyclerView.adapter = adapter
                     binding.loader.visibility = View.GONE

@@ -42,7 +42,7 @@ class TimesheetNurseFromClinic : AppCompatActivity() {
                     val dialog= Dialog(this@TimesheetNurseFromClinic)
                     dialog.setContentView(R.layout.modal_layout_clinic_details_more)
 
-                    dialog.findViewById<TextView>(R.id.tv_more_details).text = "$errorMsg"
+                    dialog.findViewById<TextView>(R.id.tv_more_details).text = "No timesheet found!"
                     dialog.findViewById<Button>(R.id.btnReviews_modal).visibility=View.GONE
                     dialog.findViewById<Button>(R.id.btnNurseAssoc_modal).visibility=View.GONE
                     dialog.findViewById<View>(R.id.divider1).visibility=View.GONE

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".clinic.fragments.jobs.myjobs.NurseRatingFragment">
+    tools:context=".clinic.fragments.jobs.applicants.ApplicantNurseReviewsFragment">
 
     <!--            TOP App Bar         -->
     <LinearLayout
@@ -31,21 +31,23 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Nurse Reviews"
+            android:text="Reviews"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
 
     </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/contentarea">
+        android:layout_height="wrap_content">
+
 
         <androidx.recyclerview.widget.RecyclerView
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_nurse_review"
-            android:id="@+id/rv_nurse_rev_my_jobs"
+            android:id="@+id/rv_nurse_rev_applicants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
@@ -61,7 +63,11 @@
             android:indeterminateTint="#012A4A" />
 
 
-
     </RelativeLayout>
+
+
+
+
+
 
 </LinearLayout>

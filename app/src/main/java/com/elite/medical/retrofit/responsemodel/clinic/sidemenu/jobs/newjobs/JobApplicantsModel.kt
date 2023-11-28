@@ -1,12 +1,12 @@
-package com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants
+package com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.newjobs
 
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import android.os.Parcelable
 
 @Parcelize
-data class JobsByClinicsModel(
+data class JobApplicantsModel(
     @SerializedName("clinic_id")
     val clinicId: Int,
     @SerializedName("message")
@@ -35,6 +35,8 @@ data class JobsByClinicsModel(
             val address: String,
             @SerializedName("approval_status")
             val approvalStatus: String,
+            @SerializedName("availability")
+            val availability: String,
             @SerializedName("cgfns_status")
             val cgfnsStatus: String,
             @SerializedName("city")
@@ -47,6 +49,8 @@ data class JobsByClinicsModel(
             val email: String,
             @SerializedName("experience")
             val experience: String,
+            @SerializedName("hiring_status")
+            val hiringStatus: String,
             @SerializedName("id")
             val id: Int,
             @SerializedName("license_expiry")

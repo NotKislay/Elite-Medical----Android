@@ -4,19 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
-import com.elite.medical.EliteMedical
-import com.elite.medical.R
-import com.elite.medical.admin.ui.auth.LoginAdmin
 import com.elite.medical.databinding.ModalLayoutClinicDetailsMoreBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -110,7 +104,13 @@ object HelperMethods {
 
     }
 
-    fun showDialog(title: String, cancelText: String, requireContext: Context, activity: FragmentActivity?) {
+    fun showDialog(
+        title: String,
+        cancelText: String,
+        requireContext: Context,
+        activity: FragmentActivity?,
+        onBackPressed: Unit?
+    ) {
 
         val customDialog = Dialog(requireContext)
         val dialogBinding =
@@ -124,7 +124,7 @@ object HelperMethods {
         dialogBinding.divider2.visibility = View.GONE
         dialogBinding.btnCancelModal.text = cancelText
         dialogBinding.btnCancelModal.setOnClickListener {
-//            activity?.onBackPressed()
+            onBackPressed
             customDialog.dismiss()
         }
 

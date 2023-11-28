@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#E8F1F2">
+        android:background="#E8F1F2"
+        android:orientation="vertical">
 
 
         <!--            TOP App Bar         -->
@@ -25,11 +25,11 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:padding="20dp"
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#012A4A"
+                android:padding="20dp"
                 android:src="@drawable/arrow" />
 
             <TextView
@@ -46,42 +46,79 @@
                 android:id="@+id/moreBtn_enr_nurse_details"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="More"
                 android:backgroundTint="@color/elite_medical_blue"
-                android:textColor="@color/white"
                 android:padding="10dp"
-                android:textSize="17sp"/>
+                android:text="More"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/loader"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="100dp"
-            android:indeterminateTint="#012A4A" />
+            android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listView_enr_nurses_det"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Timesheet"
-            android:textSize="19dp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/elite_medical_blue"
-            android:id="@+id/btnTimesheet"
-            android:paddingHorizontal="35dp"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal|bottom" />
+            <ProgressBar
+                android:id="@+id/loader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="100dp"
+                android:indeterminateTint="#012A4A"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ListView
+                    android:id="@+id/listView_enr_nurses_det"
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/btnTimesheet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/elite_medical_blue"
+                        android:paddingHorizontal="35dp"
+                        android:text="Timesheet"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/btn_reject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/md_red_200"
+                        android:text="Terminate"
+                        android:textAllCaps="false"
+                        android:textColor="@color/md_red_900"
+                        android:textSize="18sp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
 
     </LinearLayout>

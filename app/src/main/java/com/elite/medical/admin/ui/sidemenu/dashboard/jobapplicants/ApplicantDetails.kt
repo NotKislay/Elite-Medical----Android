@@ -15,6 +15,8 @@ import com.elite.medical.retrofit.apis.admin.sidemenu.DashboardAPIs
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.jobapplication.AllJobApplicant
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.jobapplication.NurseFromApprovedJobApplication
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.jobapplication.alldetailsbyid.JobClinicNurseDetailsByID
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ApplicantDetails : AppCompatActivity() {
     private lateinit var binding: ActivityApplicantDetailsBinding
@@ -115,6 +117,10 @@ class ApplicantDetails : AppCompatActivity() {
 
     private fun displayJobDetails() {
         val jobDetails = allDetails.job
+        val inputformat= SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
+        val reqFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date= inputformat.parse(jobDetails.createdAt)!!
+
         val jobDetailsArray = arrayOf(
             "Job Title: ${jobDetails.title}",
             "Job Type: ${jobDetails.type}",
@@ -123,7 +129,7 @@ class ApplicantDetails : AppCompatActivity() {
             "Job Locations: ${jobDetails.locations.joinToString(",")}",
             "Vacancy: ${jobDetails.vacancy}",
             "Status: ${jobDetails.status}",
-            "Created On: ${jobDetails.createdAt}",
+            "Created On: ${reqFormat.format(date)}",
             "Description: ${jobDetails.description}",
         )
         val adapter =

@@ -17,6 +17,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -81,14 +82,13 @@ interface RetrofitInterfaceNurse {
         @Field("location") location: String,
     ): Call<GenericSuccessErrorModel>
 
-    @Multipart
+
     @POST(ConstantsNurse.CLOCK_OUT)
+    @FormUrlEncoded
     fun nurseClockOut(
-        @Part("location") location: RequestBody,
-        @Part image: MultipartBody.Part?
+        @Field("location") location: String,
+        @Field("image") image: String?
     ): Call<GenericSuccessErrorModel>
-
-
 
 
     @POST(ConstantsNurse.NURSE_REVIEW)

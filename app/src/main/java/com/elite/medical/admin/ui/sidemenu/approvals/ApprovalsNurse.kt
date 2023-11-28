@@ -41,7 +41,12 @@ class ApprovalsNurse : AppCompatActivity() {
                 object : ApprovalAPIs.Companion.NurseApprovalCallback {
                     override fun onListReceived(nurses: List<NurseDetailsFromNurseApprovalModel>) {
                         val adapter =
-                            ApprovalNurseAdapter(ArrayList(nurses), this@ApprovalsNurse, true)
+                            ApprovalNurseAdapter(
+                                ArrayList(nurses),
+                                this@ApprovalsNurse,
+                                true,
+                                "NurseApprovals"
+                            )
                         recyclerView.adapter = adapter
                         binding.loader.visibility = View.GONE
                     }

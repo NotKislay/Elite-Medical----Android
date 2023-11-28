@@ -5,16 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Nurse
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobDetailsByIDModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
 
 
-class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>, private val viewModel: MyJobsViewModel) :
+class NurseListAdapter(
+    val itemList: List<MyJobDetailsByIDModel.Nurse>,
+    private val viewModel: MyJobsViewModel,
+    private val jobStatus: String
+) :
     RecyclerView.Adapter<NurseListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,6 +53,9 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
         var label7: TextView = binding.label7
         var label8: TextView = binding.label8
 
+
+        var btnGoDeep = binding.btnGoDeep
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,13 +70,14 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+
         holder.row6.visibility = View.VISIBLE
         holder.row7.visibility = View.VISIBLE
 
         holder.label1.text = "Name"
         holder.label2.text = "Licence Type"
         holder.label3.text = "License Expiry"
-        holder.label4.text = "Experience (In Years)"
+        holder.label4.text = "Experience"
         holder.label6.text = "Status"
         holder.label7.text = "Availability"
 
@@ -79,13 +88,18 @@ class NurseListAdapter(val itemList: MutableList<NursesAppliedOnJobModel.Nurse>,
         holder.txt6.text = itemList[position].hiringStatus
         holder.txt7.text = itemList[position].availability
 
-        holder.binding.root.setOnClickListener {
-
-            viewModel.currentNurseDetails = itemList[position]
-            it.findNavController().navigate(R.id.action_nurseListFragment_to_nurseDetailsFragment22)
-
+        if (jobStatus == "closed") {
+            holder.btnGoDeep.isVisible = false
+        } else {
+            holder.binding.root.setOnClickListener {
+                onItemClicked?.invoke(itemList.elementAt(position))
+            }
         }
 
 
     }
+
+    var onItemClicked: ((MyJobDetailsByIDModel.Nurse) -> Unit)? = null
+
+
 }

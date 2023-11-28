@@ -55,6 +55,7 @@ class AppliedJobDetails : Fragment() {
         val tv7: TextView = binding.tv7
         val tv8: TextView = binding.tv8
         val tv9: TextView = binding.tv9
+        val tv10: TextView = binding.tv10
         val startDate: TextView = binding.tvStartDate
         val endDate: TextView = binding.tvEndDate
 
@@ -64,10 +65,11 @@ class AppliedJobDetails : Fragment() {
 
         tv1.text = job.title
         tv2.text = job.type
-        tv9.text = "Posted Ago"
-        tv4.text = job.clinicName
-        tv5.text = job.locations.joinToString(",")
-        tv6.text = job.description
+        tv9.text = "NA"
+        tv10.text = job.clinicName
+        tv4.text = job.locations.joinToString(", ")
+        tv5.text = job.description
+        tv6.text = job.vacancy
         tv7.text = job.applied.size.toString()
         tv8.text = job.nurseStatus
         startDate.text = job.engageFrom

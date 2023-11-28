@@ -71,6 +71,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/title"
+                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/md_blue_grey_100"
@@ -83,32 +84,24 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Vacancy"
+                    android:text="Select Job Type"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <Spinner
+                    android:id="@+id/spinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp">
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/et_background"
+                    android:padding="5dp"
+                    android:spinnerMode="dialog" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Vacancy"
-                        android:inputType="number"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:backgroundTint="@color/md_blue_grey_100"
-                        android:backgroundTintMode="screen"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="#3D6E95"
-                        android:textCursorDrawable="@drawable/color_cursor" />
-
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,11 +128,12 @@
 
 
                 <Button
+
                     android:id="@+id/btn_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="40dp"
-                    android:backgroundTint="@color/md_grey_600"
+                    android:backgroundTint="@color/md_grey_500"
                     android:text="Select Start Date"
                     android:textColor="@color/black" />
 
@@ -172,16 +166,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="40dp"
-                    android:backgroundTint="@color/md_grey_600"
+                    android:backgroundTint="@color/md_grey_500"
                     android:text="Select End Date"
                     android:textColor="@color/black" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Description"
+                    android:text="Vacancy"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -191,17 +184,20 @@
                     android:layout_marginVertical="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Description"
+                        android:id="@+id/Vacancy"
+                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/md_blue_grey_100"
                         android:backgroundTintMode="screen"
                         android:drawablePadding="10dp"
+                        android:inputType="number"
                         android:textColor="@color/black"
                         android:textColorHint="#3D6E95"
                         android:textCursorDrawable="@drawable/color_cursor" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,22 +216,34 @@
                     android:padding="5dp"
                     android:spinnerMode="dialog" />
 
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Select Job Type"
+                    android:text="Description"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
-                <Spinner
-                    android:id="@+id/spinner2"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:background="@drawable/et_background"
-                    android:padding="5dp"
-                    android:spinnerMode="dialog" />
+                    android:layout_marginVertical="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/Description"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/md_blue_grey_100"
+                        android:backgroundTintMode="screen"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#3D6E95"
+                        android:textCursorDrawable="@drawable/color_cursor" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btn_submit"
@@ -247,6 +255,7 @@
                     android:text="Submit"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
+
 
             </LinearLayout>
 

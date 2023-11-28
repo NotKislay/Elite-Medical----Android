@@ -9,13 +9,15 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.admin.ui.sidemenu.approvals.details.ClinicApprovalDetails
+import com.elite.medical.admin.ui.sidemenu.approvals.details.NurseApprovalDetails
 import com.elite.medical.databinding.RvItemGenericBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicDetailsFromClinicApprovalModel
 
 class ApprovalClinicsAdapter(
     private val items: ArrayList<ClinicDetailsFromClinicApprovalModel>,
     val context: Context,
-    private val detailed: Boolean
+    private val detailed: Boolean,
+    val separator: String
 ) :
     RecyclerView.Adapter<ApprovalClinicsAdapter.ModelViewHolder>() {
 
@@ -79,45 +81,57 @@ class ApprovalClinicsAdapter(
 
         val item = items[position]
 
-        holder.row1.isVisible = true
-        holder.row2.isVisible = true
-        holder.row3.isVisible = true
-        holder.row4.isVisible = true
-        holder.row5.isVisible = true
-        holder.row6.isVisible = false
-        holder.row7.isVisible = false
-        holder.row8.isVisible = false
-        holder.row9.isVisible = false
-        holder.row10.isVisible = false
+        if (separator == "ClinicApprovals") {
+            holder.row1.isVisible = true
+            holder.row2.isVisible = true
+            holder.row3.isVisible = true
+            holder.row4.isVisible = true
+            holder.row5.isVisible = true
+            holder.row6.isVisible = false
+            holder.row7.isVisible = false
+            holder.row8.isVisible = false
+            holder.row9.isVisible = false
+            holder.row10.isVisible = false
 
+            holder.label1.text = "Name"
+            holder.label2.text = "Email"
+            holder.label3.text = "Address"
+            holder.label4.text = "Clinic Type"
+            holder.label5.text = "Approval Status"
 
-        holder.label1.text = "Name"
-        holder.label2.text = "Email"
-        holder.label3.text = "Address"
-        holder.label4.text = "Clinic Type"
-        holder.label5.text = "Approval Status"
-        holder.label6.text = "Approval Status"
-        holder.label7.text = "End Date"
-        holder.label8.text = "Vacancy"
-        holder.label9.text = "Applied"
-        holder.label10.text = "Status"
+            holder.tv1.text = item.name
+            holder.tv2.text = item.email
+            holder.tv3.text = item.address
+            holder.tv4.text = item.clinicType
+            holder.tv5.text = item.approvalStatus
 
-        holder.tv1.text = item.name
-        holder.tv2.text = item.email
-        holder.tv3.text = item.address
-        holder.tv4.text = item.clinicType
-        holder.tv5.text = item.approvalStatus
-
-
-        holder.layout.setOnClickListener {
-            val intent = Intent(context, ClinicApprovalDetails::class.java)
-            intent.putExtra("details", items[position])
-            context.startActivity(intent)
+            holder.btnGoDeep.isVisible = true
+            holder.layout.setOnClickListener {
+                val intent = Intent(context, ClinicApprovalDetails::class.java)
+                intent.putExtra("details", items[position])
+                context.startActivity(intent)
+            }
         }
+        else if (separator == "Recent Clinics"){
+            holder.row1.isVisible = true
+            holder.row2.isVisible = true
+            holder.row3.isVisible = true
+            holder.row4.isVisible = false
+            holder.row5.isVisible = false
+            holder.row6.isVisible = false
+            holder.row7.isVisible = false
+            holder.row8.isVisible = false
+            holder.row9.isVisible = false
+            holder.row10.isVisible = false
 
-        /*        if (!detailed)
-                    holder.arrow.visibility = View.GONE*/
+            holder.label1.text = "Name"
+            holder.label2.text = "Email"
+            holder.label3.text = "Locations"
 
-
+            holder.tv1.text = item.name
+            holder.tv2.text = item.email
+            holder.tv3.text = item.city
+            holder.btnGoDeep.isVisible = false
+        }
     }
 }

@@ -34,13 +34,14 @@ class ApprovedClinicDetails : AppCompatActivity() {
 
         val arrayData = arrayOf(
             "Name: ${details?.name}",
-            "Email: ${details?.email}",
-            "Clinic Type: ${details?.clinictype}",
             "Mobile: ${details?.contactno}",
+            "Email: ${details?.email}",
             "Address: ${details?.clinicaddress}",
+            "Clinic Type: ${details?.clinictype}",
             "VAT No: ${details?.vattinno}",
             "CST No: ${details?.cstno}",
             "Service Tax No: ${details?.servicetaxno}",
+            "Clinic UIN: ${details?.clinicuin}",
             "Declaration: ${details?.declaration}"
         )
 

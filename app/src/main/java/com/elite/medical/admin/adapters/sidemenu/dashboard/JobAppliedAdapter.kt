@@ -40,10 +40,10 @@ class JobAppliedAdapter(private val itemList: ArrayList<Job>,
 
         val engageFromTo=itemList[position].engageFrom +" to "+ itemList[position].engageTo
 
-        holder.jobTitle.text = itemList[position].title
-        holder.jobType.text = itemList[position].type
-        holder.engageDate.text = engageFromTo
-        holder.approvalStatus.text= itemList[position].approvalStatus
+        holder.jobTitle.text = "Title: ${ itemList[position].title }"
+        holder.jobType.text = "Type: ${ itemList[position].type }"
+        holder.engageDate.text = "Engage date: $engageFromTo"
+        holder.approvalStatus.text= "Status: ${ itemList[position].approvalStatus }"
 
         if (detailed) {
             holder.layout.setOnClickListener {

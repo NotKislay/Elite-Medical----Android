@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".admin.ui.dashboard.recents.RecentNurses">
+        tools:context=".admin.ui.dashboard.RecentNurses">
 
         <!-- TOP App Bar -->
         <LinearLayout

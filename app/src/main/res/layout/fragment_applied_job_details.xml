@@ -148,6 +148,35 @@
                             android:textSize="16sp" />
 
                     </TableRow>
+                    <TableRow
+                        android:id="@+id/row11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/label11"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Clinic"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Text 9"
+                            android:textAlignment="viewStart"
+                            android:textSize="16sp" />
+
+                    </TableRow>
 
                     <TableRow
                         android:id="@+id/row3"
@@ -179,36 +208,6 @@
 
 
                     </TableRow>
-
-                    <TableRow
-                        android:id="@+id/row4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/label4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Location"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Text 4"
-                            android:textAlignment="viewStart"
-                            android:textSize="16sp" />
-
-                    </TableRow>
-
                     <TableRow
                         android:id="@+id/row5"
                         android:layout_width="match_parent"
@@ -238,6 +237,36 @@
                             android:textSize="16sp" />
 
                     </TableRow>
+                    <TableRow
+                        android:id="@+id/row4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/label4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Location"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Text 4"
+                            android:textAlignment="viewStart"
+                            android:textSize="16sp" />
+
+                    </TableRow>
+
+
 
 
                     <TableRow

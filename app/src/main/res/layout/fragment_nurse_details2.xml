@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top"
     android:orientation="vertical"
-    tools:context=".clinic.fragments.jobs.myjobs.NurseDetailsFragment">
+    tools:context=".clinic.fragments.jobs.myjobs.NurseDetailsFragmentMyJobs">
 
     <!--            TOP App Bar         -->
     <LinearLayout
@@ -35,64 +35,116 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/elite_medical_blue"
+            android:text="More"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
     </LinearLayout>
 
-    <RelativeLayout
+
+    <ListView
+        android:layout_weight="1"
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:visibility="visible" />
 
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
+<!--    <View
+        android:id="@+id/h_ruler"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/listview"
+        android:background="@color/md_grey_300" />
+
+    <LinearLayout
+        android:id="@+id/licence_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/h_ruler"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:gravity="center_vertical"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:text="View Licence"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+        <Button
+            android:id="@+id/btn_view_licence"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:scrollbars="vertical"
-            android:visibility="visible" />
-
-        <View
-            android:id="@+id/h_ruler"
-            android:layout_below="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/md_grey_300" />
-
-        <LinearLayout
-            android:id="@+id/licence_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/h_ruler"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/md_blue_200"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:weightSum="10">
+            android:text="Open"
+            android:textColor="@color/md_blue_900" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="9"
-                android:gravity="center_vertical"
-                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:text="View Licence"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+    </LinearLayout>-->
 
-            <Button
-                android:id="@+id/btn_view_licence"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="30dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_blue_200"
-                android:gravity="center"
-                android:text="Open"
-                android:textColor="@color/md_blue_900" />
+    <LinearLayout
+        android:id="@+id/layout_hire_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        </LinearLayout>
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_hire"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/md_green_100"
+            android:text="Hire"
+            android:textAllCaps="false"
+            android:textColor="@color/md_green_900"
+            android:textSize="20sp" />
 
-    </RelativeLayout>
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_trial"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/md_blue_100"
+            android:text="Trial"
+            android:textAllCaps="false"
+            android:textColor="@color/md_blue_700"
+            android:textSize="20sp" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_reject"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/md_red_200"
+            android:text="Reject"
+            android:textAllCaps="false"
+            android:textColor="@color/md_red_900"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

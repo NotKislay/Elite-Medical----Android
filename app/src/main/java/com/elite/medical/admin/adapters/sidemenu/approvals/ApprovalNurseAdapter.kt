@@ -19,7 +19,8 @@ import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.nurseap
 class ApprovalNurseAdapter(
     private val items: ArrayList<NurseDetailsFromNurseApprovalModel>,
     val context: Context,
-    private val detailed: Boolean
+    private val detailed: Boolean,
+    val separator: String
 ) :
     RecyclerView.Adapter<ApprovalNurseAdapter.ModelViewHolder>() {
 
@@ -84,52 +85,63 @@ class ApprovalNurseAdapter(
 
         val item = items[position]
 
-        holder.row1.isVisible = true
-        holder.row2.isVisible = true
-        holder.row3.isVisible = true
-        holder.row4.isVisible = true
-        holder.row5.isVisible = true
-        holder.row6.isVisible = true
-        holder.row7.isVisible = false
-        holder.row8.isVisible = false
-        holder.row9.isVisible = false
-        holder.row10.isVisible = false
+        if (separator == "NurseApprovals") {
+            holder.row1.isVisible = true
+            holder.row2.isVisible = true
+            holder.row3.isVisible = true
+            holder.row4.isVisible = true
+            holder.row5.isVisible = true
+            holder.row6.isVisible = true
+            holder.row7.isVisible = false
+            holder.row8.isVisible = false
+            holder.row9.isVisible = false
+            holder.row10.isVisible = false
 
+            holder.label1.text = "Name"
+            holder.label2.text = "Email"
+            holder.label3.text = "License Type"
+            holder.label4.text = "License Expiry"
+            holder.label5.text = "Schedule Status"
+            holder.label6.text = "Approval Status"
 
-        holder.label1.text = "Name"
-        holder.label2.text = "Email"
-        holder.label3.text = "License Type"
-        holder.label4.text = "License Expiry"
-        holder.label5.text = "Schedule Status"
-        holder.label6.text = "Approval Status"
-        holder.label7.text = "End Date"
-        holder.label8.text = "Vacancy"
-        holder.label9.text = "Applied"
-        holder.label10.text = "Status"
+            holder.tv1.text = item.name
+            holder.tv2.text = item.email
+            holder.tv3.text = item.licenseType
+            holder.tv4.text = item.licenseExpiry
+            holder.tv5.text = item.scheduleStatus
+            holder.tv6.text = item.approvalStatus
 
+            holder.btnGoDeep.isVisible = true
+            holder.layout.setOnClickListener {
+                val intent = Intent(context, NurseApprovalDetails::class.java)
+                intent.putExtra("details", items[position])
+                context.startActivity(intent)
+            }
+        }
+        else if (separator == "Recent Nurse"){
+            holder.row1.isVisible = true
+            holder.row2.isVisible = true
+            holder.row3.isVisible = true
+            holder.row4.isVisible = false
+            holder.row5.isVisible = false
+            holder.row6.isVisible = false
+            holder.row7.isVisible = false
+            holder.row8.isVisible = false
+            holder.row9.isVisible = false
+            holder.row10.isVisible = false
 
-        var scheduleStatus = ""
+            holder.label1.text = "Name"
+            holder.label2.text = "Email"
+            holder.label3.text = "Locations"
 
-        scheduleStatus = if (item.scheduleStatus == "true") {
-            item.schedule + " at " + item.scheduleTime
-        } else if (item.approvalStatus == "cancelled") {
-            "Cancelled"
-        } else {
-            "Yet to schedule"
+            holder.tv1.text = item.name
+            holder.tv2.text = item.email
+            holder.tv3.text = item.city
+            holder.btnGoDeep.isVisible = false
+            //holder.tv3.text = item.locations.joinToString(",")
+            //before uncommenting please add the locations field in the data model too
         }
 
-        holder.tv1.text = item.name
-        holder.tv2.text = item.email
-        holder.tv3.text = item.licenseType
-        holder.tv4.text = item.licenseExpiry
-        holder.tv5.text = scheduleStatus
-        holder.tv6.text = item.approvalStatus
-
-        holder.layout.setOnClickListener {
-            val intent = Intent(context, NurseApprovalDetails::class.java)
-            intent.putExtra("details", items[position])
-            context.startActivity(intent)
-        }
 
 
     }

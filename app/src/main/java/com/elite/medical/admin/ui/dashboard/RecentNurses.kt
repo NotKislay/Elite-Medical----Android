@@ -1,4 +1,4 @@
-package com.elite.medical.admin.ui.dashboard.recents
+package com.elite.medical.admin.ui.dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +23,7 @@ class RecentNurses : AppCompatActivity() {
         if (nurseList != null) {
             binding.rvRecentNurses.layoutManager =
                 GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val adapter = ApprovalNurseAdapter(nurseList, this,false)
+            val adapter = ApprovalNurseAdapter(nurseList, this,false,"Recent Nurse")
             binding.rvRecentNurses.adapter = adapter
         }
 

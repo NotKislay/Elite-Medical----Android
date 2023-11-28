@@ -39,7 +39,8 @@ class EnrolledClinics : Fragment(), View.OnClickListener {
                     "No Clinics Enrolled",
                     "Go Back",
                     requireContext(),
-                    activity
+                    activity,
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 )
                 activity?.onBackPressedDispatcher?.onBackPressed()
 

@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.clinic.ui.sidemenu.jobs.viewmodels.MyJobsViewModel
 import com.elite.medical.databinding.CustomListItemBinding
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.Job
+import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobsListModel
+import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
 
-class JobListAdapter(val itemList: List<Job>, private val viewModel: MyJobsViewModel) :
+class JobListAdapter(
+    private val items: List<MyJobsListModel.Job>,
+    private val viewModel: MyJobsViewModel
+) :
     RecyclerView.Adapter<JobListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -55,12 +59,13 @@ class JobListAdapter(val itemList: List<Job>, private val viewModel: MyJobsViewM
 
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.row6.visibility = View.VISIBLE
         holder.row7.visibility = View.VISIBLE
+
 
 
         holder.label1.text = "Job Title"
@@ -70,24 +75,19 @@ class JobListAdapter(val itemList: List<Job>, private val viewModel: MyJobsViewM
         holder.label6.text = "Job Status"
         holder.label7.text = "Date Created"
 
-        holder.tv1.text = itemList[position].title
-        holder.tv2.text = itemList[position].type
-        holder.tv3.text = itemList[position].description
-        holder.tv4.text = itemList[position].applied.size.toString()
-        holder.tv6.text = itemList[position].status
-        holder.tv7.text = itemList[position].createdAt
+        holder.tv1.text = items[position].title
+        holder.tv2.text = items[position].type
+        holder.tv3.text = items[position].description
+        holder.tv4.text = items[position].applied.size.toString()
+        holder.tv6.text = items[position].status
+        holder.tv7.text = items[position].formattedCreatedAt
 
         holder.tv3.maxLines = 2
 
-        holder.layout.setOnClickListener {
-            viewModel.updateJobID(itemList[position].id)
-            viewModel.updateJobStatus(itemList[position].status)
-
-            viewModel.currentJobDetails = itemList[position]
-            it.findNavController().navigate(R.id.action_jobListFragment_to_jobDetailsFragment2)
-
-        }
-
-
+        holder.layout.setOnClickListener { onItemClicked?.invoke(items.elementAt(position)) }
     }
+
+    var onItemClicked: ((MyJobsListModel.Job) -> Unit)? = null
+
+
 }
