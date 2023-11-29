@@ -13,9 +13,12 @@ import com.elite.medical.admin.ui.sidemenu.dashboard.jobs.ApprovedJobDetailsByID
 import com.elite.medical.admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityJobApplied
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.jobsearchapproval.Job
 
-class JobAppliedAdapter(private val itemList: ArrayList<Job>,
-                        val context: ActivityJobApplied,
-                        private val detailed: Boolean) :
+class JobAppliedAdapter(
+    private val itemList: ArrayList<Job>,
+    val context: ActivityJobApplied,
+    private val detailed: Boolean,
+    private val userID: String?
+) :
     RecyclerView.Adapter<JobAppliedAdapter.ModelViewHolder>() {
     inner class ModelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -38,17 +41,33 @@ class JobAppliedAdapter(private val itemList: ArrayList<Job>,
 
     override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
 
+        val item = itemList.elementAt(position)
         val engageFromTo=itemList[position].engageFrom +" to "+ itemList[position].engageTo
+
+        var status = ""
+
+        status = if (item.hired.contains(userID.toString())) {
+            "Hired"
+        } else {
+            if (item.applied.contains(userID.toString())) {
+                "On Processing"
+            } else
+                "Not Applied"
+        }
+
 
         holder.jobTitle.text = "Title: ${ itemList[position].title }"
         holder.jobType.text = "Type: ${ itemList[position].type }"
         holder.engageDate.text = "Engage date: $engageFromTo"
-        holder.approvalStatus.text= "Status: ${ itemList[position].approvalStatus }"
+        holder.approvalStatus.text= "Status: ${ status }"
+
+        userID
 
         if (detailed) {
             holder.layout.setOnClickListener {
                 val intent = Intent(context, ApprovedJobDetailsByID::class.java)
                 intent.putExtra("jobID", itemList[position].id)
+                intent.putExtra("userID", userID)
                 context.startActivity(intent)
             }
         }

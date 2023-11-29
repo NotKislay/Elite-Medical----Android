@@ -9,7 +9,7 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.databinding.ActivityLoginNurseBinding
 import com.elite.medical.retrofit.apis.AuthAPI
 import com.elite.medical.retrofit.responsemodel.auth.LoginResponse
-import com.elite.medical.utils.ForgotPassword
+import com.elite.medical.ForgotPassword
 import com.elite.medical.utils.HelperMethods
 import com.elite.medical.utils.InputValidation
 

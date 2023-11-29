@@ -1,12 +1,7 @@
 package com.elite.medical.retrofit.apis
 
 import com.elite.medical.EliteMedical
-import com.elite.medical.retrofit.RetrofitClient
-import com.elite.medical.retrofit.RetrofitInterfaceAdmin
-import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.requestmodels.LoginModel
-import com.elite.medical.retrofit.requestmodels.RegisterClinicModel
-import com.elite.medical.retrofit.requestmodels.RegisterNurseModel
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.auth.LoginResponse
 import com.elite.medical.retrofit.responsemodel.auth.LoginResponseModel
@@ -42,10 +37,8 @@ class AuthAPI {
             password: String,
             callback: AuthLoginCallback
         ) {
-            val loginApi = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
             val userDetails = LoginModel(email, password)
-            val result = loginApi.login(userDetails)
-            result.enqueue(object : Callback<ResponseBody> {
+            EliteMedical.retrofitAdmin.login(userDetails).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
@@ -98,48 +91,40 @@ class AuthAPI {
             password: String,
             callback: LoginClinicCallback
         ) {
-            val loginApi = EliteMedical.retrofitAdmin.create(RetrofitInterfaceClinic::class.java)
             val userDetails = LoginModel(email, password)
-            val result = loginApi.loginClinic(userDetails)
-            result.enqueue(object : Callback<LoginResponseModel?> {
-                override fun onResponse(
-                    call: Call<LoginResponseModel?>,
-                    response: Response<LoginResponseModel?>
-                ) {
+            EliteMedical.retrofitClinic.loginClinic(userDetails)
+                .enqueue(object : Callback<LoginResponseModel?> {
+                    override fun onResponse(
+                        call: Call<LoginResponseModel?>,
+                        response: Response<LoginResponseModel?>
+                    ) {
 
-                    if (response.isSuccessful) {
-                        val body = response.body()!!
-                        EliteMedical.updateClinicToken(body.token)
-                        callback.onClinicLogin(null)
-                    } else if (response.code() == 400) {
+                        if (response.isSuccessful) {
+                            val body = response.body()!!
+                            EliteMedical.updateClinicToken(body.token)
+                            callback.onClinicLogin(null)
+                        } else if (response.code() == 400) {
 
-                        val errorBody = response.errorBody()!!
-                        val errorModel =
-                            Gson().fromJson(
-                                errorBody.string(),
-                                GenericSuccessErrorModel::class.java
-                            )
-                        callback.onClinicLogin(errorModel.message)
+                            val errorBody = response.errorBody()!!
+                            val errorModel =
+                                Gson().fromJson(
+                                    errorBody.string(),
+                                    GenericSuccessErrorModel::class.java
+                                )
+                            callback.onClinicLogin(errorModel.message)
+                        }
+
                     }
 
-                }
+                    override fun onFailure(call: Call<LoginResponseModel?>, t: Throwable) {
 
-                override fun onFailure(call: Call<LoginResponseModel?>, t: Throwable) {
-
-                }
-            })
+                    }
+                })
         }
 
 
-
-
-        fun logout(
-            token: String,
-            callback: AuthLogoutCallback
-        ) {
-            val logoutAPI = RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = logoutAPI.logout("Bearer $token")
-            result.enqueue(object : Callback<LogoutModel?> {
+        fun logout(callback: AuthLogoutCallback) {
+            EliteMedical.retrofitAdmin.logout().enqueue(object : Callback<LogoutModel?> {
                 override fun onResponse(
                     call: Call<LogoutModel?>,
                     response: Response<LogoutModel?>
@@ -151,9 +136,7 @@ class AuthAPI {
                     }
                 }
 
-                override fun onFailure(call: Call<LogoutModel?>, t: Throwable) {
-
-                }
+                override fun onFailure(call: Call<LogoutModel?>, t: Throwable) {}
             })
         }
 

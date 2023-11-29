@@ -80,8 +80,8 @@ class NurseAuthViewModel : ViewModel() {
         })
 
         fun uploadImage(img: String) {
-            EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-                .uploadImageTest(img).enqueue(object : Callback<ImageUploadModel?> {
+            EliteMedical.retrofitAdmin.uploadImageTest(img)
+                .enqueue(object : Callback<ImageUploadModel?> {
                     override fun onResponse(
                         call: Call<ImageUploadModel?>,
                         response: Response<ImageUploadModel?>

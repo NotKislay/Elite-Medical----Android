@@ -1,4 +1,4 @@
-package com.elite.medical.admin.adapters.sidemenu.approvals
+package com.elite.medical.admin.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -9,14 +9,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.admin.ui.sidemenu.approvals.details.ClinicApprovalDetails
 import com.elite.medical.databinding.RvItemGenericBinding
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
+import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
-class ApprovalClinicsAdapter(
-    private val items: List<ClinicApprovalModel.ClinicApproval>,
+class RecentClinicsAdapter(
+    private val items: List<AdminDashboardModel.Clinic>,
     val context: Context,
     private val separator: String
 ) :
-    RecyclerView.Adapter<ApprovalClinicsAdapter.ModelViewHolder>() {
+    RecyclerView.Adapter<RecentClinicsAdapter.ModelViewHolder>() {
 
     inner class ModelViewHolder(binding: RvItemGenericBinding) :
         RecyclerView.ViewHolder(binding.root) {

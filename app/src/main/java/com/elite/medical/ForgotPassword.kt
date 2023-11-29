@@ -1,11 +1,11 @@
-package com.elite.medical.utils
+package com.elite.medical
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.elite.medical.R
 import com.elite.medical.databinding.ActivityForgotPasswordBinding
+import com.elite.medical.utils.InputValidation
 
 class ForgotPassword : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding

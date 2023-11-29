@@ -11,19 +11,13 @@ import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJo
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.appliedjobs.AppliedJobsModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobDetailModel
 import com.elite.medical.retrofit.responsemodel.nurse.jobs.searchjobs.JobList
-import com.elite.medical.utils.Constants
-import com.elite.medical.utils.ConstantsNurse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
+import com.elite.medical.utils.endpoints.ConstantsAdmin
+import com.elite.medical.utils.endpoints.ConstantsNurse
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface RetrofitInterfaceNurse {
@@ -68,7 +62,7 @@ interface RetrofitInterfaceNurse {
     @GET(ConstantsNurse.PROFILE_DATA)
     fun getProfileData(): Call<NurseProfileDetailsModel>
 
-    @POST(Constants.UPDATE_PROFILE)
+    @POST(ConstantsAdmin.UPDATE_PROFILE)
     @FormUrlEncoded
     fun updateProfile(
         @Field("name") name: String,

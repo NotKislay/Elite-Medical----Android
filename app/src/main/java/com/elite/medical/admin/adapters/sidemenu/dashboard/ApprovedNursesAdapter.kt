@@ -3,7 +3,6 @@ package com.elite.medical.admin.adapters.sidemenu.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -12,7 +11,7 @@ import com.elite.medical.admin.ui.sidemenu.dashboard.nurses.nursedetailsfromappr
 import com.elite.medical.databinding.RvItemGenericBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.nurses.Nurse
 
-class ApprovedNursesAdapter(private val items: ArrayList<Nurse>) :
+class ApprovedNursesAdapter(private val items: List<Nurse>) :
     RecyclerView.Adapter<ApprovedNursesAdapter.ViewHolder>() {
     inner class ViewHolder(binding: RvItemGenericBinding) : RecyclerView.ViewHolder(binding.root) {
 

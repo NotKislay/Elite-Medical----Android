@@ -8,7 +8,7 @@ import com.elite.medical.EliteMedical
 import com.elite.medical.clinic.ui.ClinicNavHost
 import com.elite.medical.databinding.ActivityLoginClinicBinding
 import com.elite.medical.retrofit.apis.AuthAPI
-import com.elite.medical.utils.ForgotPassword
+import com.elite.medical.ForgotPassword
 import com.elite.medical.utils.HelperMethods
 import com.google.android.material.snackbar.Snackbar
 

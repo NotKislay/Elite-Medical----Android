@@ -1,4 +1,4 @@
-package com.elite.medical.admin.adapters.sidemenu.approvals
+package com.elite.medical.admin.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -7,19 +7,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.admin.ui.sidemenu.approvals.details.ClinicApprovalDetails
+import com.elite.medical.admin.ui.sidemenu.approvals.details.NurseApprovalDetails
 import com.elite.medical.databinding.RvItemGenericBinding
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
+import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
-class ApprovalClinicsAdapter(
-    private val items: List<ClinicApprovalModel.ClinicApproval>,
+class RecentNursesAdapter(
+    private val items: List<AdminDashboardModel.Nurse>,
     val context: Context,
-    private val separator: String
+    private val detailed: Boolean,
+    val separator: String
 ) :
-    RecyclerView.Adapter<ApprovalClinicsAdapter.ModelViewHolder>() {
+    RecyclerView.Adapter<RecentNursesAdapter.ModelViewHolder>() {
 
     inner class ModelViewHolder(binding: RvItemGenericBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
 
         val layout = binding.layout
 
@@ -58,8 +60,8 @@ class ApprovalClinicsAdapter(
 
         val btnGoDeep = binding.btnGoDeep
 
-    }
 
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModelViewHolder {
         return ModelViewHolder(
@@ -78,13 +80,13 @@ class ApprovalClinicsAdapter(
 
         val item = items[position]
 
-        if (separator == "ClinicApprovals") {
+        if (separator == "NurseApprovals") {
             holder.row1.isVisible = true
             holder.row2.isVisible = true
             holder.row3.isVisible = true
             holder.row4.isVisible = true
             holder.row5.isVisible = true
-            holder.row6.isVisible = false
+            holder.row6.isVisible = true
             holder.row7.isVisible = false
             holder.row8.isVisible = false
             holder.row9.isVisible = false
@@ -92,24 +94,26 @@ class ApprovalClinicsAdapter(
 
             holder.label1.text = "Name"
             holder.label2.text = "Email"
-            holder.label3.text = "Address"
-            holder.label4.text = "Clinic Type"
-            holder.label5.text = "Approval Status"
+            holder.label3.text = "License Type"
+            holder.label4.text = "License Expiry"
+            holder.label5.text = "Schedule Status"
+            holder.label6.text = "Approval Status"
 
             holder.tv1.text = item.name
             holder.tv2.text = item.email
-            holder.tv3.text = item.address
-            holder.tv4.text = item.clinicType
-            holder.tv5.text = item.approvalStatus
+            holder.tv3.text = item.licenseType
+            holder.tv4.text = item.licenseExpiry
+            holder.tv5.text = item.scheduleStatus
+            holder.tv6.text = item.approvalStatus
 
             holder.btnGoDeep.isVisible = true
             holder.layout.setOnClickListener {
-                val intent = Intent(context, ClinicApprovalDetails::class.java)
+                val intent = Intent(context, NurseApprovalDetails::class.java)
                 intent.putExtra("details", items[position])
                 context.startActivity(intent)
             }
         }
-        else if (separator == "Recent Clinics"){
+        else if (separator == "Recent Nurse"){
             holder.row1.isVisible = true
             holder.row2.isVisible = true
             holder.row3.isVisible = true
@@ -129,6 +133,11 @@ class ApprovalClinicsAdapter(
             holder.tv2.text = item.email
             holder.tv3.text = item.city
             holder.btnGoDeep.isVisible = false
+            //holder.tv3.text = item.locations.joinToString(",")
+            //before uncommenting please add the locations field in the data model too
         }
+
+
+
     }
 }

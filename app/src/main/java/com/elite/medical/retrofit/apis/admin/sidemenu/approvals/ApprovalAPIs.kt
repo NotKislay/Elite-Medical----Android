@@ -1,12 +1,9 @@
 package com.elite.medical.retrofit.apis.admin.sidemenu.approvals
 
-import android.util.Log
-import com.elite.medical.retrofit.RetrofitClient
-import com.elite.medical.retrofit.RetrofitInterfaceAdmin
+import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.jobapproval.JobApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.nurseapproval.NurseApprovalModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicDetailsFromClinicApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.employmentapproval.EmploymentApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.employmentapproval.EmploymentDetailsFromEmploymentApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.jobapproval.JobDetailsFromJobApprovalModel
@@ -25,7 +22,7 @@ class ApprovalAPIs {
         }
 
         interface ClinicApprovalCallback {
-            fun onListReceived(clinics: List<ClinicDetailsFromClinicApprovalModel>)
+            fun onListReceived(clinics: List<ClinicApprovalModel.ClinicApproval>)
             fun onResponseErr(msg: String, statusCode: String)
         }
 
@@ -34,7 +31,7 @@ class ApprovalAPIs {
             fun onResponseErr(msg: String, statusCode: String)
         }
 
-        interface EmploymentApprovalCallback{
+        interface EmploymentApprovalCallback {
             fun onListReceived(jobs: List<EmploymentDetailsFromEmploymentApprovalModel>)
             fun onResponseErr(msg: String, statusCode: String)
         }
@@ -47,156 +44,149 @@ class ApprovalAPIs {
         fun fetchNurseApprovalList(
             authToken: String, callback: NurseApprovalCallback
         ) {
-            val fetchNurseApprovalListAPI =
-                RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchNurseApprovalListAPI.getNurseApprovalList("Bearer $authToken")
-            result.enqueue(object : Callback<NurseApprovalModel> {
-                override fun onResponse(
-                    call: Call<NurseApprovalModel>, response: Response<NurseApprovalModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val nurseList = responseData!!.approvalNurseDetails
+            EliteMedical.retrofitAdmin.getNurseApprovalList()
+                .enqueue(object : Callback<NurseApprovalModel> {
+                    override fun onResponse(
+                        call: Call<NurseApprovalModel>, response: Response<NurseApprovalModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val nurseList = responseData!!.approvalNurseDetails
 
-                        callback.onListReceived(nurseList)
-                    } else {
-                        val statusCode=response.code().toString()
-                        val errorData = response.errorBody().toString()
-                        
-                        callback.onResponseErr(errorData,statusCode)
+                            callback.onListReceived(nurseList)
+                        } else {
+                            val statusCode = response.code().toString()
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, statusCode)
+                        }
                     }
-                }
-                override fun onFailure(call: Call<NurseApprovalModel>, t: Throwable) {
-                    
-                }
-            })
+
+                    override fun onFailure(call: Call<NurseApprovalModel>, t: Throwable) {
+
+                    }
+                })
         }
 
         fun fetchClinicApprovalList(
             authToken: String, callback: ClinicApprovalCallback
         ) {
-            val fetchClinicApprovalListAPI =
-                RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchClinicApprovalListAPI.getClinicApprovalList("Bearer $authToken")
-            result.enqueue(object : Callback<ClinicApprovalModel> {
-                override fun onResponse(
-                    call: Call<ClinicApprovalModel>, response: Response<ClinicApprovalModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val clinicList = responseData!!.clinicApprovals
-                        for (clinic in clinicList) {
-                            
-                        }
-                        callback.onListReceived(clinicList)
-                    } else {
-                        val statusCode=response.code().toString()
-                        val errorData = response.errorBody().toString()
-                        
-                        callback.onResponseErr(errorData,statusCode)
-                    }
-                }
+            EliteMedical.retrofitAdmin.getClinicApprovalList()
+                .enqueue(object : Callback<ClinicApprovalModel> {
+                    override fun onResponse(
+                        call: Call<ClinicApprovalModel>, response: Response<ClinicApprovalModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val clinicList = responseData!!.clinicApprovals
+                            for (clinic in clinicList) {
 
-                override fun onFailure(call: Call<ClinicApprovalModel>, t: Throwable) {
-                    
-                }
-            })
+                            }
+                            callback.onListReceived(clinicList)
+                        } else {
+                            val statusCode = response.code().toString()
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, statusCode)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ClinicApprovalModel>, t: Throwable) {
+
+                    }
+                })
         }
 
         fun fetchJobApprovalList(
-            authToken: String, callback: JobApprovalCallback
+            callback: JobApprovalCallback
         ) {
-            val fetchJobApprovalListAPI =
-                RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchJobApprovalListAPI.getJobApprovalList("Bearer $authToken")
-            result.enqueue(object : Callback<JobApprovalModel> {
-                override fun onResponse(
-                    call: Call<JobApprovalModel>, response: Response<JobApprovalModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val jobList = responseData!!.jobApprovals
-                        for (job in jobList) {
-                            
-                        }
-                        callback.onListReceived(jobList)
-                    } else {
-                        val statusCode=response.code().toString()
-                        val errorData = response.errorBody().toString()
-                        
-                        callback.onResponseErr(errorData,statusCode)
-                    }
-                }
+            EliteMedical.retrofitAdmin.getJobApprovalList()
+                .enqueue(object : Callback<JobApprovalModel> {
+                    override fun onResponse(
+                        call: Call<JobApprovalModel>, response: Response<JobApprovalModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val jobList = responseData!!.jobApprovals
+                            for (job in jobList) {
 
-                override fun onFailure(call: Call<JobApprovalModel>, t: Throwable) {
-                    
-                }
-            })
+                            }
+                            callback.onListReceived(jobList)
+                        } else {
+                            val statusCode = response.code().toString()
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, statusCode)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JobApprovalModel>, t: Throwable) {
+
+                    }
+                })
         }
 
         fun fetchEmploymentApprovalList(
-            authToken: String,
             callback: EmploymentApprovalCallback
-        ){
-            val api = RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getEmploymentApprovalList("Bearer $authToken")
-            result.enqueue(object : Callback<EmploymentApprovalModel?> {
-                override fun onResponse(
-                    call: Call<EmploymentApprovalModel?>,
-                    response: Response<EmploymentApprovalModel?>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val employmentDetails = responseData!!.employmentDetails
-                        for (employment in employmentDetails) {
-                            
+        ) {
+            EliteMedical.retrofitAdmin.getEmploymentApprovalList()
+                .enqueue(object : Callback<EmploymentApprovalModel?> {
+                    override fun onResponse(
+                        call: Call<EmploymentApprovalModel?>,
+                        response: Response<EmploymentApprovalModel?>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val employmentDetails = responseData!!.employmentDetails
+                            for (employment in employmentDetails) {
+
+                            }
+                            callback.onListReceived(employmentDetails)
+                        } else {
+                            val statusCode = response.code().toString()
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, statusCode)
                         }
-                        callback.onListReceived(employmentDetails)
-                    }else {
-                        val statusCode=response.code().toString()
-                        val errorData = response.errorBody().toString()
-                        
-                        callback.onResponseErr(errorData,statusCode)
                     }
-                }
-                override fun onFailure(call: Call<EmploymentApprovalModel?>, t: Throwable) {
-                    
-                }
-            })
+
+                    override fun onFailure(call: Call<EmploymentApprovalModel?>, t: Throwable) {
+
+                    }
+                })
         }
 
 
         fun fetchJobSearchApprovalList(
-            authToken: String,
             callback: JobSearchApprovalCallback
-        ){
-            val api = RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getJobSearchApprovalList("Bearer $authToken")
-            result.enqueue(object : Callback<JobSearchApprovalModel?> {
-                override fun onResponse(
-                    call: Call<JobSearchApprovalModel?>,
-                    response: Response<JobSearchApprovalModel?>
-                ) {
+        ) {
+            EliteMedical.retrofitAdmin.getJobSearchApprovalList()
+                .enqueue(object : Callback<JobSearchApprovalModel?> {
+                    override fun onResponse(
+                        call: Call<JobSearchApprovalModel?>,
+                        response: Response<JobSearchApprovalModel?>
+                    ) {
 
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val employmentDetails = responseData!!.nurseDetails
-                        for (employment in employmentDetails) {
-                            
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val employmentDetails = responseData!!.nurseDetails
+                            for (employment in employmentDetails) {
+
+                            }
+                            callback.onListReceived(employmentDetails)
+                        } else {
+                            val statusCode = response.code().toString()
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, statusCode)
                         }
-                        callback.onListReceived(employmentDetails)
-                    } else {
-                        val statusCode=response.code().toString()
-                        val errorData = response.errorBody().toString()
-                        
-                        callback.onResponseErr(errorData,statusCode)
                     }
-                }
-                override fun onFailure(call: Call<JobSearchApprovalModel?>, t: Throwable) {
-                    
 
-                }
-            })
+                    override fun onFailure(call: Call<JobSearchApprovalModel?>, t: Throwable) {
+
+
+                    }
+                })
         }
     }
 }

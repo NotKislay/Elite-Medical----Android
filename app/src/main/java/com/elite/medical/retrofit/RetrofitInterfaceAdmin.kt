@@ -24,47 +24,39 @@ import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ClinicRev
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.NurseReviewModel
 import com.elite.medical.retrofit.responsemodel.auth.LogoutModel
 import com.elite.medical.retrofit.testing.ImageUploadModel
-import com.elite.medical.utils.Constants
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import com.elite.medical.utils.endpoints.ConstantsAdmin
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface RetrofitInterfaceAdmin {
 
     //    Login, Logout & Register
 
-    @POST(Constants.LOGIN)
+    @POST(ConstantsAdmin.LOGIN)
     fun login(@Body user: LoginModel): Call<ResponseBody>
 
-    @GET(Constants.LOGOUT)
-    fun logout(
-        @Header("Authorization") authorization: String
-    ): Call<LogoutModel>
+    @GET(ConstantsAdmin.LOGOUT)
+    fun logout(): Call<LogoutModel>
 
 
-
-    @POST(Constants.REGISTER_CLINIC)
+    @POST(ConstantsAdmin.REGISTER_CLINIC)
     fun registerClinic(@Body user: RegisterClinicModel): Call<GenericSuccessErrorModel>
 
 
-    @GET(Constants.ADMIN_DASHBOARD_DATA)
+    @GET(ConstantsAdmin.ADMIN_DASHBOARD_DATA)
     fun getAdminDashboardData(): Call<AdminDashboardModel>
 
 
-    @GET(Constants.PROFILE_DATA)
+    @GET(ConstantsAdmin.PROFILE_DATA)
     fun getProfileData(): Call<ProfileDetailsModel>
 
-    @POST(Constants.UPDATE_PROFILE)
+    @POST(ConstantsAdmin.UPDATE_PROFILE)
     @FormUrlEncoded
     fun updateProfile(
         @Field("name") name: String,
@@ -72,134 +64,116 @@ interface RetrofitInterfaceAdmin {
     ): Call<GenericSuccessErrorModel>
 
 
-    @GET(Constants.APPROVALS_LIST_NURSES)
-    fun getNurseApprovalList(
-        @Header("Authorization") authorization: String
-    ): Call<NurseApprovalModel>
+    @GET(ConstantsAdmin.APPROVALS_LIST_NURSES)
+    fun getNurseApprovalList(): Call<NurseApprovalModel>
 
-    @GET(Constants.APPROVALS_LIST_CLINICS)
-    fun getClinicApprovalList(
-        @Header("Authorization") authorization: String
-    ): Call<ClinicApprovalModel>
+    @GET(ConstantsAdmin.APPROVALS_LIST_CLINICS)
+    fun getClinicApprovalList(): Call<ClinicApprovalModel>
 
-    @GET(Constants.APPROVALS_LIST_JOBS)
-    fun getJobApprovalList(
-        @Header("Authorization") authorization: String
-    ): Call<JobApprovalModel>
+    @GET(ConstantsAdmin.APPROVALS_LIST_JOBS)
+    fun getJobApprovalList(): Call<JobApprovalModel>
 
-    @GET(Constants.APPROVALS_LIST_EMPLOYMENT)
-    fun getEmploymentApprovalList(
-        @Header("Authorization") authorization: String
-    ): Call<EmploymentApprovalModel>
+    @GET(ConstantsAdmin.APPROVALS_LIST_EMPLOYMENT)
+    fun getEmploymentApprovalList(): Call<EmploymentApprovalModel>
 
-    @GET(Constants.APPROVALS_LIST_JOB_SEARCH)
-    fun getJobSearchApprovalList(
-        @Header("Authorization") authorization: String
-    ): Call<JobSearchApprovalModel>
+    @GET(ConstantsAdmin.APPROVALS_LIST_JOB_SEARCH)
+    fun getJobSearchApprovalList(): Call<JobSearchApprovalModel>
 
 
-    @POST(Constants.APPROVE_USER)
+    @POST(ConstantsAdmin.APPROVE_USER)
     @FormUrlEncoded
     fun approveUser(
-        @Header("Authorization") authorization: String,
         @Field("email") email: String
     ): Call<GenericSuccessErrorModel>
 
-    @POST(Constants.APPROVE_JOB)
+    @POST(ConstantsAdmin.APPROVE_JOB)
     @FormUrlEncoded
     fun approveJob(
-        @Header("Authorization") authorization: String,
         @Field("job_id") id: Int
     ): Call<GenericSuccessErrorModel>
 
 
-    @POST(Constants.APPROVE_EMPLOYMENT)
+    @POST(ConstantsAdmin.APPROVE_EMPLOYMENT)
     @FormUrlEncoded
     fun approveEmployment(
-        @Header("Authorization") authorization: String,
         @Field("emp_id") id: Int,
         @Field("emp_action") empAction: String
     ): Call<GenericSuccessErrorModel>
 
 
-    @POST(Constants.SCHEDULE_NURSE)
+    @POST(ConstantsAdmin.SCHEDULE_NURSE)
     @FormUrlEncoded
     fun scheduleNurse(
-        @Header("Authorization") authorization: String,
         @Field("id") id: Int,
         @Field("schedule") scheduleDate: String,
         @Field("schedule_time") scheduleTime: String
     ): Call<GenericSuccessErrorModel>
 
 
-    @POST(Constants.CANCEL_JOB)
+    @POST(ConstantsAdmin.CANCEL_JOB)
     @FormUrlEncoded
     fun cancelJob(
-        @Header("Authorization") authorization: String,
         @Field("job_id") id: Int
     ): Call<GenericSuccessErrorModel>
 
-    @POST(Constants.CANCEL_CLINIC)
+    @POST(ConstantsAdmin.CANCEL_CLINIC)
     @FormUrlEncoded
     fun cancelClinic(
-        @Header("Authorization") authorization: String,
         @Field("id") id: Int
     ): Call<GenericSuccessErrorModel>
 
-    @POST(Constants.CANCEL_NURSE)
+    @POST(ConstantsAdmin.CANCEL_NURSE)
     @FormUrlEncoded
     fun cancelNurse(
-        @Header("Authorization") authorization: String,
         @Field("id") id: Int
     ): Call<GenericSuccessErrorModel>
 
-    @POST(Constants.CANCEL_EMPLOYMENT)
+    @POST(ConstantsAdmin.CANCEL_EMPLOYMENT)
     @FormUrlEncoded
     fun cancelEmployment(
-        @Header("Authorization") authorization: String,
         @Field("emp_id") id: Int,
     ): Call<GenericSuccessErrorModel>
 
 
 //    Side Menu Review Section
 
-    @GET(Constants.NAVIGATION_NURSE_REVIEWS)
+    @GET(ConstantsAdmin.NAVIGATION_NURSE_REVIEWS)
     fun getNurseReviews(): Call<NurseReviewModel>
 
-    @GET(Constants.NAVIGATION_CLINIC_REVIEWS)
+    @GET(ConstantsAdmin.NAVIGATION_CLINIC_REVIEWS)
     fun getClinicReviews(): Call<ClinicReviewModel>
 
 
 //    Side Menu All Approved Items List     ->  Side menu   ->  Dashboard
 
-    @GET(Constants.NAVIGATION_CLINICS)
+    @GET(ConstantsAdmin.NAVIGATION_CLINICS)
     fun getApprovedClinics(): Call<ApprovedClinicsModel>
 
-    @GET("${Constants.NAVIGATION_CLINICS}/{id}")
+    @GET("${ConstantsAdmin.NAVIGATION_CLINICS}/{id}")
     fun getAssocNurses(@Path("id") id: String): Call<AssociatedNurseModel>
 
-    @GET(Constants.NAVIGATION_NOTIFICATIONS)
+    @GET(ConstantsAdmin.NAVIGATION_NOTIFICATIONS)
     fun getNotifications(): Call<AdminNotificationsModel>
 
-    @GET(Constants.NAVIGATION_NURSES)
+    @GET(ConstantsAdmin.NAVIGATION_NURSES)
     fun getApprovedNurses(): Call<ApprovedNurseListModel>
 
-    @GET("${Constants.NAVIGATION_NURSES}/{userid}")
+    @GET("${ConstantsAdmin.NAVIGATION_NURSES}/{userid}")
     fun getNurseByUserId(@Path("userid") userid: String): Call<NurseByUserIdModel>
 
-    @GET("${Constants.TIMESHEET}/{id}")
+    @GET("${ConstantsAdmin.TIMESHEET}/{id}")
     fun getTimesheetById(
         @Path("id") id: String
     ): Call<NurseTimesheetById>
 
-    @GET(Constants.NAVIGATION_JOBS)
+    @GET(ConstantsAdmin.NAVIGATION_JOBS)
     fun getApprovedJobs(): Call<ApprovedJobListModel>
 
 
-    @GET("${Constants.NAVIGATION_JOBS}/{id}")
+    @GET("${ConstantsAdmin.NAVIGATION_JOBS}/{id}")
     fun getJobDetailsByID(@Path("id") id: String): Call<JobDetailsByIDModel>
 
-    @GET(Constants.NAVIGATION_JOB_APPLICANTS)
+    @GET(ConstantsAdmin.NAVIGATION_JOB_APPLICANTS)
     fun getApprovedJobApplicants(): Call<JobApplicantsModel>
 
     @GET("job-applicants/{job_id}/nurse/{nurse_id}")

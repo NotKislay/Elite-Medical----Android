@@ -84,8 +84,7 @@ class ClinicAuthViewModel : ViewModel() {
     fun registerClinic(
         clinicDetails: RegisterClinicModel
     ) {
-        EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            .registerClinic(clinicDetails)
+        EliteMedical.retrofitAdmin.registerClinic(clinicDetails)
             .enqueue(object : Callback<GenericSuccessErrorModel> {
                 override fun onResponse(
                     call: Call<GenericSuccessErrorModel>,

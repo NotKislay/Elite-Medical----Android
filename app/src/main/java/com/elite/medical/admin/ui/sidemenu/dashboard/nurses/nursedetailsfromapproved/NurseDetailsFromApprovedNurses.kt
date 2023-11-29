@@ -118,6 +118,7 @@ class NurseDetailsFromApprovedNurses : AppCompatActivity() {
             customDialog.dismiss()
             val intent = Intent(this, ActivityJobApplied::class.java)
             intent.putExtra("appliedJobs", ArrayList(returnDetails.appliedJobs))
+            intent.putExtra("user_ID", returnDetails.userId)
             startActivity(intent)
         }
 

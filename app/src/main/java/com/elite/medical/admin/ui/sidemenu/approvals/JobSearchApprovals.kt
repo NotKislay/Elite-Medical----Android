@@ -37,24 +37,23 @@ class JobSearchApprovals : AppCompatActivity() {
 
     private fun populateRecyclerView() {
         val token = EliteMedical.AuthTokenAdmin
-        ApprovalAPIs.fetchJobSearchApprovalList(token!!,
-            object : ApprovalAPIs.Companion.JobSearchApprovalCallback {
-                override fun onListReceived(jobs: List<NurseDetailJobSearch>) {
-                    val adapter =
-                        ApprovalJobSearchAdapter(
-                            ArrayList(jobs),
-                            this@JobSearchApprovals,
-                            true
-                        )
-                    recyclerView.adapter = adapter
-                    binding.loader.visibility = View.GONE
-                }
+        ApprovalAPIs.fetchJobSearchApprovalList(object : ApprovalAPIs.Companion.JobSearchApprovalCallback {
+            override fun onListReceived(jobs: List<NurseDetailJobSearch>) {
+                val adapter =
+                    ApprovalJobSearchAdapter(
+                        ArrayList(jobs),
+                        this@JobSearchApprovals,
+                        true
+                    )
+                recyclerView.adapter = adapter
+                binding.loader.visibility = View.GONE
+            }
 
-                override fun onResponseErr(msg: String, statusCode: String) {
-                    Toast.makeText(this@JobSearchApprovals, msg, Toast.LENGTH_SHORT)
-                        .show()
-                    finish()
-                }
-            })
+            override fun onResponseErr(msg: String, statusCode: String) {
+                Toast.makeText(this@JobSearchApprovals, msg, Toast.LENGTH_SHORT)
+                    .show()
+                finish()
+            }
+        })
     }
 }

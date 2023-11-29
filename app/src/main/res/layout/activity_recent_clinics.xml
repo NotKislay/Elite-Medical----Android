@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.ui.dashboard.recents.RecentClinics">
+        tools:context=".admin.ui.dashboard.RecentClinics">
 
         <!-- TOP App Bar -->
         <LinearLayout
@@ -45,6 +45,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/tv_recent_clinics"
             tools:listitem="@layout/item_nurse"
             android:layout_width="match_parent"

@@ -10,56 +10,64 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ExpandableListAdapter
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.SideMenuAdapterAdmin
 import com.elite.medical.admin.ui.auth.LoginAdmin
-import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsClinic
-import com.elite.medical.admin.ui.sidemenu.approvals.JobApprovals
-import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsNurse
-import com.elite.medical.admin.ui.sidemenu.dashboard.ApprovedClinics
-import com.elite.medical.admin.ui.sidemenu.dashboard.NotificationsAdmin
 import com.elite.medical.admin.ui.dashboard.RecentClinicReview
-import com.elite.medical.admin.ui.dashboard.recents.RecentClinics
 import com.elite.medical.admin.ui.dashboard.RecentNurseReview
 import com.elite.medical.admin.ui.dashboard.RecentNurses
+import com.elite.medical.admin.ui.dashboard.RecentClinics
+import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsClinic
+import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsNurse
 import com.elite.medical.admin.ui.sidemenu.approvals.EmploymentApprovals
+import com.elite.medical.admin.ui.sidemenu.approvals.JobApprovals
 import com.elite.medical.admin.ui.sidemenu.approvals.JobSearchApprovals
+import com.elite.medical.admin.ui.sidemenu.dashboard.ApprovedClinics
+import com.elite.medical.admin.ui.sidemenu.dashboard.NotificationsAdmin
 import com.elite.medical.admin.ui.sidemenu.dashboard.jobapplicants.ApprovedJobApplicants
-import com.elite.medical.admin.ui.sidemenu.reviews.ClinicReviews
-import com.elite.medical.admin.ui.sidemenu.reviews.NurseReviews
 import com.elite.medical.admin.ui.sidemenu.dashboard.jobs.ApprovedJobs
 import com.elite.medical.admin.ui.sidemenu.dashboard.nurses.ApprovedNurses
+import com.elite.medical.admin.ui.sidemenu.reviews.ClinicReviews
+import com.elite.medical.admin.ui.sidemenu.reviews.NurseReviews
+import com.elite.medical.admin.viewmodels.AdminViewModel
 import com.elite.medical.databinding.ActivityDashboardAdminBinding
-import com.elite.medical.retrofit.apis.admin.DDAdminAPI
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
 class AdminDashboard : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardAdminBinding
     private lateinit var dashboardData: AdminDashboardModel
+    private lateinit var viewModel: AdminViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard_admin)
+        viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+
+
+        viewModel.getDashboardData()
+
 
         setupDrawer()
         fetchAndSetData()
 
         binding.tvRecentClinics.setOnClickListener {
             val intent = Intent(this, RecentClinics::class.java)
-            intent.putParcelableArrayListExtra("clinics", ArrayList(dashboardData.clinics.take(5)))
+            intent.putExtra("clinics", dashboardData)
             startActivity(intent)
         }
 
         binding.tvRecentNurses.setOnClickListener {
             val intent = Intent(this, RecentNurses::class.java)
-            intent.putParcelableArrayListExtra("nurse", ArrayList(dashboardData.nurses.take(5)))
+            intent.putExtra("nurse", dashboardData)
             startActivity(intent)
         }
 
@@ -89,19 +97,17 @@ class AdminDashboard : AppCompatActivity() {
     }
 
     private fun fetchAndSetData() {
-        DDAdminAPI.getDashboardData(
-            object : DDAdminAPI.Companion.DashboardDataCallback {
-                override fun onDataReceived(data: AdminDashboardModel?, statusCode: Int?) {
-                    if (statusCode == 200) {
-                        binding.tvActiveClinic.text = "Active Clinics: ${data!!.countClinics}"
-                        binding.tvActiveNurses.text = "Active Nurses: ${data!!.countNurses}"
-                        binding.tvActiveJobs.text = "Active Jobs: ${data!!.countActiveJobs}"
+        viewModel.getDashboardDataCallback = { data ->
 
-                        dashboardData = data
-                        binding.loader.visibility = View.GONE
-                    }
-                }
-            })
+            binding.tvActiveClinic.text = "Active Clinics: ${data!!.countClinics}"
+            binding.tvActiveNurses.text = "Active Nurses: ${data!!.countNurses}"
+            binding.tvActiveJobs.text = "Active Jobs: ${data!!.countActiveJobs}"
+
+            dashboardData = data
+            binding.loader.visibility = View.GONE
+
+            viewModel.dashboardData.postValue(data)
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -136,9 +142,7 @@ class AdminDashboard : AppCompatActivity() {
 
         menu.addHeaderView(
             layoutInflater.inflate(
-                R.layout.header_nav,
-                null,
-                false
+                R.layout.header_nav, null, false
             )
         )      //  Adding Menu Header File
 
@@ -225,6 +229,7 @@ class AdminDashboard : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         showLogoutConfirmationDialog()
     }
 
@@ -269,12 +274,12 @@ class AdminDashboard : AppCompatActivity() {
         customLogout.setContentView(R.layout.modal_layout_logout)
 
         customLogout.findViewById<Button>(R.id.btn_ok).setOnClickListener {
-             EliteMedical.updateAdminToken(null)
-             customLogout.dismiss()
-             val intent = Intent(this, LoginAdmin::class.java)
-             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-             startActivity(intent)
-         }
+            EliteMedical.updateAdminToken(null)
+            customLogout.dismiss()
+            val intent = Intent(this, LoginAdmin::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
 
         customLogout.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
             customLogout.dismiss()

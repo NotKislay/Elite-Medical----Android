@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.ui.AdminDashboard
-import com.elite.medical.admin.ui.auth.LoginAdmin
 import com.elite.medical.admin.ui.sidemenu.approvals.JobApprovals
 import com.elite.medical.databinding.ActivityJobApprovalDetailsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ButtonAPIs
@@ -69,8 +68,7 @@ class JobApprovalDetails : AppCompatActivity() {
             token = "Bearer $token"
             val id = details.id
             ButtonAPIs.approveJobRequest(
-                token, id,
-                object : ButtonAPIs.Companion.ButtonsCallback {
+                id, object : ButtonAPIs.Companion.ButtonsCallback {
                     override fun onSuccess(msg: String) {
                         Toast.makeText(
                             this@JobApprovalDetails,
@@ -102,8 +100,7 @@ class JobApprovalDetails : AppCompatActivity() {
             token = "Bearer $token"
             val id = details.id
             ButtonAPIs.cancelJobRequest(
-                token!!, id,
-                object : ButtonAPIs.Companion.ButtonsCallback {
+                id, object : ButtonAPIs.Companion.ButtonsCallback {
                     override fun onSuccess(msg: String) {
                         Toast.makeText(
                             this@JobApprovalDetails,

@@ -38,7 +38,6 @@ class ActivityNurseAssocToClinic : AppCompatActivity() {
     }
 
     private fun populateListOfAssocNurses(userID: String) {
-        val token = EliteMedical.AuthTokenAdmin
         DashboardAPIs.getAssocNursesList(
             userID,
             object : DashboardAPIs.Companion.AssocNursesCallback {

@@ -1,19 +1,16 @@
 package com.elite.medical.admin.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.R
-import com.elite.medical.admin.adapters.sidemenu.review.ClinicReviewAdapter
 import com.elite.medical.databinding.ItemNurseReviewBinding
-import com.elite.medical.retrofit.responsemodel.admin.dashboard.ClinicReview
+import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
-class RecentClinicReviewAdapter(private val listItem: List<ClinicReview>) :
+class RecentClinicReviewAdapter(private val listItem: List<AdminDashboardModel.ClinicReview>) :
     RecyclerView.Adapter<RecentClinicReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding: ItemNurseReviewBinding) : RecyclerView.ViewHolder(binding.root) {

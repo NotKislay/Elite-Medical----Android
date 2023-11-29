@@ -1,7 +1,6 @@
 package com.elite.medical.retrofit.apis.admin.sidemenu.approvals
 
-import com.elite.medical.retrofit.RetrofitClient
-import com.elite.medical.retrofit.RetrofitInterfaceAdmin
+import com.elite.medical.EliteMedical
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.google.gson.Gson
 import retrofit2.Call
@@ -16,45 +15,43 @@ class ButtonAPIs {
         }
 
         fun approveUserRequest(
-            token: String, email: String, callback: ButtonsCallback
+            email: String, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .approveUser(token, email).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.approveUser(email).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
+                }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
-                    }
-                })
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun scheduleNurseRequest(
-            token: String,
             id: Int,
             scheduleDate: String,
             scheduleTime: String,
             callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .scheduleNurse(token, id, scheduleDate, scheduleTime).enqueue(object :
+            EliteMedical.retrofitAdmin.scheduleNurse( id, scheduleDate, scheduleTime)
+                .enqueue(object :
                     Callback<GenericSuccessErrorModel?> {
                     override fun onResponse(
                         call: Call<GenericSuccessErrorModel?>,
@@ -84,193 +81,187 @@ class ButtonAPIs {
         }
 
         fun cancelNurseRequest(
-            token: String, id: Int, callback: ButtonsCallback
+            id: Int, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .cancelNurse(token!!, id).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.cancelNurse( id).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
+                }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
-                    }
-                })
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun cancelClinicRequest(
-            token: String, id: Int, callback: ButtonsCallback
+            id: Int, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .cancelClinic(token!!, id).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.cancelClinic( id).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
+                }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
-                    }
-                })
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun approveJobRequest(
-            token: String, id: Int, callback: ButtonsCallback
+            id: Int, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .approveJob(token, id).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.approveJob( id).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
-                    }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun cancelJobRequest(
-            token: String, id: Int, callback: ButtonsCallback
+            id: Int, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .cancelJob(token, id).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.cancelJob( id).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
-                    }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun approveEmploymentRequest(
-            token: String, id: Int, action: String, callback: ButtonsCallback
+            id: Int, action: String, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .approveEmployment(token, id, action).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.approveEmployment( id, action).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
-                    }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
         fun cancelEmploymentRequest(
-            token: String, id: Int, callback: ButtonsCallback
+            id: Int, callback: ButtonsCallback
         ) {
-            RetrofitClient.getInstance().create(RetrofitInterfaceAdmin::class.java)
-                .cancelEmployment(token, id).enqueue(object :
-                    Callback<GenericSuccessErrorModel?> {
-                    override fun onResponse(
-                        call: Call<GenericSuccessErrorModel?>,
-                        response: Response<GenericSuccessErrorModel?>
-                    ) {
-                        if (response.isSuccessful) {
-                            val message = response.body()?.message
-                            if (message != null) {
-                                callback.onSuccess(message)
-                            }
-
-                        } else {
-                            val errorBody = response.errorBody()!!
-                            val errorModel =
-                                Gson().fromJson(
-                                    errorBody.string(),
-                                    GenericSuccessErrorModel::class.java
-                                )
-                            callback.onResponseErr(errorModel.message, response.code().toString())
+            EliteMedical.retrofitAdmin.cancelEmployment( id).enqueue(object :
+                Callback<GenericSuccessErrorModel?> {
+                override fun onResponse(
+                    call: Call<GenericSuccessErrorModel?>,
+                    response: Response<GenericSuccessErrorModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        val message = response.body()?.message
+                        if (message != null) {
+                            callback.onSuccess(message)
                         }
-                    }
 
-                    override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                    } else {
+                        val errorBody = response.errorBody()!!
+                        val errorModel =
+                            Gson().fromJson(
+                                errorBody.string(),
+                                GenericSuccessErrorModel::class.java
+                            )
+                        callback.onResponseErr(errorModel.message, response.code().toString())
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<GenericSuccessErrorModel?>, t: Throwable) {
+                }
+            })
         }
 
     }

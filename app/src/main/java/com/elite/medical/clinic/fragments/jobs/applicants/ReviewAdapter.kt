@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.ItemNurseReviewBinding
-import com.elite.medical.retrofit.responsemodel.admin.dashboard.NurseReview
+import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
-class ReviewAdapter(private val listItem: ArrayList<NurseReview>) :
+class ReviewAdapter(private val listItem: ArrayList<AdminDashboardModel.NurseReview>) :
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding: ItemNurseReviewBinding) :

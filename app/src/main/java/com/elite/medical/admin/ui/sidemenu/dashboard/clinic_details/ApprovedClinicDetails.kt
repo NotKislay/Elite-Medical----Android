@@ -33,8 +33,8 @@ class ApprovedClinicDetails : AppCompatActivity() {
 
 
         val arrayData = arrayOf(
-            "Name: ${details?.name}",
-            "Mobile: ${details?.contactno}",
+            "Clinic Name: ${details?.name}",
+            "Contact No: ${details?.contactno}",
             "Email: ${details?.email}",
             "Address: ${details?.clinicaddress}",
             "Clinic Type: ${details?.clinictype}",

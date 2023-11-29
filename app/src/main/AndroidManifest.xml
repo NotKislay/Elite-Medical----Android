@@ -141,10 +141,10 @@
             android:name=".admin.ui.dashboard.RecentNurses"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.dashboard.recents.RecentClinics"
+            android:name=".admin.ui.dashboard.RecentClinics"
             android:exported="false" />
         <activity
-            android:name=".utils.ForgotPassword"
+            android:name=".ForgotPassword"
             android:exported="true" />
         <activity
             android:name=".admin.ui.sidemenu.approvals.details.NurseApprovalDetails"

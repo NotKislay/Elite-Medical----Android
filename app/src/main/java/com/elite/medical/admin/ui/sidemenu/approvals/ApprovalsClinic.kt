@@ -12,7 +12,7 @@ import com.elite.medical.R
 import com.elite.medical.admin.adapters.sidemenu.approvals.ApprovalClinicsAdapter
 import com.elite.medical.databinding.ActivityClinicsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ApprovalAPIs
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicDetailsFromClinicApprovalModel
+import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
 
 class ApprovalsClinic : AppCompatActivity() {
 
@@ -37,12 +37,12 @@ class ApprovalsClinic : AppCompatActivity() {
         val token = EliteMedical.AuthTokenAdmin
         ApprovalAPIs.fetchClinicApprovalList(token!!,
             object : ApprovalAPIs.Companion.ClinicApprovalCallback {
-                override fun onListReceived(clinics: List<ClinicDetailsFromClinicApprovalModel>) {
+                override fun onListReceived(clinics: List<ClinicApprovalModel.ClinicApproval>) {
+
                     val adapter =
                         ApprovalClinicsAdapter(
-                            ArrayList(clinics),
+                            clinics,
                             this@ApprovalsClinic,
-                            true,
                             "ClinicApprovals"
                         )
                     recyclerView.adapter = adapter

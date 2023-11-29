@@ -6,11 +6,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
@@ -26,7 +23,6 @@ import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsNurse
 import com.elite.medical.databinding.ActivityNurseApprovalDetailsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ButtonAPIs
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.nurseapproval.NurseDetailsFromNurseApprovalModel
-import com.elite.medical.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -99,49 +95,9 @@ class NurseApprovalDetails : AppCompatActivity() {
             token = "Bearer $token"
             val email = details?.email
             if (email != null) {
-                ButtonAPIs.approveUserRequest(token!!, email,
-                    object : ButtonAPIs.Companion.ButtonsCallback {
-                        override fun onSuccess(msg: String) {
-                            Toast.makeText(this@NurseApprovalDetails, "$msg", Toast.LENGTH_SHORT)
-                                .show()
-                            startActivity(
-                                Intent(
-                                    this@NurseApprovalDetails,
-                                    ApprovalsNurse::class.java
-                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            )
-                        }
-
-
-                        override fun onResponseErr(msg: String, statusCode: String) {
-
-                            Toast.makeText(this@NurseApprovalDetails, msg, Toast.LENGTH_SHORT)
-                                .show()
-                            startActivity(
-                                Intent(
-                                    this@NurseApprovalDetails,
-                                    AdminDashboard::class.java
-                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            )
-
-                        }
-                    })
-            }
-
-        }
-        binding.ScheduleBtn.setOnClickListener {
-            openModal()
-        }
-
-        binding.CancelBtn.setOnClickListener {
-
-            var token = EliteMedical.AuthTokenAdmin
-            token = "Bearer $token"
-            val id = details.id
-            ButtonAPIs.cancelNurseRequest(token!!, id,
-                object : ButtonAPIs.Companion.ButtonsCallback {
+                ButtonAPIs.approveUserRequest(email, object : ButtonAPIs.Companion.ButtonsCallback {
                     override fun onSuccess(msg: String) {
-                        Toast.makeText(this@NurseApprovalDetails, msg, Toast.LENGTH_SHORT)
+                        Toast.makeText(this@NurseApprovalDetails, "$msg", Toast.LENGTH_SHORT)
                             .show()
                         startActivity(
                             Intent(
@@ -150,6 +106,7 @@ class NurseApprovalDetails : AppCompatActivity() {
                             ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         )
                     }
+
 
                     override fun onResponseErr(msg: String, statusCode: String) {
 
@@ -164,6 +121,43 @@ class NurseApprovalDetails : AppCompatActivity() {
 
                     }
                 })
+            }
+
+        }
+        binding.ScheduleBtn.setOnClickListener {
+            openModal()
+        }
+
+        binding.CancelBtn.setOnClickListener {
+
+            var token = EliteMedical.AuthTokenAdmin
+            token = "Bearer $token"
+            val id = details.id
+            ButtonAPIs.cancelNurseRequest(id, object : ButtonAPIs.Companion.ButtonsCallback {
+                override fun onSuccess(msg: String) {
+                    Toast.makeText(this@NurseApprovalDetails, msg, Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(
+                        Intent(
+                            this@NurseApprovalDetails,
+                            ApprovalsNurse::class.java
+                        ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+                }
+
+                override fun onResponseErr(msg: String, statusCode: String) {
+
+                    Toast.makeText(this@NurseApprovalDetails, msg, Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(
+                        Intent(
+                            this@NurseApprovalDetails,
+                            AdminDashboard::class.java
+                        ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+
+                }
+            })
         }
     }
 
@@ -185,8 +179,7 @@ class NurseApprovalDetails : AppCompatActivity() {
                 token = "Bearer $token"
                 val id = details.id
                 ButtonAPIs.scheduleNurseRequest(
-                    token, id, scheduleDate, scheduleTime,
-                    object : ButtonAPIs.Companion.ButtonsCallback {
+                    id, scheduleDate, scheduleTime, object : ButtonAPIs.Companion.ButtonsCallback {
                         override fun onSuccess(msg: String) {
                             Toast.makeText(
                                 this@NurseApprovalDetails,

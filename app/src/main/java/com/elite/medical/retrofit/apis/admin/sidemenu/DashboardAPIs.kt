@@ -1,11 +1,10 @@
 package com.elite.medical.retrofit.apis.admin.sidemenu
 
 import com.elite.medical.EliteMedical
-import com.elite.medical.retrofit.RetrofitInterfaceAdmin
 import com.elite.medical.retrofit.responsemodel.GenericSuccessErrorModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.ApprovedClinicsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.AssociatedNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.ClinicDetailsFromApprovedClinicsModel
+import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.AssociatedNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.NurseTimesheetById
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.NursesDetailsFromAssociatedNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.TimesheetDataModel
@@ -74,154 +73,146 @@ class DashboardAPIs {
 
         //        Side Menu Dashboard Section
         fun getNotifications(callback: NotificationsCallback) {
-            val fetchNotificationAPI =
-                EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchNotificationAPI.getNotifications()
-            result.enqueue(object : Callback<AdminNotificationsModel> {
-                override fun onResponse(
-                    call: Call<AdminNotificationsModel>, response: Response<AdminNotificationsModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val notificationList = responseData!!.notifications
-                        callback.onListReceived(notificationList)
-                    } else {
-                        val errorData = response.errorBody().toString()
+            EliteMedical.retrofitAdmin.getNotifications()
+                .enqueue(object : Callback<AdminNotificationsModel> {
+                    override fun onResponse(
+                        call: Call<AdminNotificationsModel>,
+                        response: Response<AdminNotificationsModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val notificationList = responseData!!.notifications
+                            callback.onListReceived(notificationList)
+                        } else {
+                            response.errorBody().toString()
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<AdminNotificationsModel>, t: Throwable) {
 
                     }
-                }
-
-                override fun onFailure(call: Call<AdminNotificationsModel>, t: Throwable) {
-
-                }
-            })
+                })
         }
 
         fun getClinics(callback: ApprovedClinicsCallback) {
-            val fetchClinicsAPI =
-                EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchClinicsAPI.getApprovedClinics()
-            result.enqueue(object : Callback<ApprovedClinicsModel> {
-                override fun onResponse(
-                    call: Call<ApprovedClinicsModel>, response: Response<ApprovedClinicsModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val clinicList = responseData!!.clinics
-                        callback.onListReceived(clinicList)
-                    } else {
-                        val errorData = response.errorBody().toString()
+            EliteMedical.retrofitAdmin.getApprovedClinics()
+                .enqueue(object : Callback<ApprovedClinicsModel> {
+                    override fun onResponse(
+                        call: Call<ApprovedClinicsModel>, response: Response<ApprovedClinicsModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val clinicList = responseData!!.clinics
+                            callback.onListReceived(clinicList)
+                        } else {
+                            response.errorBody().toString()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ApprovedClinicsModel>, t: Throwable) {
-                }
-            })
+                    override fun onFailure(call: Call<ApprovedClinicsModel>, t: Throwable) {
+                    }
+                })
         }
 
         fun getNurses(callback: ApprovedNursesCallback) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getApprovedNurses()
-            result.enqueue(object : Callback<ApprovedNurseListModel?> {
-                override fun onResponse(
-                    call: Call<ApprovedNurseListModel?>,
-                    response: Response<ApprovedNurseListModel?>
-                ) {
+            EliteMedical.retrofitAdmin.getApprovedNurses()
+                .enqueue(object : Callback<ApprovedNurseListModel?> {
+                    override fun onResponse(
+                        call: Call<ApprovedNurseListModel?>,
+                        response: Response<ApprovedNurseListModel?>
+                    ) {
 
-                    if (response.isSuccessful) {
-                        val nurses = response.body()!!.nurses
-                        callback.onListReceived(nurses)
+                        if (response.isSuccessful) {
+                            val nurses = response.body()!!.nurses
+                            callback.onListReceived(nurses)
+                        }
+
                     }
 
-                }
+                    override fun onFailure(call: Call<ApprovedNurseListModel?>, t: Throwable) {
 
-                override fun onFailure(call: Call<ApprovedNurseListModel?>, t: Throwable) {
-
-                }
-            })
+                    }
+                })
         }
 
         fun getJobs(callback: ApprovedJobsCallback) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getApprovedJobs()
-            result.enqueue(object : Callback<ApprovedJobListModel?> {
-                override fun onResponse(
-                    call: Call<ApprovedJobListModel?>,
-                    response: Response<ApprovedJobListModel?>
-                ) {
-                    if (response.isSuccessful)
-                        callback.onListReceived(response.body()!!.jobs)
-                }
+            EliteMedical.retrofitAdmin.getApprovedJobs()
+                .enqueue(object : Callback<ApprovedJobListModel?> {
+                    override fun onResponse(
+                        call: Call<ApprovedJobListModel?>,
+                        response: Response<ApprovedJobListModel?>
+                    ) {
+                        if (response.isSuccessful)
+                            callback.onListReceived(response.body()!!.jobs)
+                    }
 
-                override fun onFailure(call: Call<ApprovedJobListModel?>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
+                    override fun onFailure(call: Call<ApprovedJobListModel?>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
         }
 
         fun getJobApplicants(callback: ApprovedJobApplicantsCallback) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getApprovedJobApplicants()
-            result.enqueue(object : Callback<JobApplicantsModel?> {
-                override fun onResponse(
-                    call: Call<JobApplicantsModel?>,
-                    response: Response<JobApplicantsModel?>
-                ) {
-                    if (response.isSuccessful)
-                        callback.onListReceived(response.body()!!.allJobApplicants)
-                }
+            EliteMedical.retrofitAdmin.getApprovedJobApplicants()
+                .enqueue(object : Callback<JobApplicantsModel?> {
+                    override fun onResponse(
+                        call: Call<JobApplicantsModel?>,
+                        response: Response<JobApplicantsModel?>
+                    ) {
+                        if (response.isSuccessful)
+                            callback.onListReceived(response.body()!!.allJobApplicants)
+                    }
 
-                override fun onFailure(call: Call<JobApplicantsModel?>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
+                    override fun onFailure(call: Call<JobApplicantsModel?>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
         }
 
         fun getNurseByUserId(userId: String, callback: NurseByUserIdCallback) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getNurseByUserId(userId)
-            result.enqueue(object : Callback<NurseByUserIdModel> {
-                override fun onResponse(
-                    call: Call<NurseByUserIdModel>,
-                    response: Response<NurseByUserIdModel>
-                ) {
-                    if (response.isSuccessful) {
+            EliteMedical.retrofitAdmin.getNurseByUserId(userId)
+                .enqueue(object : Callback<NurseByUserIdModel> {
+                    override fun onResponse(
+                        call: Call<NurseByUserIdModel>,
+                        response: Response<NurseByUserIdModel>
+                    ) {
+                        if (response.isSuccessful) {
 
-                        val details = response.body()
-                        if (details != null) {
-                            callback.onListReceived(details)
+                            val details = response.body()
+                            if (details != null) {
+                                callback.onListReceived(details)
+                            }
+                        } else {
+                            val errorData = response.errorBody().toString()
+
+                            callback.onResponseErr(errorData, response.code())
                         }
-                    } else {
-                        val errorData = response.errorBody().toString()
-
-                        callback.onResponseErr(errorData, response.code())
                     }
-                }
 
-                override fun onFailure(call: Call<NurseByUserIdModel>, t: Throwable) {
+                    override fun onFailure(call: Call<NurseByUserIdModel>, t: Throwable) {
 
-                }
-            })
+                    }
+                })
         }
 
         fun getJobDetailsByID(jobID: String, callback: JobDetailsByIDCallback) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getJobDetailsByID(jobID)
-            result.enqueue(object : Callback<JobDetailsByIDModel?> {
-                override fun onResponse(
-                    call: Call<JobDetailsByIDModel?>,
-                    response: Response<JobDetailsByIDModel?>
-                ) {
-                    if (response.isSuccessful) {
-                        callback.onDetailsReceived(response.body()!!.job)
+            EliteMedical.retrofitAdmin.getJobDetailsByID(jobID)
+                .enqueue(object : Callback<JobDetailsByIDModel?> {
+                    override fun onResponse(
+                        call: Call<JobDetailsByIDModel?>,
+                        response: Response<JobDetailsByIDModel?>
+                    ) {
+                        if (response.isSuccessful) {
+                            callback.onDetailsReceived(response.body()!!.job)
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JobDetailsByIDModel?>, t: Throwable) {
 
                     }
-                }
-
-                override fun onFailure(call: Call<JobDetailsByIDModel?>, t: Throwable) {
-
-                }
-            })
+                })
         }
 
         fun getJobApplicationDetailsByID(
@@ -229,74 +220,72 @@ class DashboardAPIs {
             nurseID: String,
             callback: JobApplicationsDetailsCallback
         ) {
-            val api = EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = api.getJobNurseClinicDetailsByID(jobID, nurseID)
-            result.enqueue(object : Callback<JobClinicNurseDetailsByID?> {
-                override fun onResponse(
-                    call: Call<JobClinicNurseDetailsByID?>,
-                    response: Response<JobClinicNurseDetailsByID?>
-                ) {
-                    if (response.isSuccessful)
-                        callback.onDetailsReceived(response.body()!!)
-                }
+            EliteMedical.retrofitAdmin.getJobNurseClinicDetailsByID(jobID, nurseID)
+                .enqueue(object : Callback<JobClinicNurseDetailsByID?> {
+                    override fun onResponse(
+                        call: Call<JobClinicNurseDetailsByID?>,
+                        response: Response<JobClinicNurseDetailsByID?>
+                    ) {
+                        if (response.isSuccessful)
+                            callback.onDetailsReceived(response.body()!!)
+                    }
 
-                override fun onFailure(call: Call<JobClinicNurseDetailsByID?>, t: Throwable) {
+                    override fun onFailure(call: Call<JobClinicNurseDetailsByID?>, t: Throwable) {
 
-                }
-            })
+                    }
+                })
         }
 
         fun getAssocNursesList(userID: String, callback: AssocNursesCallback) {
-            val fetchAssocNurseAPI =
-                EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = fetchAssocNurseAPI.getAssocNurses(userID)
-            result.enqueue(object : Callback<AssociatedNurseModel> {
-                override fun onResponse(
-                    call: Call<AssociatedNurseModel>, response: Response<AssociatedNurseModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val assocnurseList = responseData!!.nurses
-                        callback.onListReceived(assocnurseList)
-                    } else {
-                        val errorData = response.errorBody().toString()
+            EliteMedical.retrofitAdmin.getAssocNurses(userID)
+                .enqueue(object : Callback<AssociatedNurseModel> {
+                    override fun onResponse(
+                        call: Call<AssociatedNurseModel>, response: Response<AssociatedNurseModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val associatedNurseList = responseData!!.nurses
+                            callback.onListReceived(associatedNurseList)
+                        } else {
+                            response.errorBody().toString()
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<AssociatedNurseModel>, t: Throwable) {
 
                     }
-                }
-
-                override fun onFailure(call: Call<AssociatedNurseModel>, t: Throwable) {
-
-                }
-            })
+                })
         }
 
         fun getTimesheetByNurseId(id: String, callback: NurseTimesheetCallback) {
-            val nurseTimesheetAPI =
-                EliteMedical.retrofitAdmin.create(RetrofitInterfaceAdmin::class.java)
-            val result = nurseTimesheetAPI.getTimesheetById(id)
-            result.enqueue(object : Callback<NurseTimesheetById> {
-                override fun onResponse(
-                    call: Call<NurseTimesheetById>, response: Response<NurseTimesheetById>
-                ) {
+            EliteMedical.retrofitAdmin.getTimesheetById(id)
+                .enqueue(object : Callback<NurseTimesheetById> {
+                    override fun onResponse(
+                        call: Call<NurseTimesheetById>, response: Response<NurseTimesheetById>
+                    ) {
 
 
-                    if (response.isSuccessful) {
-                        val responseData = response.body()
-                        val timeSheetList = responseData!!.newTimesheetDataModels
-                        callback.onListReceived(timeSheetList)
-                    } else {
-                        val errorBody = response.errorBody()!!
-                        val errorModel =
-                            Gson().fromJson(errorBody.string(), GenericSuccessErrorModel::class.java)
-                        callback.onErr(errorModel.message)
+                        if (response.isSuccessful) {
+                            val responseData = response.body()
+                            val timeSheetList = responseData!!.newTimesheetDataModels
+                            callback.onListReceived(timeSheetList)
+                        } else {
+                            val errorBody = response.errorBody()!!
+                            val errorModel =
+                                Gson().fromJson(
+                                    errorBody.string(),
+                                    GenericSuccessErrorModel::class.java
+                                )
+                            callback.onErr(errorModel.message)
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<NurseTimesheetById>, t: Throwable) {
+                    override fun onFailure(call: Call<NurseTimesheetById>, t: Throwable) {
 
 
-                }
-            })
+                    }
+                })
         }
 
     }

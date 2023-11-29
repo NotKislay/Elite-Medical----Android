@@ -1,4 +1,4 @@
-package com.elite.medical.utils
+package com.elite.medical.utils.endpoints
 
 object ConstantsNurse {
 

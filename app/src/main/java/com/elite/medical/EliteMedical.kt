@@ -5,11 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.elite.medical.retrofit.RetrofitInterfaceAdmin
 import com.elite.medical.retrofit.RetrofitInterfaceClinic
 import com.elite.medical.retrofit.RetrofitInterfaceNurse
-import com.elite.medical.utils.Constants
-import com.elite.medical.utils.ConstantsClinic
-import com.elite.medical.utils.ConstantsNurse
+import com.elite.medical.utils.endpoints.ConstantsAdmin
+import com.elite.medical.utils.endpoints.ConstantsClinic
+import com.elite.medical.utils.endpoints.ConstantsNurse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -96,8 +97,9 @@ class EliteMedical : Application() {
             .addConverterFactory(GsonConverterFactory.create()).client(clientClinic).build()
             .create(RetrofitInterfaceClinic::class.java)
 
-        retrofitAdmin = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+        retrofitAdmin = Retrofit.Builder().baseUrl(ConstantsAdmin.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientAdmin).build()
+            .create(RetrofitInterfaceAdmin::class.java)
 
         retrofitNurse = Retrofit.Builder().baseUrl(ConstantsNurse.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(clientNurse).build()
@@ -108,7 +110,7 @@ class EliteMedical : Application() {
 
     companion object {
         lateinit var retrofitClinic: RetrofitInterfaceClinic
-        lateinit var retrofitAdmin: Retrofit
+        lateinit var retrofitAdmin: RetrofitInterfaceAdmin
         lateinit var retrofitNurse: RetrofitInterfaceNurse
         private lateinit var shardPrefsAdmin: SharedPreferences
         private lateinit var shardPrefsClinic: SharedPreferences

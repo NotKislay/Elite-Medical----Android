@@ -13,7 +13,6 @@ import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.ClinicJobLo
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.MyJobsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.NurseDetailsNReviewsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.ClinicJobApplicantsModel
-import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.applicants.NursesAppliedOnJobModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobDetailsByIDModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.jobs.myjobs.MyJobsListModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.EnrolledNursesModel
@@ -21,7 +20,7 @@ import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.SearchNur
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.avlbl_nurse_details.AvailableNurseDetailsModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.enr_nurse_details.EnrolledNurseByidModel
 import com.elite.medical.retrofit.responsemodel.clinic.sidemenu.nurses.enr_nurse_details.NurseTimesheetByIdModelFromClinic
-import com.elite.medical.utils.ConstantsClinic
+import com.elite.medical.utils.endpoints.ConstantsClinic
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

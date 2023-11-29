@@ -118,7 +118,7 @@ class ApplicantDetails : AppCompatActivity() {
     private fun displayJobDetails() {
         val jobDetails = allDetails.job
         val inputformat= SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
-        val reqFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val reqFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val date= inputformat.parse(jobDetails.createdAt)!!
 
         val jobDetailsArray = arrayOf(

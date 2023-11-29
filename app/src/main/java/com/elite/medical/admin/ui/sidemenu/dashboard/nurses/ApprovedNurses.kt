@@ -18,18 +18,15 @@ class ApprovedNurses : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_approved_nurses)
 
-        binding.listApprovedNurses.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         binding.btnBack.setOnClickListener { finish() }
 
         fetchApprovedNursesList()
     }
 
     private fun fetchApprovedNursesList() {
-        EliteMedical.AuthTokenAdmin
         DashboardAPIs.getNurses(object : DashboardAPIs.Companion.ApprovedNursesCallback {
             override fun onListReceived(nurses: List<Nurse>) {
-                val adapter = ApprovedNursesAdapter(ArrayList(nurses))
-
+                val adapter = ApprovedNursesAdapter(nurses)
                 binding.listApprovedNurses.adapter = adapter
                 binding.loader.visibility = View.GONE
             }

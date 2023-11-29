@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.sidemenu.dashboard.JobAppliedAdapter
@@ -23,20 +22,17 @@ class ActivityJobApplied : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_nurse_job_applied)
 
         recyclerView = binding.rvJobApplied
-        recyclerView.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
 
 
-        val appliedJobs =
-            intent.getParcelableArrayListExtra<Job>(
-                "appliedJobs"
-            )
+        val appliedJobs = intent.getParcelableArrayListExtra<Job>("appliedJobs")
+        val userID = intent.getStringExtra("user_ID")
 
 
         if (appliedJobs.isNullOrEmpty()) {
             binding.noData.isVisible = true
         } else {
             val adapter =
-                JobAppliedAdapter(appliedJobs, this@ActivityJobApplied, true)
+                JobAppliedAdapter(appliedJobs, this@ActivityJobApplied, true,userID)
             recyclerView.adapter = adapter
         }
         binding.loader.visibility = View.GONE

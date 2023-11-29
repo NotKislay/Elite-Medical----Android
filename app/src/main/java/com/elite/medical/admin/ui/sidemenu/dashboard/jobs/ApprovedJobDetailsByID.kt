@@ -2,7 +2,6 @@ package com.elite.medical.admin.ui.sidemenu.dashboard.jobs
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.elite.medical.R
@@ -18,16 +17,25 @@ class ApprovedJobDetailsByID : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
         val id = intent.getIntExtra("jobID", -1)
+        val userID = intent.getStringExtra("userID")
 
-        displayJobDetailsByID(id)
+        displayJobDetailsByID(id, userID)
 
 
     }
 
-    private fun displayJobDetailsByID(id: Int) {
+    private fun displayJobDetailsByID(id: Int, userID: String?) {
         DashboardAPIs.getJobDetailsByID(id.toString(),
             object : DashboardAPIs.Companion.JobDetailsByIDCallback {
                 override fun onDetailsReceived(jobDetails: JobX) {
+
+                    var status = ""
+
+                    status = if (jobDetails.hired.contains(userID.toString())) "Hired"
+                    else {
+                        if (jobDetails.applied.contains(userID.toString())) "On Processing"
+                        else "Not Applied"
+                    }
 
                     binding.jobTitle.text = jobDetails.title
                     binding.clinicName.text = jobDetails.clinicRegister.name
@@ -50,7 +58,7 @@ class ApprovedJobDetailsByID : AppCompatActivity() {
                     else binding.tvHired.text = hired.toString()
 
 
-                    binding.tvApprovalStatus.text = jobDetails.status
+                    binding.tvApprovalStatus.text = status
 
                     binding.llContent.visibility = View.VISIBLE
                     binding.loader.visibility = View.GONE

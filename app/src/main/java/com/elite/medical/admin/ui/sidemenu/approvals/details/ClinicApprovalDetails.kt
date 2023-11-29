@@ -1,12 +1,8 @@
 package com.elite.medical.admin.ui.sidemenu.approvals.details
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -18,9 +14,8 @@ import com.elite.medical.admin.ui.AdminDashboard
 import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsClinic
 import com.elite.medical.databinding.ActivityClinicApprovalDetailsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ButtonAPIs
+import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicApprovalModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.clinicapproval.ClinicDetailsFromClinicApprovalModel
-import com.elite.medical.utils.Constants
-import com.elite.medical.utils.ConstantsNurse
 
 class ClinicApprovalDetails : AppCompatActivity() {
 
@@ -35,9 +30,7 @@ class ClinicApprovalDetails : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        val details = intent.getParcelableExtra<ClinicDetailsFromClinicApprovalModel>(
-            "details"
-        )
+        val details = intent.getParcelableExtra<ClinicApprovalModel.ClinicApproval>("details")
 
         details!!
 
@@ -60,14 +53,14 @@ class ClinicApprovalDetails : AppCompatActivity() {
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayData)
         binding.listview.adapter = adapter
 
-/*        binding.btnViewLicence.setOnClickListener {
-            val urlIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(Constants.URL_FOR_IMAGE + details.clinicLicense)
-            )
-            startActivity(urlIntent)
+        /*        binding.btnViewLicence.setOnClickListener {
+                    val urlIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(Constants.URL_FOR_IMAGE + details.clinicLicense)
+                    )
+                    startActivity(urlIntent)
 
-        }*/
+                }*/
 
         if (details.approvalStatus == "approved" || details.approvalStatus == "cancelled") {
             binding.btnGroup.visibility = View.GONE
@@ -77,8 +70,7 @@ class ClinicApprovalDetails : AppCompatActivity() {
             var token = EliteMedical.AuthTokenAdmin
             token = "Bearer $token"
             val email = details.email
-            ButtonAPIs.approveUserRequest(token,
-                email,
+            ButtonAPIs.approveUserRequest(email,
                 object : ButtonAPIs.Companion.ButtonsCallback {
                     override fun onSuccess(msg: String) {
                         Toast.makeText(
@@ -110,11 +102,14 @@ class ClinicApprovalDetails : AppCompatActivity() {
             token = "Bearer $token"
             val id = details.id
             ButtonAPIs.cancelClinicRequest(
-                token!!,
                 id,
                 object : ButtonAPIs.Companion.ButtonsCallback {
                     override fun onSuccess(msg: String) {
-                        Toast.makeText(this@ClinicApprovalDetails, "Clinic Cancelled Successfully", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this@ClinicApprovalDetails,
+                            "Clinic Cancelled Successfully",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         val intent =

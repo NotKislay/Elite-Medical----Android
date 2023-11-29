@@ -1,21 +1,5 @@
 package com.elite.medical.utils
 
-import de.hdodenhof.circleimageview.CircleImageView
-
-
-private fun String.Companion.validateEmail(email: String): String? {
-
-    val emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$"
-
-    if (email.isEmpty())
-        return "please enter your email."
-    else if (!email.matches(emailRegex.toRegex()))
-        return "Please enter valid email"
-
-    return null
-}
-
-
 
 class InputValidation {
 
