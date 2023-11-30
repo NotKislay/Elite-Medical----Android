@@ -246,7 +246,7 @@ class NurseHomeFragment : Fragment(), View.OnClickListener {
                     "OK",
                     requireContext(),
                     activity,
-                    activity?.onBackPressedDispatcher?.onBackPressed()
+                    null
                 )
             }
         }

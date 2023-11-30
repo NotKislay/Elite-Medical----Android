@@ -31,7 +31,7 @@ class LoginClinic : AppCompatActivity() {
         binding.tvSignUp.setOnClickListener {
             val intent = Intent(this, SignupClinic::class.java)
             startActivity(intent)
-            finish()
+
         }
 
         binding.tvForgotPassword.setOnClickListener {

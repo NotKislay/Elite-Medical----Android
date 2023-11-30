@@ -35,7 +35,7 @@ class LoginNurse : AppCompatActivity() {
         binding.tvSignUp.setOnClickListener {
             val intent = Intent(this, SignupNurse::class.java)
             startActivity(intent)
-            finish()
+
         }
 
         binding.btnSignIn.setOnClickListener {
@@ -80,7 +80,7 @@ class LoginNurse : AppCompatActivity() {
 
                     override fun onLoginResult(loginResponse: LoginResponse) {
 
-                        if (loginResponse.success == "success") {
+                        if (loginResponse.status == "success") {
                             EliteMedical.updateNurseToken(loginResponse.token)
                             val intent = Intent(this@LoginNurse, NurseDashboard::class.java)
                             startActivity(intent)

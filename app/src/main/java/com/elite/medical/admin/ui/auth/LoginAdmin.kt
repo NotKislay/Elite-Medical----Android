@@ -62,7 +62,7 @@ class LoginAdmin : AppCompatActivity() {
             AuthAPI.loginGeneric(email.toString(), password.toString(),
                 object : AuthAPI.Companion.AuthLoginCallback {
                     override fun onLoginResult(loginResponse: LoginResponse) {
-                        if (loginResponse.success == "success") {
+                        if (loginResponse.status == "success") {
                             val intent = Intent(this@LoginAdmin, AdminDashboard::class.java)
                             startActivity(intent)
                             EliteMedical.updateAdminToken(loginResponse.token)
