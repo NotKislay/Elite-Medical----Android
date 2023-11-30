@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MissingDefaultResource">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".admin.fragments.mainscreen.RecentNurseReviewsAdminFragment">
 
-    <!--            TOP App Bar         -->
+    <!-- TOP App Bar -->
     <LinearLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#012A4A"
         android:gravity="center"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+        android:orientation="horizontal">
+
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -28,34 +28,39 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="-30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Employment Details"
+            android:text="@string/nurse_reviews"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
+
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bodyLyt"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="start|top"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <ListView
-            android:id="@+id/listView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@id/details" />
-    </LinearLayout>
+            android:orientation="vertical"
+            tools:context=".admin.ui.dashboard.RecentNurseReview">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listview"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_nurse_review" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,22 +1,17 @@
-package com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details
+package com.elite.medical.admin.ui.sidemenu.dashboard.clinics
 
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Window
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.elite.medical.R
-import com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more.ActivityClinicReviewsFromMoreClinicDetails
-import com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseAssocToClinic
+import com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more.ActivityClinicReviewsFromMoreClinicDetails
+import com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more.ActivityNurseAssocToClinic
 import com.elite.medical.databinding.ActivityApprovedClinicDetailsBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.ClinicDetailsFromApprovedClinicsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.ClinicReviewsFromClinicDetailsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.NursesDetailsFromAssociatedNurseModel
 
 class ApprovedClinicDetails : AppCompatActivity() {
 
@@ -29,25 +24,27 @@ class ApprovedClinicDetails : AppCompatActivity() {
 
         val details =
             intent.getParcelableExtra<ClinicDetailsFromApprovedClinicsModel>(
-                "clinic_details")
+                "clinic_details")!!
 
-
-        val arrayData = arrayOf(
-            "Clinic Name: ${details?.name}",
-            "Contact No: ${details?.contactno}",
-            "Email: ${details?.email}",
-            "Address: ${details?.clinicaddress}",
-            "Clinic Type: ${details?.clinictype}",
-            "VAT No: ${details?.vattinno}",
-            "CST No: ${details?.cstno}",
-            "Service Tax No: ${details?.servicetaxno}",
-            "Clinic UIN: ${details?.clinicuin}",
-            "Declaration: ${details?.declaration}"
+        val data = listOf(
+            details.name.toString(),
+            details.contactno.toString(),
+            details.email.toString(),
+            details.clinicaddress.toString(),
+            details.clinictype.toString(),
+            details.vattinno.toString(),
+            details.cstno.toString(),
+            details.servicetaxno.toString(),
+            details.clinicuin.toString(),
+            details.declaration.toString(),
         )
 
+        displayDetails(data)
 
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+
+
+
+
 
         binding.moreBtnClinicdetails.setOnClickListener {
             // Creating a custom dialog
@@ -85,4 +82,20 @@ class ApprovedClinicDetails : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
     }
+
+    private fun displayDetails(data: List<String>) {
+
+        binding.tv1.text = data.elementAt(0)
+        binding.tv2.text = data.elementAt(1)
+        binding.tv3.text = data.elementAt(2)
+        binding.tv4.text = data.elementAt(3)
+        binding.tv5.text = data.elementAt(4)
+        binding.tv6.text = data.elementAt(5)
+        binding.tv7.text = data.elementAt(6)
+        binding.tv8.text = data.elementAt(7)
+        binding.tv9.text = data.elementAt(8)
+        binding.tv10.text = data.elementAt(9)
+
+    }
+
 }

@@ -15,11 +15,11 @@ class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewMod
     RecyclerView.Adapter<ReviewAdapterSearchNurses.ModelViewHolder>() {
 
     class ModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.clinic_name)
+        val clinicName: TextView = itemView.findViewById(R.id.clinic_name)
         val daysago: TextView = itemView.findViewById(R.id.tv_days_ago)
         val rating: RatingBar = itemView.findViewById(R.id.rating)
         val commentcontent: TextView = itemView.findViewById(R.id.comment)
-        val nurse_name = itemView.findViewById<TextView>(R.id.clinic_name)
+        val nurse_name = itemView.findViewById<TextView>(R.id.nurse_name)
         val review_layout: LinearLayout = itemView.findViewById(R.id.review_layout)//item layout
     }
 
@@ -33,7 +33,7 @@ class ReviewAdapterSearchNurses(private val cardItems: ArrayList<ClinicReviewMod
         val currentItem = cardItems[position]
 
         holder.nurse_name.isVisible = false
-        holder.name.text = currentItem.clinic_name
+        holder.clinicName.text = currentItem.clinic_name
         holder.daysago.text = currentItem.formatteddate
         holder.rating.rating = currentItem.rating.toFloat()
         holder.commentcontent.text = currentItem.comment

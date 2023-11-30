@@ -28,7 +28,7 @@ class JobSearchEmploymentDetails : AppCompatActivity() {
             )!!
 
         if (details.trial == "false") {
-            binding.details.text = "Direct Hiring"
+
 
             val arrayData = arrayOf(
                 "Employment Start: ${details.empStart}",
@@ -40,7 +40,7 @@ class JobSearchEmploymentDetails : AppCompatActivity() {
 
 
         } else {
-            binding.details.text = "Hiring for Trial"
+
             val arrayData = arrayOf(
                 "Trial Start: ${details.trialStart}",
                 "Trial End: ${details.trialEnd}",

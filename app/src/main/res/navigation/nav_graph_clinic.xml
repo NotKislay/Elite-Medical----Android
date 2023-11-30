@@ -9,7 +9,7 @@
         android:id="@+id/nurseDetailsFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.applicants.NurseDetailsFragmentApplicants"
         android:label="fragment_nurse_details"
-        tools:layout="@layout/fragment_nurse_details" >
+        tools:layout="@layout/fragment_nurse_details">
         <action
             android:id="@+id/action_nurseDetailsFragment_to_applicantNurseReviewsFragment"
             app:destination="@id/applicantNurseReviewsFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/jobNApplicantsFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.applicants.JobListFragment"
         android:label="fragment_job_n_applicants"
-        tools:layout="@layout/fragment_job_n_applicants" >
+        tools:layout="@layout/fragment_job_n_applicants">
         <action
             android:id="@+id/action_jobNApplicantsFragment_to_listJobApplicantsFragment"
             app:destination="@id/listJobApplicantsFragment" />
@@ -27,7 +27,7 @@
         android:id="@+id/listJobApplicantsFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.applicants.NursesListFragment"
         android:label="fragment_list_job_applicants"
-        tools:layout="@layout/fragment_list_job_applicants" >
+        tools:layout="@layout/fragment_list_job_applicants">
         <action
             android:id="@+id/action_listJobApplicantsFragment_to_nurseDetailsFragment"
             app:destination="@id/nurseDetailsFragment" />
@@ -115,7 +115,7 @@
         android:id="@+id/jobListFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.myjobs.JobListFragment"
         android:label="fragment_job_list"
-        tools:layout="@layout/fragment_job_list" >
+        tools:layout="@layout/fragment_job_list">
         <action
             android:id="@+id/action_jobListFragment_to_jobDetailsFragment2"
             app:destination="@id/jobDetailsFragment" />
@@ -125,7 +125,7 @@
         android:id="@+id/jobDetailsFragment"
         android:name="com.elite.medical.clinic.fragments.jobs.myjobs.JobDetailsFragment"
         android:label="fragment_job_details"
-        tools:layout="@layout/fragment_job_details" >
+        tools:layout="@layout/fragment_job_details">
         <action
             android:id="@+id/action_jobDetailsFragment_to_nurseListFragment2"
             app:destination="@id/nurseListFragment" />

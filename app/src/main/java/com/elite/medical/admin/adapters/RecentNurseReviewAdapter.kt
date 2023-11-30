@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.databinding.ItemNurseReviewBinding
 import com.elite.medical.retrofit.responsemodel.admin.dashboard.AdminDashboardModel
 
-class RecentNurseReviewAdapter(private val listItem: ArrayList<AdminDashboardModel.NurseReview>):RecyclerView.Adapter<RecentNurseReviewAdapter.ViewHolder>() {
+class RecentNurseReviewAdapter(private val listItem: List<AdminDashboardModel.NurseReview>?):RecyclerView.Adapter<RecentNurseReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding: ItemNurseReviewBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -30,13 +30,13 @@ class RecentNurseReviewAdapter(private val listItem: ArrayList<AdminDashboardMod
     }
 
     override fun getItemCount(): Int {
-        return listItem.size
+        return listItem!!.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-        val currentItem = listItem[position]
+        val currentItem = listItem!![position]
 
         holder.clinicName.text = currentItem.clinicName
         holder.nurseName.text = currentItem.nurseName

@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.elite.medical.R
 import com.elite.medical.databinding.ActivityNurseDetailsFromApprovedNursesBinding
@@ -32,6 +32,9 @@ class NurseDetailsFromApprovedNurses : AppCompatActivity() {
             this,
             R.layout.activity_nurse_details_from_approved_nurses
         )
+
+        binding.table.isVisible = false
+
 
 //        userId = intent.getStringExtra("userId").toString()
         val extras = intent.extras!!
@@ -63,34 +66,49 @@ class NurseDetailsFromApprovedNurses : AppCompatActivity() {
 
                     val nurseArray = details.nurse
 
-                    val arrayData = arrayOf(
-                        "Name: ${nurseArray.name}",
-                        "Contact No.: ${nurseArray.mobile}",
-                        "Email: ${nurseArray.email}",
-                        "D.O.B.: ${nurseArray.dob}",
-                        "Address: ${nurseArray.address}",
-                        "License Type: ${nurseArray.licenseType}",
-                        "License Expiry: ${nurseArray.licenseExpiry}",
-                        "Experience: ${nurseArray.experience}",
-                        "Speciality: ${nurseArray.speciality}",
-                        "US Immigration Status: ${nurseArray.usImmgStatus}",
-                        "NCLEX Status: ${nurseArray.nclexStatus}",
-                        "CGFNS Status: ${nurseArray.cgfnsStatus}",
+                    val data = arrayOf(
+                        nurseArray.name.toString(),
+                        nurseArray.mobile.toString(),
+                        nurseArray.email.toString(),
+                        nurseArray.dob.toString(),
+                        nurseArray.address.toString(),
+                        nurseArray.licenseType.toString(),
+                        nurseArray.licenseExpiry.toString(),
+                        nurseArray.experience.toString(),
+                        nurseArray.speciality.toString(),
+                        nurseArray.usImmgStatus.toString(),
+                        nurseArray.nclexStatus.toString(),
+                        nurseArray.cgfnsStatus.toString(),
                     )
 
+                    displayDetails(data)
 
-                    val adapter = ArrayAdapter(
-                        this@NurseDetailsFromApprovedNurses,
-                        R.layout.custom_single_item_textview,
-                        arrayData
-                    )
-                    binding.listView.adapter = adapter
                     setData(details)
                     binding.loader.visibility = View.GONE
                 }
 
                 override fun onResponseErr(errorData: String, statusCode: Int) {}
             })
+    }
+
+
+    private fun displayDetails(data: Array<String>) {
+
+        binding.table.isVisible = true
+
+        binding.tv1.text = data.elementAt(0)
+        binding.tv2.text = data.elementAt(1)
+        binding.tv3.text = data.elementAt(2)
+        binding.tv4.text = data.elementAt(3)
+        binding.tv5.text = data.elementAt(4)
+        binding.tv6.text = data.elementAt(5)
+        binding.tv7.text = data.elementAt(6)
+        binding.tv8.text = data.elementAt(7)
+        binding.tv9.text = data.elementAt(8)
+        binding.tv10.text = data.elementAt(9)
+        binding.tv11.text = data.elementAt(10)
+        binding.tv12.text = data.elementAt(11)
+
     }
 
     private fun setData(details: NurseByUserIdModel) {

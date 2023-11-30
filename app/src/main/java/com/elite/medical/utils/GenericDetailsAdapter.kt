@@ -19,7 +19,6 @@ class GenericDetailsAdapter(
     inner class ViewHolder(binding: ItemDetailScreenBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         val row1 = binding.row1
         val row2 = binding.row2
         val row3 = binding.row3
@@ -96,6 +95,11 @@ class GenericDetailsAdapter(
         holder.row8.isVisible = true
         holder.row9.isVisible = true
         holder.row10.isVisible = true
+        holder.row11.isVisible = true
+        holder.row12.isVisible = true
+        holder.row13.isVisible = true
+        holder.row14.isVisible = true
+        holder.row15.isVisible = true
 
 
 

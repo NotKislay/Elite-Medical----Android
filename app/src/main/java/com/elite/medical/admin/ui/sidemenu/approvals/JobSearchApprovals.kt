@@ -36,7 +36,6 @@ class JobSearchApprovals : AppCompatActivity() {
     }
 
     private fun populateRecyclerView() {
-        val token = EliteMedical.AuthTokenAdmin
         ApprovalAPIs.fetchJobSearchApprovalList(object : ApprovalAPIs.Companion.JobSearchApprovalCallback {
             override fun onListReceived(jobs: List<NurseDetailJobSearch>) {
                 val adapter =

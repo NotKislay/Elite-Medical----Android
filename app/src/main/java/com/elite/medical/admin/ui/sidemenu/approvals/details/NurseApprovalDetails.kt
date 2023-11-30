@@ -6,10 +6,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
@@ -23,6 +26,7 @@ import com.elite.medical.admin.ui.sidemenu.approvals.ApprovalsNurse
 import com.elite.medical.databinding.ActivityNurseApprovalDetailsBinding
 import com.elite.medical.retrofit.apis.admin.sidemenu.approvals.ButtonAPIs
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.nurseapproval.NurseDetailsFromNurseApprovalModel
+import com.elite.medical.utils.endpoints.ConstantsAdmin
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -48,34 +52,16 @@ class NurseApprovalDetails : AppCompatActivity() {
                 "details"
             )!!
 
-        val arrayData = arrayOf(
-            "Nurse Name: ${details.name}",
-            "Contact No. : ${details.mobile}",
-            "Email: ${details.email}",
-            "Date of Birth: ${details.dob}",
-            "Address: ${details.address}",
-            "License Type: ${details.licenseType}",
-            "License Expiry: ${details.licenseExpiry}",
-            "Experience: ${details.experience}",
-            "Speciality: ${details.speciality}",
-            "US Immigration Status: ${details.usImmgStatus}",
-            "NCLEX Status: ${details.nclexStatus}",
-            "CGFNS Status: ${details.cgfnsStatus}",
-            "Approval Status: ${details.approvalStatus}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.nurseLicense}",
-        )
+        setNurseDetailsData(details)
 
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listview.adapter = adapter
-
-/*        binding.btnViewLicence.setOnClickListener {
+        binding.btnViewLicence.setOnClickListener {
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(Constants.URL_FOR_IMAGE + details.nurseLicense)
+                Uri.parse(ConstantsAdmin.URL_FOR_IMAGE + details.nurseLicense)
             )
             startActivity(urlIntent)
 
-        }*/
+        }
 
         if (details?.approvalStatus == "approved") {
             binding.btnGroup.visibility = View.GONE
@@ -159,6 +145,22 @@ class NurseApprovalDetails : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun setNurseDetailsData(details: NurseDetailsFromNurseApprovalModel) {
+            binding.tv1.text = details.name
+            binding.tv2.text = details.mobile
+            binding.tv3.text = details.email
+            binding.tv4.text = details.dob
+            binding.tv5.text = details.address
+            binding.tv6.text = details.licenseType
+            binding.tv7.text = details.licenseExpiry
+            binding.tv8.text = details.experience
+            binding.tv9.text = details.speciality
+            binding.tv10.text = details.usImmgStatus
+            binding.tv11.text = details.nclexStatus
+            binding.tv12.text = details.cgfnsStatus
+            binding.tv13.text = details.approvalStatus
     }
 
     @SuppressLint("MissingInflatedId")

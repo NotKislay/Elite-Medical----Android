@@ -1,4 +1,4 @@
-package com.elite.medical.admin.ui.sidemenu.dashboard
+package com.elite.medical.admin.ui.sidemenu.dashboard.clinics
 
 import android.os.Bundle
 import android.view.View

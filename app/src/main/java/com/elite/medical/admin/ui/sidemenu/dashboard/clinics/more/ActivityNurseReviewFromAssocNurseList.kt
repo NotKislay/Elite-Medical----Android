@@ -1,4 +1,4 @@
-package com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more
+package com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more
 
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +7,10 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.admin.adapters.sidemenu.dashboard.ApprovedNursesAdapter
 import com.elite.medical.admin.adapters.sidemenu.dashboard.NurseReviewByClinicFromNurseDetailsAdapter
 import com.elite.medical.databinding.ActivityNurseReviewFromAssocNurseListBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ReviewDetails

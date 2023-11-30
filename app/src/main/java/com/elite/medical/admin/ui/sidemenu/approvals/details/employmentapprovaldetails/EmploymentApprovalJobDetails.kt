@@ -69,8 +69,6 @@ class EmploymentApprovalJobDetails : AppCompatActivity() {
         }
 
         binding.ApproveBtn.setOnClickListener {
-            var token = EliteMedical.AuthTokenAdmin
-            token = "Bearer $token"
             val id = details.id
             val action = details.request_type
             ButtonAPIs.approveEmploymentRequest(

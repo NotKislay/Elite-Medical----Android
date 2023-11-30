@@ -138,26 +138,5 @@ class ApplicantDetails : AppCompatActivity() {
         binding.appbarTitle.text = "Job Details"
     }
 
-    private fun displayClinicDetails() {
-        val clinicDetails = allDetails.clinic
-        val jobDetailsArray = arrayOf(
-            "Clinic Name: ${clinicDetails.name}",
-            "Contact No: ${clinicDetails.mobile}",
-            "Email: ${clinicDetails.email}",
-            "Address: ${clinicDetails.address}",
-            "Clinic Type: ${clinicDetails.clinicType}",
-            "VAT/TIN No: ${clinicDetails.vatNo}",
-            "CST No: ${clinicDetails.cstNo}",
-            "Service Tax No: ${clinicDetails.serviceTaxNo}",
-            "Clinic UIN: ${clinicDetails.uinNo}",
-            "Declaration: ${clinicDetails.declaration}",
-            "Approval Status: ${clinicDetails.approvalStatus}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${clinicDetails.clinicLicense}",
-        )
-        val adapter =
-            ArrayAdapter(this, R.layout.custom_single_item_textview, jobDetailsArray)
-        binding.listView.adapter = adapter
-        binding.appbarTitle.text = "Clinic Details"
-    }
 
 }

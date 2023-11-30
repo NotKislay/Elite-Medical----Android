@@ -1,4 +1,4 @@
-package com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more
+package com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more
 
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.EliteMedical
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.sidemenu.dashboard.AssocNursesAdapter
 import com.elite.medical.databinding.ActivityNurseAssocToClinicBinding

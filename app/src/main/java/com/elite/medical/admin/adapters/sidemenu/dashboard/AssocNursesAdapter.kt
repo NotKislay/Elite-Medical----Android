@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
-import com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.ApprovedClinicDetails
-import com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseDetailsFromAssocNurse
+import com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more.ActivityNurseDetailsFromAssocNurse
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.NursesDetailsFromAssociatedNurseModel
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.reviews.ReviewDetails
 

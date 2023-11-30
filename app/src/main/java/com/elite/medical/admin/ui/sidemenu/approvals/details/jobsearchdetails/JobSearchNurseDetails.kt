@@ -1,5 +1,7 @@
 package com.elite.medical.admin.ui.sidemenu.approvals.details.jobsearchdetails
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.elite.medical.R
 import com.elite.medical.databinding.ActivityEmploymentApprovalNurseDetailsBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.approvals.nurseapproval.NurseDetailsFromNurseApprovalModel
+import com.elite.medical.utils.endpoints.ConstantsAdmin
 
 class JobSearchNurseDetails : AppCompatActivity() {
 
@@ -20,42 +23,55 @@ class JobSearchNurseDetails : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnBack.setOnClickListener { finish() }
-        binding.details.text="Job Search Approval"
+
 
         val details =
             intent.getParcelableExtra<NurseDetailsFromNurseApprovalModel>(
                 "details"
             )!!
 
+        binding.btnViewLicence.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(ConstantsAdmin.URL_FOR_IMAGE + details.nurseLicense)
+            )
+            startActivity(urlIntent)
+
+        }
+
         val arrayData = arrayOf(
-            "Nurse Name: ${details.name}",
-            "Contact No. : ${details.mobile}",
-            "Email: ${details.email}",
-            "Date of Birth: ${details.dob}",
-            "Address: ${details.address}",
-            "License Type: ${details.licenseType}",
-            "License Expiry: ${details.licenseExpiry}",
-            "Experience: ${details.experience}",
-            "Speciality: ${details.speciality}",
-            "US Immigration Status: ${details.usImmgStatus}",
-            "NCLEX Status: ${details.nclexStatus}",
-            "CGFNS Status: ${details.cgfnsStatus}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details.nurseLicense}",
-            "Approval Status: ${details.approvalStatus}",
-//            "City: ${details.city}",
-//            "Created At: ${details.createdAt}",
-//            "ID: ${details.id}",
-//            "License Issue: ${details.licenseIssue}",
-//            "Schedule: ${details.schedule}",
-//            "Schedule Status: ${details.scheduleStatus}",
-//            "Schedule Time: ${details.scheduleTime}",
-//            "State: ${details.state}",
-//            "Updated At: ${details.updatedAt}",
-//            "User ID: ${details.userId}",
-//            "ZIP: ${details.zip}"
+            details.name.toString(),
+            details.mobile.toString(),
+            details.email.toString(),
+            details.dob.toString(),
+            details.address.toString(),
+            details.licenseType.toString(),
+            details.licenseExpiry.toString(),
+            details.experience.toString(),
+            details.speciality.toString(),
+            details.usImmgStatus.toString(),
+            details.nclexStatus.toString(),
+            details.cgfnsStatus.toString(),
+            details.approvalStatus.toString(),
         )
 
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+        setNurseDetailsData(arrayData)
+
+    }
+
+    private fun setNurseDetailsData(arrayData: Array<String>) {
+        binding.tv1.text = arrayData.elementAt(0)
+        binding.tv2.text = arrayData.elementAt(1)
+        binding.tv3.text = arrayData.elementAt(2)
+        binding.tv4.text = arrayData.elementAt(3)
+        binding.tv5.text = arrayData.elementAt(4)
+        binding.tv6.text = arrayData.elementAt(5)
+        binding.tv7.text = arrayData.elementAt(6)
+        binding.tv8.text = arrayData.elementAt(7)
+        binding.tv9.text = arrayData.elementAt(8)
+        binding.tv10.text = arrayData.elementAt(9)
+        binding.tv11.text = arrayData.elementAt(10)
+        binding.tv12.text = arrayData.elementAt(11)
+        binding.tv13.text = arrayData.elementAt(12)
     }
 }

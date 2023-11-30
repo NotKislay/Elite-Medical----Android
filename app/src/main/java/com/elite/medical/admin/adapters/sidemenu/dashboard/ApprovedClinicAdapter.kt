@@ -2,13 +2,11 @@ package com.elite.medical.admin.adapters.sidemenu.dashboard
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.elite.medical.R
-import com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.ApprovedClinicDetails
+import com.elite.medical.admin.ui.sidemenu.dashboard.clinics.ApprovedClinicDetails
 import com.elite.medical.databinding.RvItemGenericBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.ClinicDetailsFromApprovedClinicsModel
 

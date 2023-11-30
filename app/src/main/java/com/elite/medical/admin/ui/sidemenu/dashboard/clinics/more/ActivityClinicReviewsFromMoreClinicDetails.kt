@@ -1,7 +1,6 @@
-package com.elite.medical.admin.ui.sidemenu.dashboard.clinic_details.more
+package com.elite.medical.admin.ui.sidemenu.dashboard.clinics.more
 
 import android.app.Dialog
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,11 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elite.medical.R
 import com.elite.medical.admin.adapters.sidemenu.dashboard.ClinicDetailsAdapterFromClinicDetails
-import com.elite.medical.admin.adapters.sidemenu.review.ClinicReviewAdapter
 import com.elite.medical.databinding.ActivityNavigationClinicReviewBinding
-import com.elite.medical.databinding.ActivityNavigationNurseReviewBinding
 import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.ClinicReviewsFromClinicDetailsModel
-import com.elite.medical.retrofit.responsemodel.admin.sidemenu.dashboard.clinics.more.NursesDetailsFromAssociatedNurseModel
 
 class ActivityClinicReviewsFromMoreClinicDetails : AppCompatActivity() {
 

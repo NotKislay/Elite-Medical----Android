@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_admin"
+    app:startDestination="@id/adminDashboardFragment">
+
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.AdminDashboardFragment"
+        android:label="fragment_admin_dashboard"
+        tools:layout="@layout/fragment_admin_dashboard" >
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_recentClinicsAdminFragment"
+            app:destination="@id/recentClinicsAdminFragment" />
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_recentNursesAdminFragment"
+            app:destination="@id/recentNursesAdminFragment" />
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_recentClinicReviewsAdminFragment"
+            app:destination="@id/recentClinicReviewsAdminFragment" />
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_recentNurseReviewsAdminFragment"
+            app:destination="@id/recentNurseReviewsAdminFragment" />
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentNursesAdminFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.RecentNursesAdminFragment"
+        android:label="fragment_recent_nurses_admin"
+        tools:layout="@layout/fragment_recent_nurses_admin" />
+    <fragment
+        android:id="@+id/recentClinicsAdminFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.RecentClinicsAdminFragment"
+        android:label="fragment_recent_clinics_admin"
+        tools:layout="@layout/fragment_recent_clinics_admin" />
+    <fragment
+        android:id="@+id/recentNurseReviewsAdminFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.RecentNurseReviewsAdminFragment"
+        android:label="fragment_recent_nurse_reviews_admin"
+        tools:layout="@layout/fragment_recent_nurse_reviews_admin" />
+    <fragment
+        android:id="@+id/recentClinicReviewsAdminFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.RecentClinicReviewsAdminFragment"
+        android:label="fragment_recent_clinic_reviews_admin"
+        tools:layout="@layout/fragment_recent_clinic_reviews_admin" />
+    <fragment
+        android:id="@+id/adminProfileFragment"
+        android:name="com.elite.medical.admin.fragments.mainscreen.AdminProfileFragment"
+        android:label="fragment_admin_profile"
+        tools:layout="@layout/fragment_admin_profile" />
+
+
+</navigation>

@@ -7,8 +7,10 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -65,9 +67,7 @@
             android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.ActivityReviewsByClinic"
             android:exported="false" />
 
-        <activity
-            android:name=".admin.ui.ActivityViewProfile"
-            android:exported="false" />
+
         <activity
             android:name=".admin.ui.sidemenu.dashboard.nurses.nursedetailsfromapproved.NurseDetailsFromApprovedNurses"
             android:exported="false" />
@@ -87,13 +87,13 @@
             android:name=".admin.ui.sidemenu.dashboard.jobapplicants.NurseDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseReviewFromAssocNurseList"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.more.ActivityNurseReviewFromAssocNurseList"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityClinicReviewsFromMoreClinicDetails"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.more.ActivityClinicReviewsFromMoreClinicDetails"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseDetailsFromAssocNurse"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.more.ActivityNurseDetailsFromAssocNurse"
             android:exported="false" />
         <activity
             android:name=".admin.ui.sidemenu.dashboard.jobapplicants.ApplicantDetails"
@@ -108,7 +108,7 @@
             android:name=".admin.ui.sidemenu.dashboard.jobs.ApprovedJobDetailsByID"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.clinic_details.more.ActivityNurseAssocToClinic"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.more.ActivityNurseAssocToClinic"
             android:exported="false" />
         <activity
             android:name=".admin.ui.sidemenu.dashboard.jobs.ApprovedJobs"
@@ -123,26 +123,16 @@
             android:name=".admin.ui.sidemenu.reviews.NurseReviews"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.clinic_details.ApprovedClinicDetails"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.ApprovedClinicDetails"
             android:exported="false" />
         <activity
-            android:name=".admin.ui.sidemenu.dashboard.ApprovedClinics"
+            android:name=".admin.ui.sidemenu.dashboard.clinics.ApprovedClinics"
             android:exported="false" />
-        <activity
-            android:name="._feature_testing.ViewModelTesting"
-            android:exported="false" />
-        <activity
-            android:name=".admin.ui.dashboard.RecentNurseReview"
-            android:exported="false" />
-        <activity
-            android:name=".admin.ui.dashboard.RecentClinicReview"
-            android:exported="false" />
-        <activity
-            android:name=".admin.ui.dashboard.RecentNurses"
-            android:exported="false" />
-        <activity
-            android:name=".admin.ui.dashboard.RecentClinics"
-            android:exported="false" />
+
+
+
+
+
         <activity
             android:name=".ForgotPassword"
             android:exported="true" />
@@ -179,9 +169,7 @@
         <activity
             android:name=".admin.ui.sidemenu.approvals.details.jobsearchdetails.JobSearchNurseDetails"
             android:exported="false" />
-        <activity
-            android:name="._feature_testing.FeatureTesting"
-            android:exported="true" />
+
 
 
         <activity

@@ -21,38 +21,46 @@ class JobSearchClinicDetails : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        binding.details.text="Job Search Approval"
+
 
         val details =
             intent.getParcelableExtra<ClinicDetailsFromClinicApprovalModel>(
                 "details"
-            )
+            )!!
 
         val arrayData = arrayOf(
-            "Clinic Name: ${details?.name}",
-            "Contact No. : ${details?.mobile}",
-            "Email: ${details?.email}",
-            "Address: ${details?.address}",
-            "Clinic Type: ${details?.clinicType}",
-            "VAT/TIN No. : ${details?.vatNo}",
-            "CST No: ${details?.cstNo}",
-            "Service Tax No: ${details?.serviceTaxNo}",
-            "Clinic UIN: ${details?.uinNo}",
-            "Declaration: ${details?.declaration}",
-            "View Licence: https://staging.emfwebapp.ikshudigital.com/storage/${details?.clinicLicense}",
-            "Approval Status: ${details?.approvalStatus}",
-//            "City: ${details?.city}",
-//            "Created At: ${details?.createdAt}",
-//            "ID: ${details?.id}",
-//            "Locations: ${details?.locations?.joinToString(", ")}",
-//            "State: ${details?.state}",
-//            "Updated At: ${details?.updatedAt}",
-//            "User ID: ${details?.userId}",
-//            "ZIP: ${details?.zip}"
+            details.name.toString(),
+            details.mobile.toString(),
+            details.email.toString(),
+            details.address.toString(),
+            details.clinicType.toString(),
+            details.vatNo.toString(),
+            details.cstNo.toString(),
+            details.serviceTaxNo.toString(),
+            details.uinNo.toString(),
+            details.approvalStatus.toString(),
+            details.declaration.toString(),
         )
 
-        val adapter = ArrayAdapter(this, R.layout.custom_single_item_textview, arrayData)
-        binding.listView.adapter = adapter
+        displayDetails(arrayData)
+
+
+
+    }
+
+    private fun displayDetails(data: Array<String>) {
+
+        binding.tv1.text = data.elementAt(0)
+        binding.tv2.text = data.elementAt(1)
+        binding.tv3.text = data.elementAt(2)
+        binding.tv4.text = data.elementAt(3)
+        binding.tv5.text = data.elementAt(4)
+        binding.tv6.text = data.elementAt(5)
+        binding.tv7.text = data.elementAt(6)
+        binding.tv8.text = data.elementAt(7)
+        binding.tv9.text = data.elementAt(8)
+        binding.tv10.text = data.elementAt(9)
+        binding.tv11.text = data.elementAt(10)
 
     }
 }
